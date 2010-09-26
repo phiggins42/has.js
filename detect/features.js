@@ -26,7 +26,11 @@
     });
     
     addtest("json-parse", function(){
-		return "JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a;
+		return !!("JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+	});
+    
+    addtest("json-stringify", function(){
+		return !!("JSON" in window && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
 	});
     
 })(has);
