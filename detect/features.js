@@ -16,22 +16,18 @@
     addtest("native-map", !!ar.map);
     delete ar;
     
-
     addtest('function-caller', (function(undefined) { 
       function test() { return test.caller !== undefined }
       return test();
     })());
     
-
-
     addtest("json-parse", function(){
-  		return !!("JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
-  	});
+        return !!("JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+    });
 
     addtest("json-stringify", function(){
-  		return !!("JSON" in window && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
-  	});
-
+        return !!("JSON" in window && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
+    });
 
     // FIXME: isn't really native
     addtest("native-console", !!("console" in window));
@@ -64,23 +60,18 @@
     addtest("crosswindowmessaging", function() {
         return !!window.postMessage;
     });
-    
-    
+        
     addtest('orientation',function(){
       return 'ondeviceorientation' in window;
     });
     
-    
-    
-    
-    
-    addtest('positionfixed', function() {
-        var test = document.createElement('div'),
+    addtest('positionfixed', function(d) {
+        var test = d.createElement('div'),
             control = test.cloneNode(),
             fake = false,
-            root = document.body || (function() {
+            root = d.body || (function() {
                 fake = true;
-                return document.documentElement.appendChild(document.createElement('body'));
+                return d.documentElement.appendChild(d.createElement('body'));
             }());
 
         var oldCssText = root.style.cssText;
@@ -96,7 +87,7 @@
         root.style.cssText = oldCssText;
 
         if (fake) {
-            document.documentElement.removeChild(root);
+            d.documentElement.removeChild(root);
         }
 
         return ret;
