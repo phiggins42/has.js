@@ -38,7 +38,7 @@
 
     var elem = document.createElement( "canvas" );
     addtest("canvas", function(doc) { 
-       return elem.getContext && elem.getContext('2d'); 
+       return !!(elem.getContext && elem.getContext('2d'));
     });
     addtest("canvastext", function(doc) {
         return !!(has("canvas") && typeof elem.getContext('2d').fillText == 'function');
