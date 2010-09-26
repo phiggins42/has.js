@@ -15,6 +15,8 @@
     addtest("native-isArray", !!("isArray" in Array));
     addtest("native-map", !!ar.map);
     delete ar;
+    
+
 
     // FIXME: should we test all obj types or just some
     addtest("native-JSON", function(){
@@ -51,6 +53,11 @@
 
     addtest("crosswindowmessaging", function() {
         return !!window.postMessage;
+    });
+    
+    
+    addtest('orientation',function(){
+      return 'ondeviceorientation' in window;
     });
         
 })(has);
