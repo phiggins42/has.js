@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            .yes {
+                color:green;
+            }
+            .no {
+                color:red;
+            }
+        </style>
+        <title>has.js tests</title>
+        <script src="../has.js"></script>
+        <script>
+            // redundant test
+            has.add("js-enabled-direct", true);
+            
+            var lazy = 0;
+            has.add("js-enabled-lazy", function(){ lazy++; return true; });
+            if(!lazy && !has("js-enabled-lazy")){
+                alert("lazy test failed.");
+            }
+            
+            var run = 0;
+            has.add("js-enabled-lazy-now", function(){ run++; return true; }, true);
+            if(!run){
+                alert("lazy with immediate execution failed");
+            }
+        </script>
+        
+        <script>window.beforeLoading = +new Date;</script>
+        <script src="../detect/bugs.js"></script>
+        <script src="../detect/features.js"></script>
+        <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
+    </head>
+    <body>
+        <h1>has.js</h1>
+        <p>Feature Detection, al la carte stylie</p>
+        
+        <fieldset>
+            <legend>Results (first 3 are fake) <span id="took"></span></legend>
+            <ul id="output"></ul>
+        </fieldset>
+
+        <p>Test loading and registration took <span id="took2"></span></p>
+
+        <script>
+            var out = document.getElementById("output"), 
+                html = [],
+                nao = +new Date,
+                results = has.all(),
+                done = +new Date
+            ;
+
+            for(var i in results){
+                html.push("<li>", i ," <em class='", results[i] ? "yes" : "no", "'>", results[i], "</em></li>");
+            }
+            
+            out.innerHTML = html.join("");
+            document.getElementById("took").innerHTML = "took: " + (done - nao) + "ms";
+            document.getElementById("took2").innerHTML = window.afterLoading + "ms";
+            
+        </script>
+    </body>
+</html>

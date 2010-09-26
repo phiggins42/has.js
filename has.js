@@ -57,7 +57,26 @@ has = (function(d){
         //  |           return false; // fake test, byid-when-form-has-name-matching-an-id is slightly longer
         //  |       });
         testCache[name] = now ? test(d, el) : test;
-    }
+    };
+    
+    has.event = function(eventName, element){
+        // summary: Tests if a node supports a particular event
+
+        element = element || d.createElement(TAGNAMES[eventName] || 'div');
+        eventName = 'on' + eventName;
+
+        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize"
+        // `in` "catches" those
+        var isSupported = (eventName in element);
+
+        if (!isSupported && element.setAttribute) {
+            element.setAttribute(eventName, 'return;');
+            isSupported = typeof element[eventName] == 'function';
+        }
+
+        element = null;
+        return isSupported;
+    };
     
     has.all = function(){
         // summary: For debugging or logging, can be removed in production. Run all known tests 
@@ -67,7 +86,7 @@ has = (function(d){
             ret[i] = has(i);
         }
         return ret; // Object
-    }
+    };
     
     return has;
 
