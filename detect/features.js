@@ -17,7 +17,12 @@
     delete ar;
     
 
-
+    addtest('function-caller', (function(undefined) { 
+      function test() { return test.caller !== undefined }
+      return test();
+    })());
+    
+    
     // FIXME: should we test all obj types or just some
     addtest("native-JSON", function(){
         return !!("JSON" in window && JSON.parse('{"a":true}'));
