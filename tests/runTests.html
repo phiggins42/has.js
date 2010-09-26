@@ -28,7 +28,14 @@
             }
         </script>
         
-        <script>window.beforeLoading = +new Date;</script>
+        <script>
+            // FIXME: should we doc.write in Prototype.js || Moo Core here to see if we detect safely/correctly
+            // in presence of known *.prototype extending libs?
+            // document.write('<script src="......"><' + '/script>');
+        
+            // timing mech
+            window.beforeLoading = +new Date;
+        </script>
         <script src="../detect/bugs.js"></script>
         <script src="../detect/features.js"></script>
         <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
