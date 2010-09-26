@@ -22,11 +22,16 @@
       return test();
     })());
     
-    
-    // FIXME: should we test all obj types or just some
-    addtest("native-JSON", function(){
-        return !!("JSON" in window && JSON.parse('{"a":true}'));
-    });
+
+
+    addtest("json-parse", function(){
+  		return !!("JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+  	});
+
+    addtest("json-stringify", function(){
+  		return !!("JSON" in window && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
+  	});
+
 
     // FIXME: isn't really native
     addtest("native-console", !!("console" in window));
@@ -96,6 +101,5 @@
 
         return ret;
     });
-    
-        
+
 })(has);
