@@ -27,10 +27,13 @@
     // FIXME: poorly named, might be useless
     addtest("beget", !!("create" in Object));
 
-    var canvas = "canvas", canvastext = "canvastext";
-    addtest(canvas, function(doc) { return !!doc.createElement( canvas ).getContext; });
-    addtest(canvastext, function(doc) {
-        return !!(has(canvas) && typeof doc.createElement( canvas ).getContext('2d').fillText == 'function');
+
+    var elem = doc.createElement( "canvas" );
+    addtest("canvas", function(doc) { 
+       return elem.getContext && elem.getContext('2d'); 
+    });
+    addtest("canvastext", function(doc) {
+        return !!(has(canvas) && typeof elem.getContext('2d').fillText == 'function');
     });
     
     /**
