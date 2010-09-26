@@ -67,7 +67,7 @@
     
     addtest('positionfixed', function(d) {
         var test = d.createElement('div'),
-            control = test.cloneNode(),
+            control = test.cloneNode(false),
             fake = false,
             root = d.body || (function() {
                 fake = true;
