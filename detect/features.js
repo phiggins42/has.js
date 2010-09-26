@@ -25,4 +25,8 @@
         return !!(has(canvas) && typeof doc.createElement( canvas ).getContext('2d').fillText == 'function');
     });
     
+    addtest("native-json", function(){
+		return !!(JSON.toString() == "[object JSON]" && JSON.parse && JSON.stringify);
+	});
+    
 })(has);
