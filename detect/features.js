@@ -1,5 +1,7 @@
 (function(has){
 
+    // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?)
+
     var addtest = has.add;
    
     addtest("native-dataset", function(d, e){

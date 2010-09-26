@@ -59,6 +59,7 @@ has = (function(d){
         testCache[name] = now ? test(d, el) : test;
     };
     
+    // FIXME: clearly not tested. grab TAGNAMES from Modernizr
     has.event = function(eventName, element){
         // summary: Tests if a node supports a particular event
 
@@ -87,6 +88,9 @@ has = (function(d){
         }
         return ret; // Object
     };
+    
+    //>>include detect/bugs.js
+    //>>include detect/features.js
     
     return has;
 
