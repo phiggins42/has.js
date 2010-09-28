@@ -219,4 +219,69 @@
 
     });
 
+    addtest("css-border-radius", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.borderRadius == "string" ||
+                typeof s.WebkitBorderRadius == "string" ||
+                typeof s.MozBorderRadius == "string" ||
+                typeof s.KhtmlBorderRadius == "string");
+        }
+        return false;
+    });
+
+    addtest("css-box-shadow", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.boxShadow == "string" ||
+                typeof s.WebkitBoxShadow == "string" ||
+                typeof s.MozBoxShadow == "string" ||
+                typeof s.OBoxShadow == "string" ||
+                typeof s.MsBoxShadow == "string");
+        }
+        return false;
+    });
+
+    addtest("css-opacity", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.opacity == "string");
+        }
+        return false;
+    });
+
+    addtest("css-resize", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.resize == "string");
+        }
+        return false;
+    });
+
+    addtest("css-text-overflow", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.textOverflow == "string" ||
+                typeof s.OTextOverflow == "string");
+        }
+        return false;
+    });
+
+    addtest("css-text-shadow", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.textShadow == "string");
+        }
+        return false;
+    });
+
+    addtest("css-transform", function(g, d, e){
+        var s;
+        if(e && (s = e.style)){
+            return (typeof s.WebkitTransform == "string" ||
+                typeof s.MozTransform == "string");
+        }
+        return false;
+    });
+
 })(has);
