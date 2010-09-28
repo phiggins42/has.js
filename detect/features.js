@@ -1,15 +1,15 @@
 (function(has){
 
-    // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?)
+    // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
     var addtest = has.add;
    
     addtest("native-dataset", function(d, e){
        e.setAttribute("data-a-b", "c");
-       return (e.dataset && e.dataset.aB === "c");
+       return !!(e.dataset && e.dataset.aB === "c");
     });
     
-    // FIXME: perhaps wrap in a single "MDC-Array" test?
+    // FIXME: perhaps wrap in a single "MDC-Array" test? ^ph
     var ar = [];
     addtest("native-forEach", !!("forEach" in ar));
     addtest("native-isArray", !!("isArray" in Array));
@@ -32,15 +32,41 @@
     // FIXME: isn't really native
     addtest("native-console", !!("console" in window));
 
-    // FIXME: poorly named, might be useless
+    // FIXME: poorly named, might be useless ^ph
     addtest("beget", !!("create" in Object));
 
+    // FIXME: need to decide how to handle 'branching' like this ^ph
+    var xhrTests = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
+    addtest("native-xhr", function(){
+        var http, ret;
+        try{
+            http = new XMLHttpRequest();
+            if(http){ 
+                ret = new Boolean(true); 
+                ret.ACTIVEX = false; 
+            }
+        }catch(e){ 
+            for(var i = 0, l = xhrTests.length; i < l; i++){
+                var xhr = xhrTests[i];
+                try{
+                    http = new ActiveXObject(xhr);
+                }catch(e){}
+                if(http){ 
+                    // FIXME: should this be true and sniff ACTIVEX
+                    ret = new Boolean(false);
+                    ret.ACTIVEX = xhr;
+                }
+                delete xhrTests;
+            }
+        }
+        return ret;
+    });
 
     var elem = document.createElement( "canvas" );
-    addtest("canvas", function(doc) { 
+    addtest("canvas", function() { 
        return !!(elem.getContext && elem.getContext('2d'));
     });
-    addtest("canvastext", function(doc) {
+    addtest("canvastext", function() {
         return !!(has("canvas") && typeof elem.getContext('2d').fillText == 'function');
     });
     
