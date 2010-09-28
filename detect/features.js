@@ -1,15 +1,23 @@
-(function(global, has){
+(function(has){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
     var addtest = has.add;
    
-    // FIXME: perhaps wrap in a single "MDC-Array" test? ^ph
-    var ar = [];
-    addtest("native-forEach", !!("forEach" in ar));
-    addtest("native-isArray", !!("isArray" in Array));
-    addtest("native-map", !!ar.map);
-    delete ar;
+    addtest("native-forEach", function(){
+        return !!("forEach" in []);
+    });
+    addtest("native-isArray", function(){
+        return !!("isArray" in Array);
+    });
+    addtest("native-map", function(){
+        return !!([].map);
+    });
+    addtest("es5-array", function(){
+        var ar = [];
+        return !!(has("native-isArray") && ar.indexOf && ar.lastIndexOf && ar.every && ar.some &&
+            has("native-forEach") && has("native-map") && ar.filter && ar.reduce && ar.reduceRight);
+    });
     
     addtest('function-caller', (function(undefined) { 
       function test() { return test.caller !== undefined }
@@ -25,10 +33,14 @@
     });
 
     // FIXME: isn't really native
-    addtest("native-console", !!("console" in global));
+    addtest("native-console", function(global){
+        return !!("console" in global)
+    });
 
     // FIXME: poorly named, might be useless ^ph
-    addtest("beget", !!("create" in Object));
+    addtest("beget", function(){
+        !!("create" in Object)
+    });
 
     if(!has('is-browser')){ return; }
 
@@ -122,4 +134,4 @@
         return ret;
     });
 
-})(this, has);
+})(has);
