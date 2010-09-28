@@ -72,6 +72,19 @@
         return "trim" in String.prototype;
     });
 
+    // Date tests
+    addtest("date-toISOString", function(){
+        return "toISOString" in Date.prototype;
+    });
+
+    addtest("date-toJSON", function(){
+        return "toJSON" in Date.prototype;
+    });
+
+    addtest("date-now", function(){
+        return "now" in Date;
+    });
+
     // JSON tests
     addtest("json-parse", function(global){
         return !!("JSON" in global && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
