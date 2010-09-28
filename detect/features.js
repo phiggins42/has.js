@@ -67,6 +67,11 @@
             has("object-keys") && has("object-extensible") && has("object-properties");
     });
 
+    // String tests
+    addtest("string-trim", function(){
+        return "trim" in String.prototype;
+    });
+
     // JSON tests
     addtest("json-parse", function(global){
         return !!("JSON" in global && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
