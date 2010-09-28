@@ -15,13 +15,14 @@
     });
     addtest("es5-array", function(){
         var ar = [];
+
         return !!(has("native-isArray") && ar.indexOf && ar.lastIndexOf && ar.every && ar.some &&
             has("native-forEach") && has("native-map") && ar.filter && ar.reduce && ar.reduceRight);
     });
     
     addtest('function-caller', (function(undefined) { 
-      function test() { return test.caller !== undefined }
-      return test();
+        function test() { return test.caller !== undefined; }
+        return test();
     })());
     
     addtest("json-parse", function(global){
@@ -34,20 +35,20 @@
 
     // FIXME: isn't really native
     addtest("native-console", function(global){
-        return !!("console" in global)
+        return !!("console" in global);
     });
 
     // FIXME: poorly named, might be useless ^ph
     addtest("beget", function(){
-        !!("create" in Object)
+        !!("create" in Object);
     });
 
     if(!has('is-browser')){ return; }
 
     // begin browser tests
     addtest("native-dataset", function(g, d, e){
-       e.setAttribute("data-a-b", "c");
-       return !!(e.dataset && e.dataset.aB === "c");
+        e.setAttribute("data-a-b", "c");
+        return !!(e.dataset && e.dataset.aB === "c");
     });
 
     // FIXME: need to decide how to handle 'branching' like this ^ph
@@ -79,7 +80,7 @@
 
     var elem = document.createElement( "canvas" );
     addtest("canvas", function() { 
-       return !!(elem.getContext && elem.getContext('2d'));
+        return !!(elem.getContext && elem.getContext('2d'));
     });
     addtest("canvastext", function() {
         return !!(has("canvas") && typeof elem.getContext('2d').fillText == 'function');
@@ -103,7 +104,7 @@
     });
         
     addtest('orientation',function(global){
-      return 'ondeviceorientation' in global;
+        return 'ondeviceorientation' in global;
     });
     
     addtest('positionfixed', function(g, d) {
@@ -127,7 +128,7 @@
         root.removeChild(control);
         root.style.cssText = oldCssText;
 
-        if (fake) {
+        if(fake){
             d.documentElement.removeChild(root);
         }
 
@@ -135,33 +136,30 @@
     });
     
     // should fail in webkit, as they dont support it.
-    addtest('mutation-attrmodified', function(){
-      var bool = false;
-      var listener = function(){ bool = true; };
-      document.documentElement.addEventListener("DOMAttrModified", listener, false);
-      document.documentElement.setAttribute("___TEST___", true);
-      document.documentElement.removeAttribute("___TEST___", true);
-      document.documentElement.removeEventListener("DOMAttrModified", listener, false);
-      return bool;
+    addtest('mutation-attrmodified', function(g, document){
+        var bool = false;
+        var listener = function(){ bool = true; };
+        document.documentElement.addEventListener("DOMAttrModified", listener, false);
+        document.documentElement.setAttribute("___TEST___", true);
+        document.documentElement.removeAttribute("___TEST___", true);
+        document.documentElement.removeEventListener("DOMAttrModified", listener, false);
+        return bool;
     });
 
-
-
     // works in chrome/ff. not in opera.
-
     addtest('mutation-domsubtreemodified', function(){
 
-      var bool = false;
-      var listener = function(){ console.log(arguments); bool = true; };
+        var bool = false;
+        var listener = function(){ console.log(arguments); bool = true; };
 
-      var elem = document.createElement("div");
-      //document.documentElement.appendChild(elem)
-      elem.innerHTML = "<elem></elem>";
+        var elem = document.createElement("div");
+        //document.documentElement.appendChild(elem)
+        elem.innerHTML = "<elem></elem>";
 
-      elem.addEventListener("DOMSubtreeModified", listener, false);
-      elem.innerHTML = "<foo></foo>";
-      elem.removeEventListener("DOMSubtreeModified", listener, false);
-      return bool;
+        elem.addEventListener("DOMSubtreeModified", listener, false);
+        elem.innerHTML = "<foo></foo>";
+        elem.removeEventListener("DOMSubtreeModified", listener, false);
+        return bool;
 
     });
 
