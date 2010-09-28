@@ -92,5 +92,36 @@
 
         return ret;
     });
+    
+    // should fail in webkit, as they dont support it.
+    addtest('mutation-attrmodified', function(){
+      var bool = false;
+      var listener = function(){ bool = true; };
+      document.documentElement.addEventListener("DOMAttrModified", listener, false);
+      document.documentElement.setAttribute("___TEST___", true);
+      document.documentElement.removeAttribute("___TEST___", true);
+      document.documentElement.removeEventListener("DOMAttrModified", listener, false);
+      return bool;
+    });
+
+
+
+    // works in chrome/ff. not in opera.
+
+    addtest('mutation-domsubtreemodified', function(){
+
+      var bool = false;
+      var listener = function(){ console.log(arguments); bool = true; };
+
+      var elem = document.createElement("div");
+      //document.documentElement.appendChild(elem)
+      elem.innerHTML = "<elem></elem>";
+
+      elem.addEventListener("DOMSubtreeModified", listener, false);
+      elem.innerHTML = "<foo></foo>";
+      elem.removeEventListener("DOMSubtreeModified", listener, false);
+      return bool;
+
+    });
 
 })(has);
