@@ -1,14 +1,9 @@
-(function(has){
+(function(global, has){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
     var addtest = has.add;
    
-    addtest("native-dataset", function(d, e){
-       e.setAttribute("data-a-b", "c");
-       return !!(e.dataset && e.dataset.aB === "c");
-    });
-    
     // FIXME: perhaps wrap in a single "MDC-Array" test? ^ph
     var ar = [];
     addtest("native-forEach", !!("forEach" in ar));
@@ -21,19 +16,27 @@
       return test();
     })());
     
-    addtest("json-parse", function(){
-        return !!("JSON" in window && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+    addtest("json-parse", function(global){
+        return !!("JSON" in global && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
     });
 
-    addtest("json-stringify", function(){
-        return !!("JSON" in window && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
+    addtest("json-stringify", function(global){
+        return !!("JSON" in global && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
     });
 
     // FIXME: isn't really native
-    addtest("native-console", !!("console" in window));
+    addtest("native-console", !!("console" in global));
 
     // FIXME: poorly named, might be useless ^ph
     addtest("beget", !!("create" in Object));
+
+    if(!has('is-browser')){ return; }
+
+    // begin browser tests
+    addtest("native-dataset", function(g, d, e){
+       e.setAttribute("data-a-b", "c");
+       return !!(e.dataset && e.dataset.aB === "c");
+    });
 
     // FIXME: need to decide how to handle 'branching' like this ^ph
     var xhrTests = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
@@ -83,15 +86,15 @@
         return !!navigator.geolocation;
     });
 
-    addtest("crosswindowmessaging", function() {
-        return !!window.postMessage;
+    addtest("crosswindowmessaging", function(global) {
+        return !!global.postMessage;
     });
         
-    addtest('orientation',function(){
-      return 'ondeviceorientation' in window;
+    addtest('orientation',function(global){
+      return 'ondeviceorientation' in global;
     });
     
-    addtest('positionfixed', function(d) {
+    addtest('positionfixed', function(g, d) {
         var test = d.createElement('div'),
             control = test.cloneNode(false),
             fake = false,
@@ -119,4 +122,4 @@
         return ret;
     });
 
-})(has);
+})(this, has);
