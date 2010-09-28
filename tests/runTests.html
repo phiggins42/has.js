@@ -8,10 +8,26 @@
             .no {
                 color:red;
             }
+            #ua {
+                font-weight:bold;
+            }
         </style>
         <title>has.js tests</title>
         <script src="../has.js"></script>
         <script>
+        
+            // some return objects contain additional information 
+            // about how to handle a situation. define whatever
+            // keys are handled specially in this way here:
+            has.specials = {
+                "native-xhr": "ACTIVEX"
+            }
+        
+            has.byId = function(id){
+                return document.getElementById(id);
+            }
+            
+        
             // redundant test
             has.add("js-enabled-direct", true);
             
@@ -45,28 +61,49 @@
         <p>Feature Detection, al la carte stylie</p>
         
         <fieldset>
-            <legend>Results (first 3 are fake) <span id="took"></span></legend>
+            <legend>Results (js-enabled-* tests are fake) <span id="took"></span></legend>
             <ul id="output"></ul>
         </fieldset>
-
+        
         <p>Test loading and registration took <span id="took2"></span></p>
+        <p>Your userAgent is being reported as: <span id="ua"></span></p>
 
+        <form action='report.php' method="POST">
+            <button id="boom" disabled="disabled">Report these to teh matrix</button>
+            <div id="resultinputs"></div>
+            <input type="hidden" name="useragent" id="useragent">
+            <input type="hidden" name="cost" id="cost">
+        </form>
+        
         <script>
+        
             var out = document.getElementById("output"), 
-                html = [],
+                html = [], data = [],
                 nao = +new Date,
                 results = has.all(),
                 done = +new Date
             ;
 
             for(var i in results){
-                html.push("<li>", i ," <em class='", results[i] ? "yes" : "no", "'>", results[i], "</em></li>");
+                
+                var special = "", r = results[i];
+                if(i in has.specials){
+                    special = r[has.specials[i]] || "";
+                }
+                
+                data.push("<input type='hidden' name='", i, "' value='", results[i] + special ,"'>");
+                html.push("<li>", i ," <em class='", results[i] ? "yes" : "no", "'>", results[i], "</em>", special, "</li>");
             }
             
             out.innerHTML = html.join("");
-            document.getElementById("took").innerHTML = "took: " + (done - nao) + "ms";
-            document.getElementById("took2").innerHTML = window.afterLoading + "ms";
             
+            has.byId("resultinputs").innerHTML = data.join("");
+            
+            has.byId("took").innerHTML = "took: " + (done - nao) + "ms";
+            has.byId("cost").value = has.byId("took2").innerHTML = window.afterLoading + "ms";
+            has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
+            
+            // has.byId("boom").disabled = false; // backend not in place
         </script>
     </body>
 </html>

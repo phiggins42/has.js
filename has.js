@@ -1,4 +1,4 @@
-has = (function(d){
+has = (function(g, d){
     
     // summary: A simple feature detection function/framework.
     //
@@ -19,7 +19,7 @@ has = (function(d){
         testCache = {}, 
         has = function(/* String */name){
             if(typeof testCache[name] == "function"){
-                testCache[name] = testCache[name](d, el);
+                testCache[name] = testCache[name](g, d, el);
             }
             return testCache[name]; // Boolean
         }
@@ -56,7 +56,7 @@ has = (function(d){
         //  |           // doc == document, el == the generic element
         //  |           return false; // fake test, byid-when-form-has-name-matching-an-id is slightly longer
         //  |       });
-        testCache[name] = now ? test(d, el) : test;
+        testCache[name] = now ? test(g, d, el) : test;
     };
     
     // FIXME: clearly not tested. grab TAGNAMES from Modernizr
@@ -88,10 +88,14 @@ has = (function(d){
         }
         return ret; // Object
     };
+
+    has.add('is-browser', function(global, document, element){
+        return (typeof document != 'undefined' && typeof element != 'undefined' && typeof navigator != 'undefined');
+    }, true);
     
     //>>include detect/bugs.js
     //>>include detect/features.js
     
     return has;
 
-})(document);
+})(this, document);
