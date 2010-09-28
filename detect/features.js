@@ -55,8 +55,8 @@
                     // FIXME: should this be true and sniff ACTIVEX
                     ret = new Boolean(false);
                     ret.ACTIVEX = xhr;
+                    delete xhrTests;
                 }
-                delete xhrTests;
             }
         }
         return ret;
