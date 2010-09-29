@@ -1,8 +1,4 @@
 (function(has, addtest){
-<<<<<<< HEAD
-
-=======
->>>>>>> phiggins/master
     // Adapted from Juriy Zaytsev's Common Feature Tests (http://github.com/kangax/cft)
 
     var FN = "function";
@@ -530,8 +526,5 @@
         }
         return isBuggy;
     });
-<<<<<<< HEAD
-=======
     
->>>>>>> phiggins/master
 })(has, has.add);
