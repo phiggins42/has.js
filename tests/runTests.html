@@ -60,8 +60,22 @@
             window.beforeLoading = +new Date;
         </script>
         <script src="../detect/bugs.js"></script>
+
+        <script src="../detect/array.js"></script>
+        <script src="../detect/canvas.js"></script>
+        <script src="../detect/css.js"></script>
+        <script src="../detect/dates.js"></script>
+        <script src="../detect/dom.js"></script>
         <script src="../detect/features.js"></script>
+        <script src="../detect/function.js"></script>
+        <script src="../detect/json.js"></script>
+        <script src="../detect/object.js"></script>
+        <script src="../detect/strings.js"></script>
+        
+        
         <script src="../detect/cft.js"></script>
+        
+        
         <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
     </head>
     <body>
@@ -89,17 +103,17 @@
                 html = [], data = [],
                 nao = +new Date,
                 results = has.all(),
-				done = +new Date,
-				bugRE = /^bug-/
+        done = +new Date,
+        bugRE = /^bug-/
             ;
 
-			function resultClass(result, isBug, special){
-				// format bug-* tests opposite from others
-				if(isBug && result != 'error'){
-					return (result == true ? "no" : "yes");
-				}
-				return (result == true ? "yes" : "no");
-			}
+      function resultClass(result, isBug, special){
+        // format bug-* tests opposite from others
+        if(isBug && result != 'error'){
+          return (result == true ? "no" : "yes");
+        }
+        return (result == true ? "yes" : "no");
+      }
 
             for(var i in results){
                 
