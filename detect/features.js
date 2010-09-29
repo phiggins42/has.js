@@ -170,34 +170,6 @@
         return 'ondeviceorientation' in global;
     });
     
-    addtest('positionfixed', function(g, d) {
-        var test = d.createElement('div'),
-            control = test.cloneNode(false),
-            fake = false,
-            root = d.body || (function() {
-                fake = true;
-                return d.documentElement.appendChild(d.createElement('body'));
-            }());
-
-        var oldCssText = root.style.cssText;
-        root.style.cssText = 'padding:0;margin:0';
-        test.style.cssText = 'position:fixed;top:42px';
-        root.appendChild(test);
-        root.appendChild(control);
-
-        var ret = test.offsetTop !== control.offsetTop;
-
-        root.removeChild(test);
-        root.removeChild(control);
-        root.style.cssText = oldCssText;
-
-        if(fake){
-            d.documentElement.removeChild(root);
-        }
-
-        return ret;
-    });
-    
     // should fail in webkit, as they dont support it.
     addtest('mutation-attrmodified', function(g, document){
         var bool = false,
@@ -228,6 +200,34 @@
     });
 
     // FIXME: move to detect/css.js perhaps ^ph
+    addtest('css-positionfixed', function(g, d) {
+        var test = d.createElement('div'),
+            control = test.cloneNode(false),
+            fake = false,
+            root = d.body || (function() {
+                fake = true;
+                return d.documentElement.appendChild(d.createElement('body'));
+            }());
+
+        var oldCssText = root.style.cssText;
+        root.style.cssText = 'padding:0;margin:0';
+        test.style.cssText = 'position:fixed;top:42px';
+        root.appendChild(test);
+        root.appendChild(control);
+
+        var ret = test.offsetTop !== control.offsetTop;
+
+        root.removeChild(test);
+        root.removeChild(control);
+        root.style.cssText = oldCssText;
+
+        if(fake){
+            d.documentElement.removeChild(root);
+        }
+
+        return ret;
+    });
+    
     addtest("css-border-radius", function(g, d, e){
         return cssprop('borderRadius', e);
     });
