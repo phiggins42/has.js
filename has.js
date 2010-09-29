@@ -59,6 +59,25 @@ has = (function(g, d){
         testCache[name] = now ? test(g, d, el) : test;
     };
     
+    var ucFirstRE = /^(.)/,
+        wordRE = /(\w+)/g,
+        prefixes = 'Webkit Moz O ms Khtml'
+    ;
+        
+    has.cssprop = function(styleName, elem){
+        var s, camel;
+        if(elem && (s = elem.style)){
+            if(typeof s[styleName] == "string"){ return true; }
+            camel = styleName.replace(ucFirstRE, function(all, letter){
+                return letter.toUpperCase();
+            });
+            return (prefixes.replace(wordRE, function(prefix){
+                if(typeof s[prefix + camel] == "string"){ return true; }
+            }).indexOf('true') != -1);
+        }
+        return false;
+    }
+    
     has.all = function(){
         // summary: For debugging or logging, can be removed in production. Run all known tests 
         //  at some point in time for the current environment. 

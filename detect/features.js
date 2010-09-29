@@ -1,4 +1,4 @@
-(function(has){
+(function(has, cssprop){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
@@ -228,23 +228,7 @@
     });
 
     // cssprop adapted from http://gist.github.com/598008 (thanks, Paul!)
-    var ucFirstRE = /^(.)/,
-        wordRE = /(\w+)/g,
-        prefixes = 'Webkit Moz O ms Khtml';
-    var cssprop = has.cssprop = function(styleName, elem){
-        var s, camel;
-        if(elem && (s = elem.style)){
-            if(typeof s[styleName] == STR){ return true; }
-            camel = styleName.replace(ucFirstRE, function(all, letter){
-                return letter.toUpperCase();
-            });
-            return (prefixes.replace(wordRE, function(prefix){
-                if(typeof s[prefix+camel] == STR){ return true; }
-            }).indexOf('true') != -1);
-        }
-        return false;
-    }
-
+    // FIXME: move to detect/css.js perhaps ^ph
     addtest("css-border-radius", function(g, d, e){
         return cssprop('borderRadius', e);
     });
@@ -273,4 +257,4 @@
         return cssprop('transform', e);
     });
 
-})(has);
+})(has, has.cssprop);
