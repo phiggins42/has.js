@@ -2,7 +2,14 @@
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
-    var addtest = has.add;
+    var addtest = has.add,
+    
+        // we could define a couple "constants" for reuse ...
+        // just need to ensure they are the same across detect/*.js 
+        // so we can wrap in a single (fn(){})() at 'build' ^ph
+        STR = "string",
+        FN = "function"
+    ;   
 
     // Array tests
     addtest("native-forEach", function(){
@@ -10,7 +17,7 @@
     });
 
     addtest("native-isArray", function(){
-        return "isArray" in Array;
+        return "isArray" in Array && Array.isArray([]);
     });
 
     addtest("native-map", function(){
@@ -34,7 +41,7 @@
         return test();
     })());
 
-    // Object tests
+    // Object tests // break into detect/object.js
     addtest("object-create", function(){
         return "create" in Object;
     });
