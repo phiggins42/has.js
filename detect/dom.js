@@ -5,12 +5,17 @@
     addtest('dom-attrmodified', function(g, d){
         var bool = false,
             root = d.documentElement;
-            
-        var listener = function(){ bool = true; };
-        root.addEventListener("DOMAttrModified", listener, false);
-        root.setAttribute("___TEST___", true);
-        root.removeAttribute("___TEST___", true);
-        root.removeEventListener("DOMAttrModified", listener, false);
+        
+        //  IE versions prior to IE9 will not have support for either
+        //  document.addEventListener or any of the mutation events
+        if ( document.addEventListener ) {
+          var listener = function(){ bool = true; };
+          root.addEventListener("DOMAttrModified", listener, false);
+          root.setAttribute("___TEST___", true);
+          root.removeAttribute("___TEST___", true);
+          root.removeEventListener("DOMAttrModified", listener, false);
+        }
+        
         return bool;
     });
 
@@ -21,11 +26,15 @@
             elem = d.createElement("div"),
             listener = function(){ bool = true; };
 
-        elem.innerHTML = "<elem></elem>";
-
-        elem.addEventListener("DOMSubtreeModified", listener, false);
-        elem.innerHTML = "<foo></foo>";
-        elem.removeEventListener("DOMSubtreeModified", listener, false);
+        //  IE versions prior to IE9 will not have support for either
+        //  document.addEventListener or any of the mutation events
+        if ( document.addEventListener ) {
+          elem.innerHTML = "<elem></elem>";
+          elem.addEventListener("DOMSubtreeModified", listener, false);
+          elem.innerHTML = "<foo></foo>";
+          elem.removeEventListener("DOMSubtreeModified", listener, false);
+        }        
+        
         return bool;
 
     });
