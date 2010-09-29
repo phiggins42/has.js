@@ -200,12 +200,14 @@
     
     // should fail in webkit, as they dont support it.
     addtest('mutation-attrmodified', function(g, document){
-        var bool = false;
+        var bool = false,
+            root = document.documentElement;
+            
         var listener = function(){ bool = true; };
-        document.documentElement.addEventListener("DOMAttrModified", listener, false);
-        document.documentElement.setAttribute("___TEST___", true);
-        document.documentElement.removeAttribute("___TEST___", true);
-        document.documentElement.removeEventListener("DOMAttrModified", listener, false);
+        root.addEventListener("DOMAttrModified", listener, false);
+        root.setAttribute("___TEST___", true);
+        root.removeAttribute("___TEST___", true);
+        root.removeEventListener("DOMAttrModified", listener, false);
         return bool;
     });
 
@@ -216,7 +218,6 @@
         var listener = function(){ console.log(arguments); bool = true; };
 
         var elem = document.createElement("div");
-        //document.documentElement.appendChild(elem)
         elem.innerHTML = "<elem></elem>";
 
         elem.addEventListener("DOMSubtreeModified", listener, false);
