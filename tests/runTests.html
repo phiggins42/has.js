@@ -14,8 +14,8 @@
             #ua {
                 font-weight:bold;
             }
-            #output { list-style:none; }
-            #output li {
+            .resultList { list-style:none; }
+            .resultList li {
                 float:left;
                 width:250px;
                 padding:5px;
@@ -76,23 +76,16 @@
         <script src="../detect/strings.js"></script>
         <script src="../detect/events.js"></script>
         
-        
-        
-        
-        
-        
         <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
     </head>
     <body>
         <h1>has.js</h1>
         <p>Feature Detection, al la carte stylie</p>
-        
-        <fieldset>
-            <legend>Results (js-enabled-* tests are fake) <span id="took"></span></legend>
-            <ul id="output"></ul>
-        </fieldset>
+
+        <div id="output"></div>
         
         <p>Test loading and registration took <span id="took2"></span></p>
+        <p>Test running took <span id="took"></span></p>
         <p>Your userAgent is being reported as: <span id="ua"></span></p>
 
         <form action='report.php' method="POST">
@@ -118,9 +111,9 @@
                     return "na";
                 }
                 if(isBug && result != 'error'){
-                    return (result == true ? "no" : "yes");
+                    return (result ? "no" : "yes");
                 }
-                return (result == true ? "yes" : "no");
+                return (result ? "yes" : "no");
             }
 
             var keys = null, i;
@@ -133,8 +126,18 @@
             }
             keys.sort();
 
+            var fieldsets = { 'none': [] },
+                categoryRE = /^(\w+)-/;
             var outputResult = function(key, i){
-                var special = "", r = results[key];
+                var special = "", r = results[key],
+                    match = key.match(categoryRE),
+                    category = match ? match[1] : 'none';
+
+                if(!(category in fieldsets)){
+                    fieldsets[category] = [];
+                }
+                var html = fieldsets[category];
+
                 if(key in has.specials){
                     special = r[has.specials[key]] || "";
                 }
@@ -155,6 +158,12 @@
                 for(var key; key=keys[i]; i++){
                     outputResult(key, i);
                 }
+            }
+
+            for(var j in fieldsets){
+                html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
+                html = html.concat(fieldsets[j]);
+                html.push('</ul></fieldset>');
             }
 
             out.innerHTML = html.join("");
