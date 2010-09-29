@@ -51,8 +51,37 @@
         delete xhrTests;
         return ret;
     });
-
-
+    
+    
+    // FROM cft.js
+    addtest('native-has-attribute', function(g, d){
+        if(d.createElement){
+            var i = d.createElement('iframe'),
+                root = d.documentElement,
+                frames = g.frames;
+            if(root && root.appendChild && root.removeChild){
+                i.style.display = 'none';
+                root.appendChild(i);
+                // some clients (e.g. Blackberry 9000 (Bold)) throw error when accesing frame's document
+                try{
+                    var frame = frames[frames.length-1];
+                    if(frame){
+                        var doc = frame.document;
+                        if(doc && doc.write){
+                            doc.write('<html><head><title></title></head><body></body></html>');
+                            var present = doc.documentElement ? ('hasAttribute' in doc.documentElement) : false;
+                            root.removeChild(i);
+                            i = null;
+                            return present;
+                        }
+                    }
+                }catch(e){
+                    return null;
+                }
+            }
+        }
+        return null;
+    });
     
     /**
      * geolocation tests for the new Geolocation API specification.
@@ -74,7 +103,28 @@
     addtest('orientation',function(global){
         return 'ondeviceorientation' in global;
     });
-    
+
+    // non-browser specific
+    addtest('eval-global-scope', function(g){
+        var fnId = '__eval' + Number(new Date()),
+            passed = false;
+
+        try{
+            // catch indirect eval call errors (i.e. in such clients as Blackberry 9530)
+            g.eval('var ' + fnId + '=true');
+        }catch(e){}
+        passed = (g[fnId] === true);
+        if(passed){
+            try{
+                delete g[fnId];
+            }catch(e){
+                g[fnId] = void 0;
+            }
+        }
+        return passed;
+    });
+
+
 
 
 

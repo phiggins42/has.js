@@ -21,5 +21,17 @@
             has("array-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
     });
 
+    
+    // FROM cft.js
+    addtest('array-prototype-slice-nodelist', function(g, d){
+        try{
+            return (Array.prototype.slice.call(d.forms, 0) instanceof Array);
+        }catch(e){
+            return false;
+        }
+    });
+
+
+
 
 })(has, has.add, has.cssprops);

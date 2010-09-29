@@ -30,4 +30,36 @@
 
     });
 
+    //  FROM cft.js
+    addtest('dom-children-returns-nodes', function(g, d, e){
+        var de = d.documentElement,
+            supported = null;
+        if(de && typeof de.children != 'undefined'){
+            e.innerHTML = '<div><p>a<\/p><\/div>b<!-- x -->';
+            // Safari 2.x returns ALL elements in `children`
+            // We check that first element is a DIV and that it's the only one element returned
+            supported = (e.children && 
+                e.children.length === 1 && 
+                e.children[0] &&
+                e.children[0].tagName &&
+                e.children[0].tagName.toUpperCase() === 'DIV');
+            e.innerHTML = '';
+        }
+        return supported;
+    });
+
+
+    addtest('dom-tagname-uppercase', function(g, d){
+        var e = d && d.documentElement;
+        if(e){
+            return 'HTML' === e.nodeName;
+        }
+        return null;
+    });
+
+
+
+
+
+
 })(has, has.add, has.cssprop);
