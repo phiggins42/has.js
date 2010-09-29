@@ -12,31 +12,31 @@
     ;   
 
     // Array tests
-    addtest("native-forEach", function(){
+    addtest("array-forEach", function(){
         return "forEach" in [];
     });
 
-    addtest("native-isArray", function(){
+    addtest("array-isArray", function(){
         return "isArray" in Array && Array.isArray([]);
     });
 
-    addtest("native-map", function(){
+    addtest("array-map", function(){
         return "map" in [];
     });
     
     addtest("es5-array", function(){
         var ar = [];
-        return has("native-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
-            ("every" in ar) && ("some" in ar) && has("native-forEach") &&
-            has("native-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
+        return has("array-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
+            ("every" in ar) && ("some" in ar) && has("array-forEach") &&
+            has("array-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
     });
 
     // Function tests
-    addtest("native-bind", function(){
+    addtest("function-bind", function(){
         return "bind" in Function.prototype;
     });
 
-    addtest('function-caller', (function(undefined) { 
+    addtest("function-caller", (function(undefined) { 
         function test() { return test.caller !== undefined; }
         return test();
     })());
