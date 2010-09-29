@@ -61,6 +61,7 @@
         </script>
         <script src="../detect/bugs.js"></script>
         <script src="../detect/features.js"></script>
+        <script src="../detect/cft.js"></script>
         <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
     </head>
     <body>
@@ -88,8 +89,17 @@
                 html = [], data = [],
                 nao = +new Date,
                 results = has.all(),
-                done = +new Date
+				done = +new Date,
+				bugRE = /^bug-/
             ;
+
+			function resultClass(result, isBug, special){
+				// format bug-* tests opposite from others
+				if(isBug && result != 'error'){
+					return (result == true ? "no" : "yes");
+				}
+				return (result == true ? "yes" : "no");
+			}
 
             for(var i in results){
                 
@@ -103,7 +113,7 @@
                 }
                 
                 data.push("<input type='hidden' name='", i, "' value='", results[i] + special ,"'>");
-                html.push("<li>", i ," <em class='", results[i] == true ? "yes" : "no", "'>", results[i], "</em>", special, "</li>");
+                html.push("<li>", i ," <em class='", resultClass(r, bugRE.test(i)), "'>", (r === null ? 'n/a' : !!r) , "</em>", special, "</li>");
             }
             
             out.innerHTML = html.join("");
