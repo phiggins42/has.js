@@ -1,5 +1,5 @@
 (function(has){
-    // Adapted from http://github.com/kangax/cft
+    // Adapted from Juriy Zaytsev's Common Feature Tests (http://github.com/kangax/cft)
 
     var addtest = has.add,
         FN = "function";
