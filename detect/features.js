@@ -200,23 +200,24 @@
     
     // should fail in webkit, as they dont support it.
     addtest('mutation-attrmodified', function(g, document){
-        var bool = false;
+        var bool = false,
+            root = document.documentElement;
+            
         var listener = function(){ bool = true; };
-        document.documentElement.addEventListener("DOMAttrModified", listener, false);
-        document.documentElement.setAttribute("___TEST___", true);
-        document.documentElement.removeAttribute("___TEST___", true);
-        document.documentElement.removeEventListener("DOMAttrModified", listener, false);
+        root.addEventListener("DOMAttrModified", listener, false);
+        root.setAttribute("___TEST___", true);
+        root.removeAttribute("___TEST___", true);
+        root.removeEventListener("DOMAttrModified", listener, false);
         return bool;
     });
 
     // works in chrome/ff. not in opera.
-    addtest('mutation-domsubtreemodified', function(){
+    addtest('mutation-domsubtreemodified', function(g, document){
 
-        var bool = false;
-        var listener = function(){ console.log(arguments); bool = true; };
+        var bool = false,
+            elem = document.createElement("div"),
+            listener = function(){ bool = true; };
 
-        var elem = document.createElement("div");
-        //document.documentElement.appendChild(elem)
         elem.innerHTML = "<elem></elem>";
 
         elem.addEventListener("DOMSubtreeModified", listener, false);
@@ -226,69 +227,50 @@
 
     });
 
-    addtest("css-border-radius", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.borderRadius == "string" ||
-                typeof s.WebkitBorderRadius == "string" ||
-                typeof s.MozBorderRadius == "string" ||
-                typeof s.KhtmlBorderRadius == "string");
+    // cssprop adapted from http://gist.github.com/598008 (thanks, Paul!)
+    var ucFirstRE = /^(.)/,
+        wordRE = /(\w+)/g,
+        prefixes = 'Webkit Moz O ms Khtml';
+    var cssprop = has.cssprop = function(styleName, elem){
+        var s, camel;
+        if(elem && (s = elem.style)){
+            if(typeof s[styleName] == STR){ return true; }
+            camel = styleName.replace(ucFirstRE, function(all, letter){
+                return letter.toUpperCase();
+            });
+            return (prefixes.replace(wordRE, function(prefix){
+                if(typeof s[prefix+camel] == STR){ return true; }
+            }).indexOf('true') != -1);
         }
         return false;
+    }
+
+    addtest("css-border-radius", function(g, d, e){
+        return cssprop('borderRadius', e);
     });
 
     addtest("css-box-shadow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.boxShadow == "string" ||
-                typeof s.WebkitBoxShadow == "string" ||
-                typeof s.MozBoxShadow == "string" ||
-                typeof s.OBoxShadow == "string" ||
-                typeof s.MsBoxShadow == "string");
-        }
-        return false;
+        return cssprop('boxShadow', e);
     });
 
     addtest("css-opacity", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.opacity == "string");
-        }
-        return false;
+        return cssprop('opacity', e);
     });
 
     addtest("css-resize", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.resize == "string");
-        }
-        return false;
+        return cssprop('resize', e);
     });
 
     addtest("css-text-overflow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.textOverflow == "string" ||
-                typeof s.OTextOverflow == "string");
-        }
-        return false;
+        return cssprop('textOverflow', e);
     });
 
     addtest("css-text-shadow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.textShadow == "string");
-        }
-        return false;
+        return cssprop('textShadow', e);
     });
 
     addtest("css-transform", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.WebkitTransform == "string" ||
-                typeof s.MozTransform == "string");
-        }
-        return false;
+        return cssprop('transform', e);
     });
 
 })(has);
