@@ -72,7 +72,7 @@ should adopt has.
 
 ## Contribute
 
-**has.js** contributions are covered under a common license by way of [[Dojo Foundation CLA|http://dojofoundation.org/cla]], and brought to you by the following awesome folks:
+**has.js** contributions are covered under a common license by way of [Dojo Foundation CLA](http://dojofoundation.org/cla), and brought to you by the following awesome folks:
 
   + John David Dalton
   + Bryan Forbes
@@ -83,6 +83,5 @@ should adopt has.
 
 ## License 
 
-Tentatively, **has.js** is available under the Academic Free License, New BSD License, and the MIT License. Providing this common code under
-multiple licenses requires us to have all contributors provide a [[CLA|http://dojofoundation.org/cla]].
+Tentatively, **has.js** is available under the Academic Free License, New BSD License, and the MIT License. Providing this common code under multiple licenses requires us to have all contributors agree to a [CLA](http://dojofoundation.org/cla).
 
