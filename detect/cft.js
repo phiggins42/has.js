@@ -1,8 +1,7 @@
-(function(has){
+(function(has, addtest){
     // Adapted from Juriy Zaytsev's Common Feature Tests (http://github.com/kangax/cft)
 
-    var addtest = has.add,
-        FN = "function";
+    var FN = "function";
 
     // non-browser specific
     addtest('eval-global-scope', function(g){
@@ -204,12 +203,15 @@
     addtest('event-metakey', function(g, d){
         return event_tests(g, d, 'metakey');
     });
+
     addtest('event-preventdefault', function(g, d){
         return event_tests(g, d, 'preventdefault');
     });
+
     addtest('event-srcelement', function(g, d){
         return event_tests(g, d, 'srcelement');
     });
+    
     addtest('event-relatedtarget', function(g, d){
         return event_tests(g, d, 'relatedtarget');
     });
@@ -524,4 +526,5 @@
         }
         return isBuggy;
     });
-})(has);
+    
+})(has, has.add);
