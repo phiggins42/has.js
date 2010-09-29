@@ -25,18 +25,16 @@ has = (function(g, d){
         }
     ;
     
-    has.add = function(/* String */name, /* Function|Boolean */test, /* Boolean? */now){
+    has.add = function(/* String */name, /* Function */test, /* Boolean? */now){
         // summary: Register a new feature detection test for some named feature
         //
         // name: String
         //      The name of the feature to test.
         //
-        // test: Function|Boolean
+        // test: Function
         //      A test function to register. If a function, queued for testing until actually
-        //      needed. Can be a boolean if the test is incredibly trivial, though in this case
-        //      be sure to NOT pass the `now` member, as any truthy value there assumes
-        //      the `test` is a function. The test function should return a boolean indicating
-        //      the presence of a feature. Truthy values will suffice. 
+        //      needed. The test function should return a boolean indicating
+        //      the presence of a feature or bug.
         //
         // now: Boolean? 
         //      Optional. Omit if `test` is not a function. Provides a way to immediately
@@ -46,14 +44,17 @@ has = (function(g, d){
         //  |       has.add("javascript", function(){ return true; }, true); 
         //  
         // example:
-        //      Again with the redundantness:
+        //      Again with the redundantness. You can do this in your tests, but we should
+        //      not be doing this in any internal has.js tests
         //  |       has.add("javascript", true);
         //
         // example:
-        //      Two things are passed to the testFunction. `document`, and a generic element
-        //      from which to work your test, should the need arise. 
-        //  |       has.add("bug-byid", function(doc, el){
-        //  |           // doc == document, el == the generic element
+        //      Three things are passed to the testFunction. `global`, `document`, and a generic element
+        //      from which to work your test should the need arise. 
+        //  |       has.add("bug-byid", function(g, d, e){
+        //  |           // g = global, typically window, yadda yadda
+        //  |           // d == document object
+        //  |           // e == the generic element. a `has` element.
         //  |           return false; // fake test, byid-when-form-has-name-matching-an-id is slightly longer
         //  |       });
         testCache[name] = now ? test(g, d, el) : test;
@@ -79,6 +80,7 @@ has = (function(g, d){
         return false;
     }
     
+    //>>excludeStart("production", true);
     has.all = function(){
         // summary: For debugging or logging, can be removed in production. Run all known tests 
         //  at some point in time for the current environment. 
@@ -93,13 +95,11 @@ has = (function(g, d){
         }
         return ret; // Object
     };
+    //>>exlucdeEnd("production");
 
     has.add('is-browser', function(global, document, element){
         return (typeof document != 'undefined' && typeof element != 'undefined' && typeof navigator != 'undefined');
     }, true);
-    
-    //>>include detect/bugs.js
-    //>>include detect/features.js
     
     return has;
 

@@ -1,22 +1,20 @@
-(function(has, cssprop){
+(function(has, addtest, cssprop){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
-    var addtest = has.add,
-    
-        // we could define a couple "constants" for reuse ...
-        // just need to ensure they are the same across detect/*.js 
-        // so we can wrap in a single (fn(){})() at 'build' ^ph
-        STR = "string",
+    // we could define a couple "constants" for reuse ...
+    // just need to ensure they are the same across detect/*.js 
+    // so we can wrap in a single (fn(){})() at 'build' ^ph
+    var STR = "string",
         FN = "function"
     ;   
 
     // Array tests
-    addtest("array-forEach", function(){
+    addtest("array-foreach", function(){
         return "forEach" in [];
     });
 
-    addtest("array-isArray", function(){
+    addtest("array-isarray", function(){
         return "isArray" in Array && Array.isArray([]);
     });
 
@@ -26,8 +24,8 @@
     
     addtest("es5-array", function(){
         var ar = [];
-        return has("array-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
-            ("every" in ar) && ("some" in ar) && has("array-forEach") &&
+        return has("array-isarray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
+            ("every" in ar) && ("some" in ar) && has("array-foreach") &&
             has("array-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
     });
 
@@ -46,7 +44,7 @@
         return "create" in Object;
     });
     
-    addtest("object-getPrototypeOf", function(){
+    addtest("object-getprototypeof", function(){
         return "getPrototypeOf" in Object;
     });
     
@@ -70,7 +68,7 @@
     });
     
     addtest("es5-object", function(){
-        return has("object-create") && has("object-getPrototypeOf") && has("object-seal") &&
+        return has("object-create") && has("object-getprototypeof") && has("object-seal") &&
             has("object-keys") && has("object-extensible") && has("object-properties");
     });
 
@@ -80,11 +78,11 @@
     });
 
     // Date tests
-    addtest("date-toISOString", function(){
+    addtest("date-toisostring", function(){
         return "toISOString" in Date.prototype;
     });
 
-    addtest("date-toJSON", function(){
+    addtest("date-tojson", function(){
         return "toJSON" in Date.prototype;
     });
 
@@ -108,7 +106,7 @@
 
     if(!has('is-browser')){ return; }
 
-    // begin browser tests
+    // begin browser tests (dom-dataset? ^ph)
     addtest("native-dataset", function(g, d, e){
         e.setAttribute("data-a-b", "c");
         return !!(e.dataset && e.dataset.aB === "c");
@@ -171,9 +169,9 @@
     });
     
     // should fail in webkit, as they dont support it.
-    addtest('mutation-attrmodified', function(g, document){
+    addtest('dom-attrmodified', function(g, d){
         var bool = false,
-            root = document.documentElement;
+            root = d.documentElement;
             
         var listener = function(){ bool = true; };
         root.addEventListener("DOMAttrModified", listener, false);
@@ -184,10 +182,10 @@
     });
 
     // works in chrome/ff. not in opera.
-    addtest('mutation-domsubtreemodified', function(g, document){
+    addtest('dom-subtreemodified', function(g, d){
 
         var bool = false,
-            elem = document.createElement("div"),
+            elem = d.createElement("div"),
             listener = function(){ bool = true; };
 
         elem.innerHTML = "<elem></elem>";
@@ -200,7 +198,7 @@
     });
 
     // FIXME: move to detect/css.js perhaps ^ph
-    addtest('css-positionfixed', function(g, d) {
+    addtest('css-position-fixed', function(g, d) {
         var test = d.createElement('div'),
             control = test.cloneNode(false),
             fake = false,
@@ -256,4 +254,4 @@
         return cssprop('transform', e);
     });
 
-})(has, has.cssprop);
+})(has, has.add, has.cssprop);

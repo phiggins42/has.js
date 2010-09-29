@@ -19,7 +19,7 @@ so the intention is to come to some agreement on a basic naming convention and A
 
 Currently, the testing convention is _has('somefeature')_ returns _Boolean_. eg:
 
-    if(has("native-bind")){
+    if(has("function-bind")){
         // your enviroment has a native Function.prototype.bind
     }else{
         // you should get a new browser. 
@@ -78,6 +78,7 @@ should adopt has.
   + Bryan Forbes
   + Peter Higgins
   + Paul Irish
+  + Juriy Zaytsev
 
 ## License 
 
