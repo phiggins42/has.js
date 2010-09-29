@@ -1,6 +1,6 @@
 # has.js
 
-Pure feature detection library, a la carte stylie.
+Pure feature detection library, a la carte style.
 
 This document is **not** complete. 
 
@@ -72,7 +72,7 @@ should adopt has.
 
 ## Contribute
 
-**has.js** contributions are covered under a common license by way of [Dojo Foundation CLA][], and brought to you by the following awesome folks:
+**has.js** contributions are covered under a common license by way of [[Dojo Foundation CLA|http://dojofoundation.org/cla]], and brought to you by the following awesome folks:
 
   + John David Dalton
   + Bryan Forbes
@@ -84,6 +84,5 @@ should adopt has.
 ## License 
 
 Tentatively, **has.js** is available under the Academic Free License, New BSD License, and the MIT License. Providing this common code under
-multiple licenses requires us to have all contributors provide a CLA.
+multiple licenses requires us to have all contributors provide a [[CLA|http://dojofoundation.org/cla]].
 
-[Dojo Foundation CLA] http://dojofoundation.org/cla
