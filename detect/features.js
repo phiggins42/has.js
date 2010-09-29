@@ -1,13 +1,11 @@
-(function(has, cssprop){
+(function(has, addtest, cssprop){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
-    var addtest = has.add,
-    
-        // we could define a couple "constants" for reuse ...
-        // just need to ensure they are the same across detect/*.js 
-        // so we can wrap in a single (fn(){})() at 'build' ^ph
-        STR = "string",
+    // we could define a couple "constants" for reuse ...
+    // just need to ensure they are the same across detect/*.js 
+    // so we can wrap in a single (fn(){})() at 'build' ^ph
+    var STR = "string",
         FN = "function"
     ;   
 
@@ -108,7 +106,7 @@
 
     if(!has('is-browser')){ return; }
 
-    // begin browser tests
+    // begin browser tests (dom-dataset? ^ph)
     addtest("native-dataset", function(g, d, e){
         e.setAttribute("data-a-b", "c");
         return !!(e.dataset && e.dataset.aB === "c");
@@ -200,7 +198,7 @@
     });
 
     // FIXME: move to detect/css.js perhaps ^ph
-    addtest('css-positionfixed', function(g, d) {
+    addtest('css-position-fixed', function(g, d) {
         var test = d.createElement('div'),
             control = test.cloneNode(false),
             fake = false,
@@ -256,4 +254,4 @@
         return cssprop('transform', e);
     });
 
-})(has, has.cssprop);
+})(has, has.add, has.cssprop);
