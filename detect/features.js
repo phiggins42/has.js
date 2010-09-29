@@ -94,11 +94,11 @@
 
     // JSON tests
     addtest("json-parse", function(global){
-        return !!("JSON" in global && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+        return !!("JSON" in global && typeof JSON.parse == FN && JSON.parse('{"a":true}').a);
     });
     
     addtest("json-stringify", function(global){
-        return !!("JSON" in global && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
+        return !!("JSON" in global && typeof JSON.stringify == FN && JSON.stringify({a:true}) == '{"a":true}');
     });
 
     // FIXME: isn't really native
@@ -146,7 +146,7 @@
         return !!(elem.getContext && elem.getContext('2d'));
     });
     addtest("canvastext", function() {
-        return !!(has("canvas") && typeof elem.getContext('2d').fillText == 'function');
+        return !!(has("canvas") && typeof elem.getContext('2d').fillText == FN);
     });
     
     /**
