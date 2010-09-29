@@ -212,12 +212,12 @@
     });
 
     // works in chrome/ff. not in opera.
-    addtest('mutation-domsubtreemodified', function(){
+    addtest('mutation-domsubtreemodified', function(g, document){
 
-        var bool = false;
-        var listener = function(){ console.log(arguments); bool = true; };
+        var bool = false,
+            elem = document.createElement("div"),
+            listener = function(){ bool = true; };
 
-        var elem = document.createElement("div");
         elem.innerHTML = "<elem></elem>";
 
         elem.addEventListener("DOMSubtreeModified", listener, false);
