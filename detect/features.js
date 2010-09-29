@@ -227,69 +227,50 @@
 
     });
 
-    addtest("css-border-radius", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.borderRadius == "string" ||
-                typeof s.WebkitBorderRadius == "string" ||
-                typeof s.MozBorderRadius == "string" ||
-                typeof s.KhtmlBorderRadius == "string");
+    // cssprop adapted from http://gist.github.com/598008 (thanks, Paul!)
+    var ucFirstRE = /^(.)/,
+        wordRE = /(\w+)/g,
+        prefixes = 'Webkit Moz O ms Khtml';
+    var cssprop = has.cssprop = function(styleName, elem){
+        var s, camel;
+        if(elem && (s = elem.style)){
+            if(typeof s[styleName] == STR){ return true; }
+            camel = styleName.replace(ucFirstRE, function(all, letter){
+                return letter.toUpperCase();
+            });
+            return (prefixes.replace(wordRE, function(prefix){
+                if(typeof s[prefix+camel] == STR){ return true; }
+            }).indexOf('true') != -1);
         }
         return false;
+    }
+
+    addtest("css-border-radius", function(g, d, e){
+        return cssprop('borderRadius', e);
     });
 
     addtest("css-box-shadow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.boxShadow == "string" ||
-                typeof s.WebkitBoxShadow == "string" ||
-                typeof s.MozBoxShadow == "string" ||
-                typeof s.OBoxShadow == "string" ||
-                typeof s.MsBoxShadow == "string");
-        }
-        return false;
+        return cssprop('boxShadow', e);
     });
 
     addtest("css-opacity", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.opacity == "string");
-        }
-        return false;
+        return cssprop('opacity', e);
     });
 
     addtest("css-resize", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.resize == "string");
-        }
-        return false;
+        return cssprop('resize', e);
     });
 
     addtest("css-text-overflow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.textOverflow == "string" ||
-                typeof s.OTextOverflow == "string");
-        }
-        return false;
+        return cssprop('textOverflow', e);
     });
 
     addtest("css-text-shadow", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.textShadow == "string");
-        }
-        return false;
+        return cssprop('textShadow', e);
     });
 
     addtest("css-transform", function(g, d, e){
-        var s;
-        if(e && (s = e.style)){
-            return (typeof s.WebkitTransform == "string" ||
-                typeof s.MozTransform == "string");
-        }
-        return false;
+        return cssprop('transform', e);
     });
 
 })(has);
