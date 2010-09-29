@@ -214,28 +214,6 @@
         return event_tests(g, d, 'relatedtarget');
     });
 
-    // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto") 
-    // for statically positioned elements
-    addtest('dom-computed-values-for-static', function(g, d){
-        var view = d.defaultView;
-        if (view && view.getComputedStyle) {
-            var de = d.documentElement;
-            var position = null;
-            var style = view.getComputedStyle(de, null);
-            // if element is not statically positioned, make it as such, then restore
-            if(style.position !== 'static'){
-                position = style.position;
-                de.style.position = '';
-            }
-            var result = (view.getComputedStyle(de, null).left !== 'auto');
-            if(position !== null){
-                de.style.position = position;
-            }
-            return result;
-        }
-        return null;
-    });
-
     addtest('dom-children-returns-nodes', function(g, d, e){
         var de = d.documentElement,
             supported = null;
@@ -254,6 +232,28 @@
     });
 
     // Browser bugs:
+
+    // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto") 
+    // for statically positioned elements
+    addtest('bug-computed-values-for-static', function(g, d){
+        var view = d.defaultView;
+        if (view && view.getComputedStyle) {
+            var de = d.documentElement;
+            var position = null;
+            var style = view.getComputedStyle(de, null);
+            // if element is not statically positioned, make it as such, then restore
+            if(style.position !== 'static'){
+                position = style.position;
+                de.style.position = '';
+            }
+            var result = (view.getComputedStyle(de, null).left !== 'auto');
+            if(position !== null){
+                de.style.position = position;
+            }
+            return result;
+        }
+        return null;
+    });
 
     addtest('bug-contains', function(g, d, e){
         var e2 = d.createElement('div');
