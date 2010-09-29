@@ -64,4 +64,41 @@
         return cssprop('transform', e);
     });
 
+    
+    //FROM cft.js
+    addtest('css-rgba', function(g, d, e){
+        var re = /^rgba/,
+            result = null,
+            prev;
+        if(e.style && typeof re.test == FN){
+            try{
+                prev = e.style.color;
+                e.style.color = 'rgba(1,1,1,0.5)';
+                result = re.test(e.style.color);
+                e.style.color = prev;
+            }catch(e){
+                result = false;
+            }
+        }
+        return result;
+    });
+    
+    //FROM cft.js
+    addtest('css-enabled', function(g, d){
+        var b = d.body,
+            supported = null;
+        if(b && b.appendChild && b.removeChild){
+            var e = d.createElement('div');
+            if(e && e.style){
+                e.style.display = 'none';
+                b.appendChild(e);
+                supported = (e.offsetWidth === 0);
+                b.removeChild(e);
+                e = null;
+            }
+        }
+        return supported;
+    });
+
+
 })(has, has.add, has.cssprop);

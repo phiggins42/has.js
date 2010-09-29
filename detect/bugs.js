@@ -1,7 +1,102 @@
 (function(has, addtest, cssprop){
 
-// FIXME: add juriy's CFT tests ^PI
-//   http://github.com/kangax/cft
+    //   http://github.com/kangax/cft
+    var STR = "string",
+        FN = "function"
+    ;   
+
+
+
+
+    // Browser bugs:
+
+    // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto") 
+    // for statically positioned elements
+    addtest('bug-computed-values-for-static', function(g, d){
+        var view = d.defaultView;
+        if (view && view.getComputedStyle) {
+            var de = d.documentElement;
+            var position = null;
+            var style = view.getComputedStyle(de, null);
+            // if element is not statically positioned, make it as such, then restore
+            if(style.position !== 'static'){
+                position = style.position;
+                de.style.position = '';
+            }
+            var result = (view.getComputedStyle(de, null).left !== 'auto');
+            if(position !== null){
+                de.style.position = position;
+            }
+            return result;
+        }
+        return null;
+    });
+
+    addtest('bug-contains', function(g, d, e){
+        var e2 = d.createElement('div');
+        if(e && e2 && e.contains){
+            return e.contains(e2);
+        }
+        return null;
+    });
+
+    addtest('bug-query-selector-ignores-caps', function(g, d, e){
+        if(d.compatMode == 'BackCompat'){
+            var e2 = d.createElement('span');
+            if(e2 && e.appendChild && e.querySelector){
+                e2.className = 'Test';
+                e.appendChild(e2);
+                var buggy = (e.querySelector('.Test') !== null);
+                e.removeChild(e2);
+                e2 = null;
+                return buggy;
+            }
+        }
+        return null;
+    });
+
+    addtest('bug-typeof-nodelist-function', function(g, d){
+        if(d.forms){
+            return (typeof d.forms == FN);
+        }
+        return null;
+    });
+
+    // IE returns comment nodes as part of `getElementsByTagName` results
+    addtest('bug-getelementsbytagname-returns-comment-nodes', function(g, d, e){
+        if(e && e.getElementsByTagName){
+            e.innerHTML = '<span>a</span><!--b-->';
+            var all = e.getElementsByTagName('*');
+            // IE5.5 returns a 0-length collection when calling getElementsByTagName with wildcard
+            if(all.length){
+                var lastNode = e.getElementsByTagName('*')[1];
+                var buggy = !!(lastNode && lastNode.nodeType === 8);
+                lastNode = all = null;
+                e.innerHTML = '';
+                return buggy;
+            }
+        }
+        return null;
+    });
+
+    // name attribute can not be set at run time in IE
+    // http://msdn.microsoft.com/en-us/library/ms536389.aspx
+    addtest('bug-setattribute-ignores-name', function(g, d){
+        var elForm = d.createElement('form'),
+            elInput = d.createElement('input'),
+            root = d.documentElement;
+        if (elForm && elInput && elInput.setAttribute && elForm.appendChild && 
+            root && root.appendChild && root.removeChild) {
+            elInput.setAttribute('name', 'test');
+            elForm.appendChild(elInput);
+            // Older Safari (e.g. 2.0.2) populates "elements" collection only when form is within a document
+            root.appendChild(elForm);
+            var isBuggy = elForm.elements ? (typeof elForm.elements['test'] == 'undefined') : null;
+            root.removeChild(elForm);
+            return isBuggy;
+        }
+        return null;
+    });
 
 
     addtest('bug-properties-are-attributes', function(g, d, e){
@@ -207,5 +302,60 @@
         }
         return isBuggy;
     });    
+
+
+    addtest('bug-string-split-regexp', function(){
+        var s = 'a_b';
+        if(typeof s.split == FN){
+            return s.split(/(_)/).length !== 3;
+        }
+        return null;
+    });
+
+    addtest('bug-function-expression', function(){
+        var g = null;
+        return (function(){
+            var f = function g(){};
+            // `g` should be resolved to `null` (the one we declared outside this function)
+            // but since named function expression identifier leaks onto the enclosing scope in IE, 
+            // it will be resolved to a function
+            return (typeof g == FN);
+        })();
+    });
+    
+    addtest('bug-string-replace-ignores-functions', function(g){
+        var s = 'a';
+        if(typeof s.replace == FN){
+            return (s.replace(s, function(){ return ''; }).length !== 0);
+        }
+        return null;
+    });
+
+    addtest('bug-arguments-instanceof-array', function(g){
+        return arguments instanceof g.Array;
+    });
+
+    addtest('bug-array-concat-arguments', function(g){
+        return (function(){
+            if(has('bug-arguments-instanceof-array')){
+                return [].concat(arguments)[0] !== 1;
+            }
+            return null;
+        })(1,2);
+    });
+
+    addtest('bug-dontenum-enumerable', function(){
+        for(var prop in { toString: true }){
+            return false;
+        }
+        return true;
+    });
+
+    addtest('bug-regexp-whitespace', function(){
+        var str = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
+                "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029";
+        return !/^\s+$/.test(str);
+    });
+
     
 })(has, has.add, has.cssprop);
