@@ -1,7 +1,8 @@
 (function(has){
     // Adapted from http://github.com/kangax/cft
 
-    var addtest = has.add;
+    var addtest = has.add,
+        FN = "function";
 
     // non-browser specific
     addtest('eval-global-scope', function(g){
@@ -25,7 +26,7 @@
 
     addtest('bug-string-replace-ignores-functions', function(g){
         var s = 'a';
-        if(typeof s.replace == 'function'){
+        if(typeof s.replace == FN){
             return (s.replace(s, function(){ return ''; }).length !== 0);
         }
         return null;
@@ -59,7 +60,7 @@
 
     addtest('bug-string-split-regexp', function(){
         var s = 'a_b';
-        if(typeof s.split == 'function'){
+        if(typeof s.split == FN){
             return s.split(/(_)/).length !== 3;
         }
         return null;
@@ -72,7 +73,7 @@
             // `g` should be resolved to `null` (the one we declared outside this function)
             // but since named function expression identifier leaks onto the enclosing scope in IE, 
             // it will be resolved to a function
-            return (typeof g == 'function');
+            return (typeof g == FN);
         })();
     });
 
@@ -137,7 +138,7 @@
         var re = /^rgba/,
             result = null,
             prev;
-        if(e.style && typeof re.test == 'function'){
+        if(e.style && typeof re.test == FN){
             try{
                 prev = e.style.color;
                 e.style.color = 'rgba(1,1,1,0.5)';
@@ -279,7 +280,7 @@
 
     addtest('bug-typeof-nodelist-function', function(g, d){
         if(d.forms){
-            return (typeof d.forms == 'function');
+            return (typeof d.forms == FN);
         }
         return null;
     });
