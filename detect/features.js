@@ -24,8 +24,8 @@
     
     addtest("es5-array", function(){
         var ar = [];
-        return has("array-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
-            ("every" in ar) && ("some" in ar) && has("array-forEach") &&
+        return has("array-isarray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
+            ("every" in ar) && ("some" in ar) && has("array-foreach") &&
             has("array-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
     });
 
@@ -68,7 +68,7 @@
     });
     
     addtest("es5-object", function(){
-        return has("object-create") && has("object-getPrototypeOf") && has("object-seal") &&
+        return has("object-create") && has("object-getprototypeof") && has("object-seal") &&
             has("object-keys") && has("object-extensible") && has("object-properties");
     });
 
