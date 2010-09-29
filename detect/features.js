@@ -227,7 +227,6 @@
 
     });
 
-    // cssprop adapted from http://gist.github.com/598008 (thanks, Paul!)
     // FIXME: move to detect/css.js perhaps ^ph
     addtest("css-border-radius", function(g, d, e){
         return cssprop('borderRadius', e);

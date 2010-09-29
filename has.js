@@ -64,6 +64,7 @@ has = (function(g, d){
         prefixes = 'Webkit Moz O ms Khtml'
     ;
         
+    // cssprop adapted from http://gist.github.com/598008 (thanks, ^pi)
     has.cssprop = function(styleName, elem){
         var s, camel;
         if(elem && (s = elem.style)){
