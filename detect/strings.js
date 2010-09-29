@@ -1,4 +1,4 @@
-(function(has, addtest, cssprops)
+(function(has, addtest, cssprops) {
 
 
     // String tests
