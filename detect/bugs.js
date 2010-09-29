@@ -1,8 +1,8 @@
-(function(has){
+(function(has, addtest, cssprop){
 
 // FIXME: add juriy's CFT tests ^PI
 //   http://github.com/kangax/cft
-    
+
 
     addtest('bug-properties-are-attributes', function(g, d, e){
         if(e && e.getAttribute){
@@ -208,4 +208,4 @@
         return isBuggy;
     });    
     
-})(has);
+})(has, has.add, has.cssprop);
