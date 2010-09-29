@@ -78,6 +78,7 @@ should adopt has.
   + Bryan Forbes
   + Peter Higgins
   + Paul Irish
+  + Rick Waldron
   + Juriy Zaytsev
 
 ## License 
