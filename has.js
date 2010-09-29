@@ -59,32 +59,17 @@ has = (function(g, d){
         testCache[name] = now ? test(g, d, el) : test;
     };
     
-    // FIXME: clearly not tested. grab TAGNAMES from Modernizr
-    has.event = function(eventName, element){
-        // summary: Tests if a node supports a particular event
-
-        element = element || d.createElement(TAGNAMES[eventName] || 'div');
-        eventName = 'on' + eventName;
-
-        // When using `setAttribute`, IE skips "unload", WebKit skips "unload" and "resize"
-        // `in` "catches" those
-        var isSupported = (eventName in element);
-
-        if (!isSupported && element.setAttribute) {
-            element.setAttribute(eventName, 'return;');
-            isSupported = typeof element[eventName] == 'function';
-        }
-
-        element = null;
-        return isSupported;
-    };
-    
     has.all = function(){
         // summary: For debugging or logging, can be removed in production. Run all known tests 
         //  at some point in time for the current environment. 
         var ret = {};
         for(var i in testCache){
-            ret[i] = has(i);
+            try{
+                ret[i] = has(i);
+            }catch(e){
+                ret[i] = "error";
+                ret[i].ERROR_MSG = e;
+            }
         }
         return ret; // Object
     };
@@ -99,3 +84,5 @@ has = (function(g, d){
     return has;
 
 })(this, document);
+
+

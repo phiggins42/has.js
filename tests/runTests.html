@@ -98,8 +98,12 @@
                     special = r[has.specials[i]] || "";
                 }
                 
+                if(r == "error"){
+                    special = r.ERROR_MSG;
+                }
+                
                 data.push("<input type='hidden' name='", i, "' value='", results[i] + special ,"'>");
-                html.push("<li>", i ," <em class='", results[i] ? "yes" : "no", "'>", results[i], "</em>", special, "</li>");
+                html.push("<li>", i ," <em class='", results[i] == true ? "yes" : "no", "'>", results[i], "</em>", special, "</li>");
             }
             
             out.innerHTML = html.join("");
