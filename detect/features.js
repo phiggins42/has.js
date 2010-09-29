@@ -12,31 +12,31 @@
     ;   
 
     // Array tests
-    addtest("native-forEach", function(){
+    addtest("array-forEach", function(){
         return "forEach" in [];
     });
 
-    addtest("native-isArray", function(){
+    addtest("array-isArray", function(){
         return "isArray" in Array && Array.isArray([]);
     });
 
-    addtest("native-map", function(){
+    addtest("array-map", function(){
         return "map" in [];
     });
     
     addtest("es5-array", function(){
         var ar = [];
-        return has("native-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
-            ("every" in ar) && ("some" in ar) && has("native-forEach") &&
-            has("native-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
+        return has("array-isArray") && ("indexOf" in ar) && ("lastIndexOf" in ar) &&
+            ("every" in ar) && ("some" in ar) && has("array-forEach") &&
+            has("array-map") && ("filter" in ar) && ("reduce" in ar) && ("reduceRight" in ar);
     });
 
     // Function tests
-    addtest("native-bind", function(){
+    addtest("function-bind", function(){
         return "bind" in Function.prototype;
     });
 
-    addtest('function-caller', (function(undefined) { 
+    addtest("function-caller", (function(undefined) { 
         function test() { return test.caller !== undefined; }
         return test();
     })());
@@ -94,11 +94,11 @@
 
     // JSON tests
     addtest("json-parse", function(global){
-        return !!("JSON" in global && typeof JSON.parse == "function" && JSON.parse('{"a":true}').a);
+        return !!("JSON" in global && typeof JSON.parse == FN && JSON.parse('{"a":true}').a);
     });
     
     addtest("json-stringify", function(global){
-        return !!("JSON" in global && typeof JSON.stringify == "function" && JSON.stringify({a:true}) == '{"a":true}');
+        return !!("JSON" in global && typeof JSON.stringify == FN && JSON.stringify({a:true}) == '{"a":true}');
     });
 
     // FIXME: isn't really native
@@ -146,7 +146,7 @@
         return !!(elem.getContext && elem.getContext('2d'));
     });
     addtest("canvastext", function() {
-        return !!(has("canvas") && typeof elem.getContext('2d').fillText == 'function');
+        return !!(has("canvas") && typeof elem.getContext('2d').fillText == FN);
     });
     
     /**
@@ -168,34 +168,6 @@
         
     addtest('orientation',function(global){
         return 'ondeviceorientation' in global;
-    });
-    
-    addtest('positionfixed', function(g, d) {
-        var test = d.createElement('div'),
-            control = test.cloneNode(false),
-            fake = false,
-            root = d.body || (function() {
-                fake = true;
-                return d.documentElement.appendChild(d.createElement('body'));
-            }());
-
-        var oldCssText = root.style.cssText;
-        root.style.cssText = 'padding:0;margin:0';
-        test.style.cssText = 'position:fixed;top:42px';
-        root.appendChild(test);
-        root.appendChild(control);
-
-        var ret = test.offsetTop !== control.offsetTop;
-
-        root.removeChild(test);
-        root.removeChild(control);
-        root.style.cssText = oldCssText;
-
-        if(fake){
-            d.documentElement.removeChild(root);
-        }
-
-        return ret;
     });
     
     // should fail in webkit, as they dont support it.
@@ -228,6 +200,34 @@
     });
 
     // FIXME: move to detect/css.js perhaps ^ph
+    addtest('css-positionfixed', function(g, d) {
+        var test = d.createElement('div'),
+            control = test.cloneNode(false),
+            fake = false,
+            root = d.body || (function() {
+                fake = true;
+                return d.documentElement.appendChild(d.createElement('body'));
+            }());
+
+        var oldCssText = root.style.cssText;
+        root.style.cssText = 'padding:0;margin:0';
+        test.style.cssText = 'position:fixed;top:42px';
+        root.appendChild(test);
+        root.appendChild(control);
+
+        var ret = test.offsetTop !== control.offsetTop;
+
+        root.removeChild(test);
+        root.removeChild(control);
+        root.style.cssText = oldCssText;
+
+        if(fake){
+            d.documentElement.removeChild(root);
+        }
+
+        return ret;
+    });
+    
     addtest("css-border-radius", function(g, d, e){
         return cssprop('borderRadius', e);
     });
