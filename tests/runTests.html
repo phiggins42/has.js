@@ -116,7 +116,8 @@
                 return (result ? "yes" : "no");
             }
 
-            var keys = null, i;
+            var keys = [], i;
+            
             if(has('object-keys')){
                 keys = Object.keys(results);
             }else{

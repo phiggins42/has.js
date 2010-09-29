@@ -13,7 +13,13 @@
     addtest("object-create", function(){
         return "create" in Object;
     });
-    
+
+
+    addtest("object-__proto__", function(){
+        return !!{}.__proto__;
+    });
+
+
     addtest("object-getprototypeof", function(){
         return "getPrototypeOf" in Object;
     });
