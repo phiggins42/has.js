@@ -68,7 +68,7 @@ should adopt has.
 
 ## Platform Builds
 
-
+Something resembling a "builder" is coming. 
 
 ## Contribute
 
@@ -81,7 +81,6 @@ should adopt has.
   + [Paul Irish](http://paulirish.com) - jQuery Dev Team
   + [Rick Waldron](http://github.com/rwldrn/)
   + [Juriy Zaytsev](http://perfectionkills.com) -
-
 
 ## License 
 
