@@ -77,15 +77,15 @@
      *   http://gist.github.com/366184
      */
 
-    addtest("geolocation", function() {
+    addtest("native-geolocation", function() {
         return !!navigator.geolocation;
     });
 
-    addtest("crosswindowmessaging", function(global) {
+    addtest("native-crosswindowmessaging", function(global) {
         return !!global.postMessage;
     });
         
-    addtest('orientation',function(global){
+    addtest('native-orientation',function(global){
         return 'ondeviceorientation' in global;
     });
     
