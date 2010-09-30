@@ -76,10 +76,12 @@ should adopt has.
 
   + [John David Dalton](http://allyoucanleet.com/) - FuseJS Project Lead
   + [Bryan Forbes](http://http://www.reigndropsfall.net) - Dojo Committer
+  + [Andrée Hansson](http://github.com/peol)
   + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
   + [Paul Irish](http://paulirish.com) - jQuery Dev Team
-  + Rick Waldron
+  + [Rick Waldron](http://github.com/rwldrn/)
   + [Juriy Zaytsev](http://perfectionkills.com) -
+
 
 ## License 
 
