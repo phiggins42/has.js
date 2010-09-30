@@ -8,8 +8,6 @@
         return null;
     });
 
-
-
     var event_tests = function(g, d, test){
         var result = {
             metakey: false,
@@ -37,6 +35,7 @@
                 i = null;
             }
         }
+        
         addtest('event-metakey', result.metakey);
         addtest('event-preventdefault', result.preventdefault);
         addtest('event-srcelement', result.srcelement);
@@ -59,7 +58,5 @@
     addtest('event-relatedtarget', function(g, d){
         return event_tests(g, d, 'relatedtarget');
     });
-
-
 
 })(has, has.add, has.cssprop);

@@ -1,16 +1,11 @@
 (function(has, addtest, cssprop){
 
-    // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
-
-    // we could define a couple "constants" for reuse ...
+    // define a couple "constants" for reuse ...
     // just need to ensure they are the same across detect/*.js 
     // so we can wrap in a single (fn(){})() at 'build' ^ph
     var STR = "string",
         FN = "function"
     ;   
-
-
-
 
     // FIXME: isn't really native
     addtest("native-console", function(global){
@@ -51,7 +46,6 @@
         delete xhrTests;
         return ret;
     });
-    
     
     // FROM cft.js
     addtest('native-has-attribute', function(g, d){
@@ -123,9 +117,5 @@
         }
         return passed;
     });
-
-
-
-
 
 })(has, has.add, has.cssprop);

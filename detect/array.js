@@ -1,4 +1,4 @@
-(function(has, addtest, cssprops) {
+(function(has, addtest, cssprop){
 
 
     // Array tests
@@ -34,4 +34,4 @@
 
 
 
-})(has, has.add, has.cssprops);
+})(has, has.add, has.cssprop);

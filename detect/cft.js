@@ -1,4 +1,4 @@
-(function(has, addtest, cssprop ){
+(function(has, addtest, cssprop){
 
 
 

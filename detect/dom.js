@@ -1,6 +1,5 @@
 (function(has, addtest, cssprop){
 
-
     // should fail in webkit, as they dont support it.
     addtest('dom-attrmodified', function(g, d){
         var bool = false,
@@ -48,7 +47,6 @@
         return supported;
     });
 
-
     addtest('dom-tagname-uppercase', function(g, d){
         var e = d && d.documentElement;
         if(e){
@@ -56,10 +54,5 @@
         }
         return null;
     });
-
-
-
-
-
 
 })(has, has.add, has.cssprop);
