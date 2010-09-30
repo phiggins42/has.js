@@ -7,7 +7,7 @@
         
         //  IE versions prior to IE9 will not have support for either
         //  document.addEventListener or any of the mutation events
-        if ( document.addEventListener ) {
+        if(document.addEventListener){
           var listener = function(){ bool = true; };
           root.addEventListener("DOMAttrModified", listener, false);
           root.setAttribute("___TEST___", true);
@@ -27,7 +27,7 @@
 
         //  IE versions prior to IE9 will not have support for either
         //  document.addEventListener or any of the mutation events
-        if ( document.addEventListener ) {
+        if(document.addEventListener){
           elem.innerHTML = "<elem></elem>";
           elem.addEventListener("DOMSubtreeModified", listener, false);
           elem.innerHTML = "<foo></foo>";
