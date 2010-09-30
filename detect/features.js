@@ -11,33 +11,27 @@
 
     if(!has('is-browser')){ return; }
 
-    // FIXME: need to decide how to handle 'branching' like this ^ph
+    // The following three tests should be enough to let the
+    // libraries handle their own branching for XHR ^bf
     addtest("native-xhr", function(){
-        var xhrTests = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
-            http, ret;
-        try{
-            http = new XMLHttpRequest();
-            if(http){
-                ret = new Boolean(true); 
-                ret.ACTIVEX = false; 
-            }
-        }catch(e){
-            for(var i = 0, xhr; xhr = xhrTests[i]; i++){
-                try{
-                    http = new ActiveXObject(xhr);
-                }catch(e){}
-                if(http){
-                    // FIXME: should this be true and sniff ACTIVEX
-                    ret = new Boolean(false);
-                    ret.ACTIVEX = xhr;
-                    break;
-                }
+        return has.isHostType(g, 'XMLHttpRequest');
+    });
+
+    addtest("native-activexobject", function(g){
+        return has.isHostType(g, 'ActiveXObject');
+    });
+
+    addtest("activex-enabled", function(g){
+        if(has('native-activexobject')){
+            try{
+                return !!(new ActiveXObject('htmlfile'));
+            }catch(e){
+                return false;
             }
         }
-        delete xhrTests;
-        return ret;
+        return null;
     });
-    
+
     // FROM cft.js
     addtest('native-has-attribute', function(g, d){
         if(d.createElement){
