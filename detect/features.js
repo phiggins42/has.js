@@ -17,7 +17,7 @@
         return has.isHostType(g, 'XMLHttpRequest');
     });
 
-    addtest("native-activexobject", function(g){
+    addtest("activex", function(g){
         return has.isHostType(g, 'ActiveXObject');
     });
 
