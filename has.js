@@ -15,9 +15,9 @@ has = (function(g, d){
     //          }
     //      }
     
-    var NON_HOST_TYPES = { 'boolean': 1, 'number': 1, 'string': 1, 'undefined': 1 },
-        el = d && d.createElement("has"),
-        prefixes = ['Webkit', 'Moz', 'O', 'ms', 'Khtml'],
+    var NON_HOST_TYPES = { "boolean": 1, "number": 1, "string": 1, "undefined": 1 },
+        el = d && d.createElement("DiV"),
+        prefixes = ["Webkit", "Moz", "O", "ms", "Khtml"],
         testCache = {}
     ;
     
@@ -80,6 +80,15 @@ has = (function(g, d){
         }
         return false;
     };
+    
+    has.clearElement = function(elem) {
+        if (elem) {
+            while (elem.lastChild) {
+                elem.removeChild(elem.lastChild);
+            }
+        }
+        return elem;
+    },
     
     // Host objects can return type values that are different from their actual
     // data type. The objects we are concerned with usually return non-primitive
