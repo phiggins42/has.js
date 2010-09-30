@@ -15,15 +15,18 @@ has = (function(g, d){
     //          }
     //      }
     
-    var el = d && d.createElement("has"),
-        testCache = {}, 
-        has = function(/* String */name){
-            if(typeof testCache[name] == "function"){
-                testCache[name] = testCache[name](g, d, el);
-            }
-            return testCache[name]; // Boolean
-        }
+    var NON_HOST_TYPES = { 'boolean': 1, 'number': 1, 'string': 1, 'undefined': 1 },
+        el = d && d.createElement("has"),
+        prefixes = ['Webkit', 'Moz', 'O', 'ms', 'Khtml'],
+        testCache = {}
     ;
+    
+    function has(/* String */name){
+        if(typeof testCache[name] == "function"){
+            testCache[name] = testCache[name](g, d, el);
+        }
+        return testCache[name]; // Boolean
+    }
     
     has.add = function(/* String */name, /* Function */test, /* Boolean? */now){
         // summary: Register a new feature detection test for some named feature
@@ -60,8 +63,6 @@ has = (function(g, d){
         testCache[name] = now ? test(g, d, el) : test;
     };
     
-    var prefixes = ['Webkit', 'Moz', 'O', 'ms', 'Khtml'];
-    
     // cssprop adapted from http://gist.github.com/598008 (thanks, ^pi)
     has.cssprop = function(styleName, elem){
         var s, length = prefixes.length,
@@ -78,7 +79,15 @@ has = (function(g, d){
             }
         }
         return false;
-    }
+    };
+    
+    // Host objects can return type values that are different from their actual
+    // data type. The objects we are concerned with usually return non-primitive
+    // types of object, function, or unknown.
+    has.isHostType = function(object, property) {
+      var type = typeof object[property];
+      return type == 'object' ? !!object[property] : !NON_HOST_TYPES[type];
+    };
     
     //>>excludeStart("production", true);
     has.all = function(){
