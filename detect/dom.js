@@ -1,4 +1,18 @@
 (function(has, addtest, cssprop){
+
+    addtest("dom-quirks", function(g, d){
+        if(typeof d.compatMode == "string"){
+            return (d.compatMode == "BackCompat");
+        }
+        if(d.createElement){
+            var el = d.createElement('div');
+            if(el && el.style){
+                el.style.width = '1';
+            }
+            return el.style.width === '1px';
+        }
+        return null;
+    });
     
     addtest("dom-dataset", function(g, d, e){
         e.setAttribute("data-a-b", "c");
