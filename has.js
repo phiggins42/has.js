@@ -60,22 +60,22 @@ has = (function(g, d){
         testCache[name] = now ? test(g, d, el) : test;
     };
     
-    var ucFirstRE = /^(.)/,
-        wordRE = /(\w+)/g,
-        prefixes = 'Webkit Moz O ms Khtml'
-    ;
-        
+    var prefixes = ['Webkit', 'Moz', 'O', 'ms', 'Khtml'];
+    
     // cssprop adapted from http://gist.github.com/598008 (thanks, ^pi)
     has.cssprop = function(styleName, elem){
-        var s, camel;
+        var s, length = prefixes.length,
+            capitalized = styleName.charAt(0).toUpperCase() + styleName.slice(1);
+        
         if(elem && (s = elem.style)){
-            if(typeof s[styleName] == "string"){ return true; }
-            camel = styleName.replace(ucFirstRE, function(all, letter){
-                return letter.toUpperCase();
-            });
-            return (prefixes.replace(wordRE, function(prefix){
-                if(typeof s[prefix + camel] == "string"){ return true; }
-            }).indexOf('true') != -1);
+            if(typeof s[styleName] == "string"){
+                return true;
+            }
+            while (length--) {
+                if(typeof s[prefixes[length] + capitalized] == "string"){
+                    return true;
+                }
+            }
         }
         return false;
     }
