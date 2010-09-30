@@ -4,7 +4,6 @@
         FN = "function"
     ;   
 
-
     // JSON tests
     addtest("json-parse", function(global){
         return !!("JSON" in global && typeof JSON.parse == FN && JSON.parse('{"a":true}').a);

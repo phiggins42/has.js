@@ -1,9 +1,6 @@
 (function(has, addtest, cssprop){
 
-
-
     var script = document.createElement('script');
-    
 
     addtest("script-defer", function() {
         return !!("defer" in script);
