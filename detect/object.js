@@ -14,11 +14,18 @@
         return "create" in Object;
     });
 
-
+    // true for Gecko, Webkit, Opera 10.5+
     addtest("object-__proto__", function(){
-        return !!{}.__proto__;
+        var supported = false, arr = [], obj = { }, backup = arr.__proto__;
+        if (arr.__proto__ == Array.prototype  &&
+              obj.__proto__ == Object.prototype) {
+            // test if it's writable and restorable
+            arr.__proto__ = obj;
+            supported = typeof arr.push == 'undefined';
+            arr.__proto__ = backup;
+        }
+        return supported && typeof arr.push == 'function';
     });
-
 
     addtest("object-getprototypeof", function(){
         return "getPrototypeOf" in Object;
