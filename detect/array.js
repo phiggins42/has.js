@@ -1,44 +1,48 @@
 (function(has, addtest, cssprop){
     
+    var toString = {}.toString,
+        FUNCTION_CLASS = '[object Function]';
+    
     // Array tests
     addtest("array-every", function(){
-        return typeof [].every == "function";
+        return toString.call([].every) == FUNCTION_CLASS;
     });
     
     addtest("array-filter", function(){
-        return typeof [].filter == "function";
+        return toString.call([].filter) == FUNCTION_CLASS;
     });
     
     addtest("array-foreach", function(){
-        return typeof [].forEach == "function";
+        return toString.call([].forEach) == FUNCTION_CLASS;
     });
     
     addtest("array-indexof", function(){
-        return typeof [].indexOf == "function";
+        return toString.call([].indexOf) == FUNCTION_CLASS;
     });
     
     addtest("array-isarray", function(){
-        return typeof Array.isArray == "function" && Array.isArray([]);
+        return toString.call(Array.isArray) == FUNCTION_CLASS &&
+            Array.isArray([]) === true;
     });
     
     addtest("array-lastindexof", function(){
-        return typeof [].lastIndexOf == "function";
+        return toString.call([].lastIndexOf) == FUNCTION_CLASS;
     });
     
     addtest("array-map", function(){
-        return typeof [].map == "function";
+        return toString.call([].map) == FUNCTION_CLASS;
     });
     
     addtest("array-reduce", function(){
-        return typeof [].reduce == "function";
+        return toString.call([].reduce) == FUNCTION_CLASS;
     });
     
     addtest("array-reduceright", function(){
-        return typeof [].reduce == "function";
+        return toString.call([].reduce) == FUNCTION_CLASS;
     });
     
     addtest("array-some", function(){
-        return typeof [].map == "function";
+        return toString.call([].map) == FUNCTION_CLASS;
     });
     
     addtest("array-es5", function(){
