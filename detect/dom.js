@@ -2,7 +2,7 @@
     
     addtest("dom-dataset", function(g, d, e){
         e.setAttribute("data-a-b", "c");
-        return !!(e.dataset && e.dataset.aB === "c");
+        return has.isHostType(e, 'dataset') && e.dataset.aB == "c";
     });
     
     // works in all but IE < 9
