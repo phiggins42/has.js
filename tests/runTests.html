@@ -31,7 +31,6 @@
             // about how to handle a situation. define whatever
             // keys are handled specially in this way here:
             has.specials = {
-                "native-xhr": "ACTIVEX"
             }
         
             has.byId = function(id){
@@ -166,7 +165,7 @@
             }
 
             for(var j in categories){
-				if(!categories[j].length){ continue; }
+                if(!categories[j].length){ continue; }
                 html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
                 html = html.concat(categories[j]);
                 html.push('</ul></fieldset>');
