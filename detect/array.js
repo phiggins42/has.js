@@ -1,44 +1,48 @@
 (function(has, addtest, cssprop){
     
+    var STR = "string",
+        FN = "function"
+    ;
+    
     // Array tests
     addtest("array-every", function(){
-        return typeof [].every == "function";
+        return typeof [].every == FN;
     });
     
     addtest("array-filter", function(){
-        return typeof [].filter == "function";
+        return typeof [].filter == FN;
     });
     
     addtest("array-foreach", function(){
-        return typeof [].forEach == "function";
+        return typeof [].forEach == FN;
     });
     
     addtest("array-indexof", function(){
-        return typeof [].indexOf == "function";
+        return typeof [].indexOf == FN;
     });
     
     addtest("array-isarray", function(){
-        return typeof Array.isArray == "function" && Array.isArray([]);
+        return typeof Array.isArray == FN && Array.isArray([]);
     });
     
     addtest("array-lastindexof", function(){
-        return typeof [].lastIndexOf == "function";
+        return typeof [].lastIndexOf == FN;
     });
     
     addtest("array-map", function(){
-        return typeof [].map == "function";
+        return typeof [].map == FN;
     });
     
     addtest("array-reduce", function(){
-        return typeof [].reduce == "function";
+        return typeof [].reduce == FN;
     });
     
     addtest("array-reduceright", function(){
-        return typeof [].reduce == "function";
+        return typeof [].reduce == FN;
     });
     
     addtest("array-some", function(){
-        return typeof [].map == "function";
+        return typeof [].map == FN;
     });
     
     addtest("array-es5", function(){
