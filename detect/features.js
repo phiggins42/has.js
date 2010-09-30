@@ -13,7 +13,7 @@
 
     // The following three tests should be enough to let the
     // libraries handle their own branching for XHR ^bf
-    addtest("native-xhr", function(){
+    addtest("native-xhr", function(g){
         return has.isHostType(g, 'XMLHttpRequest');
     });
 
