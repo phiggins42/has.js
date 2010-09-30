@@ -42,7 +42,7 @@
     });
     
     addtest("array-some", function(){
-        return typeof [].map == FN;
+        return typeof [].some == FN;
     });
     
     addtest("array-es5", function(){
