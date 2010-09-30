@@ -1,8 +1,5 @@
 (function(has, addtest, cssprop){
 
-    // define a couple "constants" for reuse ...
-    // just need to ensure they are the same across detect/*.js 
-    // so we can wrap in a single (fn(){})() at 'build' ^ph
     var STR = "string",
         FN = "function"
     ;   
@@ -13,12 +10,6 @@
     });
 
     if(!has('is-browser')){ return; }
-
-    // begin browser tests (dom-dataset? ^ph)
-    addtest("native-dataset", function(g, d, e){
-        e.setAttribute("data-a-b", "c");
-        return !!(e.dataset && e.dataset.aB === "c");
-    });
 
     // FIXME: need to decide how to handle 'branching' like this ^ph
     addtest("native-xhr", function(){

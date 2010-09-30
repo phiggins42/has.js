@@ -1,5 +1,10 @@
 (function(has, addtest, cssprop){
 
+    addtest("dom-dataset", function(g, d, e){
+        e.setAttribute("data-a-b", "c");
+        return !!(e.dataset && e.dataset.aB === "c");
+    });
+
     // should fail in webkit, as they dont support it.
     addtest('dom-attrmodified', function(g, d){
         var bool = false,
