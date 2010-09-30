@@ -22,14 +22,15 @@
     });
 
     addtest("activex-enabled", function(g){
+        var supported = null;
         if(has('native-activexobject')){
             try{
-                return !!(new ActiveXObject('htmlfile'));
+                supported = !!(new ActiveXObject('htmlfile'));
             }catch(e){
-                return false;
+                supported = false;
             }
         }
-        return null;
+        return supported;
     });
 
     // FROM cft.js
