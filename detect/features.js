@@ -98,6 +98,27 @@
         return 'ondeviceorientation' in global;
     });
 
+
+    /*
+     * not sure if there is any point in testing for worker support
+     * as an adequate fallback is impossible/pointless 
+     * 
+     * ^rw
+     */
+    addtest("native-worker", function(global){
+        return !!("Worker" in global);
+    });
+
+    addtest("native-sharedworker", function(global){
+        return !!("SharedWorker" in global);
+    });    
+    
+    addtest("native-eventsource", function(global){
+        return !!("EventSource" in global);
+    });
+    
+    
+
     // non-browser specific
     addtest('eval-global-scope', function(g){
         var fnId = '__eval' + Number(new Date()),
