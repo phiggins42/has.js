@@ -74,12 +74,12 @@ should adopt has.
 
 **has.js** contributions are covered under a common license by way of [Dojo Foundation CLA](http://dojofoundation.org/cla), and brought to you by the following awesome folks:
 
-  + John David Dalton
-  + Bryan Forbes
-  + Peter Higgins
-  + Paul Irish
+  + [John David Dalton](http://allyoucanleet.com/) - FuseJS Project Lead
+  + [Bryan Forbes](http://http://www.reigndropsfall.net) - Dojo Committer
+  + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
+  + [Paul Irish](http://paulirish.com) - jQuery Dev Team
   + Rick Waldron
-  + Juriy Zaytsev
+  + [Juriy Zaytsev](http://perfectionkills.com) -
 
 ## License 
 
