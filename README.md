@@ -80,7 +80,9 @@ Something resembling a "builder" is coming.
   + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
   + [Paul Irish](http://paulirish.com) - jQuery Dev Team
   + [Rick Waldron](http://github.com/rwldrn/)
-  + [Juriy Zaytsev](http://perfectionkills.com) -
+  + [Juriy Zaytsev](http://perfectionkills.com)
+  
+There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.net**
 
 ## License 
 

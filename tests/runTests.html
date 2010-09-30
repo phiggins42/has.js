@@ -31,7 +31,6 @@
             // about how to handle a situation. define whatever
             // keys are handled specially in this way here:
             has.specials = {
-                "native-xhr": "ACTIVEX"
             }
         
             has.byId = function(id){
@@ -66,7 +65,7 @@
         
         <script src="../detect/bugs.js"></script>
         <script src="../detect/array.js"></script>
-        <script src="../detect/canvas.js"></script>
+        <script src="../detect/graphics.js"></script>
         <script src="../detect/css.js"></script>
         <script src="../detect/dates.js"></script>
         <script src="../detect/dom.js"></script>
@@ -131,17 +130,17 @@
             }
             keys.sort();
 
-            var fieldsets = { 'none': [] },
-                categoryRE = /^(\w+)-/;
+            var categories = { 'none': [] },
+                categoryRE = /^(\w+)[-]?/;
             var outputResult = function(key, i){
                 var special = "", r = results[key],
                     match = key.match(categoryRE),
                     category = match ? match[1] : 'none';
 
-                if(!(category in fieldsets)){
-                    fieldsets[category] = [];
+                if(!(category in categories)){
+                    categories[category] = [];
                 }
-                var html = fieldsets[category];
+                var html = categories[category];
 
                 if(key in has.specials){
                     special = r[has.specials[key]] || "";
@@ -165,9 +164,10 @@
                 }
             }
 
-            for(var j in fieldsets){
+            for(var j in categories){
+                if(!categories[j].length){ continue; }
                 html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
-                html = html.concat(fieldsets[j]);
+                html = html.concat(categories[j]);
                 html.push('</ul></fieldset>');
             }
 
