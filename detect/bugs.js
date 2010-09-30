@@ -1,14 +1,9 @@
 (function(has, addtest, cssprop){
 
-    //   http://github.com/kangax/cft
+    // http://github.com/kangax/cft
     var STR = "string",
         FN = "function"
     ;   
-
-
-
-
-    // Browser bugs:
 
     // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto") 
     // for statically positioned elements

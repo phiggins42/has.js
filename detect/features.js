@@ -1,16 +1,8 @@
 (function(has, addtest, cssprop){
 
-    // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
-
-    // we could define a couple "constants" for reuse ...
-    // just need to ensure they are the same across detect/*.js 
-    // so we can wrap in a single (fn(){})() at 'build' ^ph
     var STR = "string",
         FN = "function"
     ;   
-
-
-
 
     // FIXME: isn't really native
     addtest("native-console", function(global){
@@ -18,12 +10,6 @@
     });
 
     if(!has('is-browser')){ return; }
-
-    // begin browser tests (dom-dataset? ^ph)
-    addtest("native-dataset", function(g, d, e){
-        e.setAttribute("data-a-b", "c");
-        return !!(e.dataset && e.dataset.aB === "c");
-    });
 
     // FIXME: need to decide how to handle 'branching' like this ^ph
     addtest("native-xhr", function(){
@@ -51,7 +37,6 @@
         delete xhrTests;
         return ret;
     });
-    
     
     // FROM cft.js
     addtest('native-has-attribute', function(g, d){
@@ -103,7 +88,26 @@
     addtest('orientation',function(global){
         return 'ondeviceorientation' in global;
     });
+    
+    /*
+     * not sure if there is any point in testing for worker support
+     * as an adequate fallback is impossible/pointless 
+     * 
+     * ^rw
+     */
 
+    addtest("native-worker", function(global){
+        return !!("Worker" in global);
+    });
+
+    addtest("native-sharedworker", function(global){
+        return !!("SharedWorker" in global);
+    });    
+    
+    addtest("native-eventsource", function(global){
+        return !!("EventSource" in global);
+    });
+    
     // non-browser specific
     addtest('eval-global-scope', function(g){
         var fnId = '__eval' + Number(new Date()),
@@ -123,9 +127,5 @@
         }
         return passed;
     });
-
-
-
-
 
 })(has, has.add, has.cssprop);

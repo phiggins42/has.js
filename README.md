@@ -68,18 +68,19 @@ should adopt has.
 
 ## Platform Builds
 
-
+Something resembling a "builder" is coming. 
 
 ## Contribute
 
 **has.js** contributions are covered under a common license by way of [Dojo Foundation CLA](http://dojofoundation.org/cla), and brought to you by the following awesome folks:
 
-  + John David Dalton
-  + Bryan Forbes
-  + Peter Higgins
-  + Paul Irish
-  + Rick Waldron
-  + Juriy Zaytsev
+  + [John David Dalton](http://allyoucanleet.com/) - FuseJS Project Lead
+  + [Bryan Forbes](http://http://www.reigndropsfall.net) - Dojo Committer
+  + [Andrée Hansson](http://github.com/peol)
+  + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
+  + [Paul Irish](http://paulirish.com) - jQuery Dev Team
+  + [Rick Waldron](http://github.com/rwldrn/)
+  + [Juriy Zaytsev](http://perfectionkills.com) -
 
 ## License 
 

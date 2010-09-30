@@ -1,5 +1,10 @@
 (function(has, addtest, cssprop){
     
+    addtest("dom-dataset", function(g, d, e){
+        e.setAttribute("data-a-b", "c");
+        return !!(e.dataset && e.dataset.aB === "c");
+    });
+    
     // works in all but IE < 9
     addtest('dom-addeventlistener', function(g, d) {
         return has.isHostType(d, 'addEventListener');
@@ -20,7 +25,6 @@
         return supported;
     });
     
-    // works in chrome/ff. not in opera.
     addtest('dom-subtreemodified', function(g, d, el){
         var supported = null,
             listener = function(){ supported = true; };

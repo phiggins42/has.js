@@ -21,6 +21,7 @@
                 padding:5px;
                 border-bottom:1px dotted #ededed;
             }
+            fieldset { margin-bottom:4px; }
         </style>
         <title>has.js tests</title>
         <script src="../has.js"></script>
@@ -62,8 +63,8 @@
             // timing mech
             window.beforeLoading = +new Date;
         </script>
+        
         <script src="../detect/bugs.js"></script>
-
         <script src="../detect/array.js"></script>
         <script src="../detect/canvas.js"></script>
         <script src="../detect/css.js"></script>
@@ -75,12 +76,13 @@
         <script src="../detect/object.js"></script>
         <script src="../detect/strings.js"></script>
         <script src="../detect/events.js"></script>
+        <script src="../detect/script.js"></script>
         
         <script>window.afterLoading = (+new Date - window.beforeLoading)</script>
     </head>
     <body>
         <h1>has.js</h1>
-        <p>Feature Detection, al la carte stylie</p>
+        <p>Feature Detection, a la carte stylie</p>
 
         <div id="output"></div>
         
@@ -94,6 +96,8 @@
             <input type="hidden" name="useragent" id="useragent">
             <input type="hidden" name="cost" id="cost">
         </form>
+        
+        <p>More about this test page and project on <a href="http://github.com/phiggins42/has.js">github:has.js</a></p>
         
         <script>
         

@@ -1,9 +1,5 @@
 (function(has, addtest, cssprop){
 
-
-    // we could define a couple "constants" for reuse ...
-    // just need to ensure they are the same across detect/*.js 
-    // so we can wrap in a single (fn(){})() at 'build' ^ph
     var STR = "string",
         FN = "function"
     ;   
@@ -64,7 +60,6 @@
         return cssprop('transform', e);
     });
 
-    
     //FROM cft.js
     addtest('css-rgba', function(g, d, e){
         var re = /^rgba/,
@@ -99,6 +94,5 @@
         }
         return supported;
     });
-
 
 })(has, has.add, has.cssprop);

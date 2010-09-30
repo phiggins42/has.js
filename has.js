@@ -94,8 +94,8 @@ has = (function(g, d){
     // data type. The objects we are concerned with usually return non-primitive
     // types of object, function, or unknown.
     has.isHostType = function(object, property) {
-      var type = typeof object[property];
-      return type == 'object' ? !!object[property] : !NON_HOST_TYPES[type];
+        var type = typeof object[property];
+        return type == 'object' ? !!object[property] : !NON_HOST_TYPES[type];
     };
     
     //>>excludeStart("production", true);
