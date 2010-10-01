@@ -75,7 +75,7 @@
     // FIXME: these don't need to be here, was just doing first pass at inspection ^ph
     addtest("dom-html5", function(g, d, el){
         el.innerHTML = "<nav>a</nav>";
-        return el.firstChild && el.firstChild.nodeType == 1;
+        return el.childNodes.length == 1;
     });
     
     addtest("dom-html5-shived", function(g, d){
@@ -89,7 +89,7 @@
     
     addtest("dom-html5-fixed", function(g, d, e){
         el.innerHTML = "<nav>a</nav>";
-        return el.firstChild && el.firstChild.nodeType == 1;
+        return el.childNodes.length == 1;
     });
     
 })(has, has.add, has.cssprop);
