@@ -42,7 +42,7 @@
     });
     
     addtest("array-some", function(){
-        return toString.call([].map) == FUNCTION_CLASS;
+        return toString.call([].some) == FUNCTION_CLASS;
     });
     
     addtest("array-es5", function(){
