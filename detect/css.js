@@ -4,6 +4,32 @@
         FN = "function"
     ;   
 
+    addtest('css-content-box', function(g, d){
+        var test = d.createElement('div'),
+            fake = false,
+            root = d.body || (function() {
+                fake = true;
+                return d.documentElement.appendChild(d.createElement('body'));
+            }());
+        test.style.position = "absolute";
+        test.style.top = "-4000px";
+        test.style.width = "40px";
+        test.style.height = "40px";
+        test.style.borderLeft = "1px solid black";
+        test.style.borderRight = "1px solid black";
+        root.appendChild(test);
+
+        var isContentBox = !!(test.clientWidth == 40);
+
+        root.removeChild(test);
+
+        if(fake){
+            d.documentElement.removeChild(root);
+        }
+
+        return isContentBox;
+    });
+
     addtest('css-position-fixed', function(g, d) {
         var test = d.createElement('div'),
             control = test.cloneNode(false),
@@ -38,6 +64,10 @@
 
     addtest("css-box-shadow", function(g, d, e){
         return cssprop('boxShadow', e);
+    });
+
+    addtest('css-box-sizing', function(g, d, e){
+        return cssprop('boxSizing', e);
     });
 
     addtest("css-opacity", function(g, d, e){
