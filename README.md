@@ -75,12 +75,14 @@ Something resembling a "builder" is coming.
 **has.js** contributions are covered under a common license by way of [Dojo Foundation CLA](http://dojofoundation.org/cla), and brought to you by the following awesome folks:
 
   + [John David Dalton](http://allyoucanleet.com/) - FuseJS Project Lead
+  + [Brad Dougherty](http://github.com/bdougherty)
   + [Bryan Forbes](http://http://www.reigndropsfall.net) - Dojo Committer
+  + [Ryan Grove](http://twitter.com/yaypie) - YUI engineer
   + [Andrée Hansson](http://github.com/peol)
   + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
   + [Paul Irish](http://paulirish.com) - jQuery Dev Team
   + [Rick Waldron](http://github.com/rwldrn/)
-  + [Juriy Zaytsev](http://perfectionkills.com)
+  + [Juriy Zaytsev](http://perfectionkills.com) - @kangax, nuff' said.
   
 There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.net**
 
