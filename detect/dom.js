@@ -72,4 +72,24 @@
         return el ? el.nodeName == 'DIV' : null;
     });
     
+    // FIXME: these don't need to be here, was just doing first pass at inspection ^ph
+    addtest("dom-html5", function(g, d, el){
+        el.innerHTML = "<nav>a</nav>";
+        return el.firstChild && el.firstChild.nodeType == 1;
+    });
+    
+    addtest("dom-html5-shived", function(g, d){
+        var unsupported = !has("dom-html5");
+        if(unsupported){
+            // shim it:
+            'abbr article aside audio canvas details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.replace(/\w+/g,function(n){ d.createElement(n) });
+        }
+        return unsupported;
+    });
+    
+    addtest("dom-html5-fixed", function(g, d, e){
+        el.innerHTML = "<nav>a</nav>";
+        return el.firstChild && el.firstChild.nodeType == 1;
+    });
+    
 })(has, has.add, has.cssprop);
