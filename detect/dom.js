@@ -82,7 +82,10 @@
         var unsupported = !has("dom-html5");
         if(unsupported){
             // shim it:
-            'abbr article aside audio canvas details figcaption figure footer header hgroup mark meter nav output progress section summary time video'.replace(/\w+/g,function(n){ d.createElement(n) });
+            'abbr article aside audio canvas details figcaption figure footer header ' +
+            'hgroup mark meter nav output progress section summary time video'.replace(/\w+/g,function(n){ 
+                d.createElement(n) 
+            });
         }
         return unsupported;
     });
