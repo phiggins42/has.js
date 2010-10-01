@@ -90,3 +90,14 @@ There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.
 
 Tentatively, **has.js** is available under the Academic Free License, New BSD License, and the MIT License. Providing this common code under multiple licenses requires us to have all contributors agree to a [CLA](http://dojofoundation.org/cla).
 
+## TODO
+
+**has.js** is open source, and open to contribution. Please fork and send pull requests as you see fit. This is a rough list of things that are needed or coming:
+
+  + moar tests. Fork/pull request anytime. 
+  + Static Frontend - some home to put a static instance of has.js online to collect UA -> has(test) mappings
+  + Documentation regarding each of the tests, by name. eg: has("native-xhr") // tests if the environment has a native XmlHttpRequest implementation. 
+  + moar tests. Again with the forking. 
+  + "compiler" code / frontend 
+     + ideally something that will use the list of tests, provide a clean interface to selecting tests needed and to download a single has.js file with tests embedded.
+     + keeping in mind to remove additional closures and provide (only needed) var CONTS = "" style helpers in a single wrapping function. 
