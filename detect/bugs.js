@@ -352,5 +352,9 @@
         return !/^\s+$/.test(str);
     });
 
+	addtest('bug-tofixed-rounding', function(){
+		return (0.9).toFixed() == 0;
+	});
+
     
 })(has, has.add, has.cssprop);
