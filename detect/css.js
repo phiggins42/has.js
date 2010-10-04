@@ -4,28 +4,24 @@
         FN = "function"
     ;   
 
-    addtest('css-content-box', function(g, d){
-        var test = d.createElement('div'),
-            fake = false,
+    addtest('css-content-box', function(g, d, e){
+        var fake = false,
             root = d.body || (function() {
                 fake = true;
                 return d.documentElement.appendChild(d.createElement('body'));
             }());
-        test.style.position = "absolute";
-        test.style.top = "-4000px";
-        test.style.width = "40px";
-        test.style.height = "40px";
-        test.style.borderLeft = "1px solid black";
-        test.style.borderRight = "1px solid black";
-        root.appendChild(test);
+        e.style.cssText = "position: absolute; top: -4000px; width: 40px; height: 40px; border: 1px solid black;";
+        root.appendChild(e);
 
-        var isContentBox = !!(test.clientWidth == 40);
+        var isContentBox = e.clientWidth == 40;
 
-        root.removeChild(test);
+        root.removeChild(e);
 
         if(fake){
             d.documentElement.removeChild(root);
         }
+
+        e.style.cssText = "";
 
         return isContentBox;
     });
