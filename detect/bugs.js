@@ -27,6 +27,25 @@
         return null;
     });
 
+    addtest('bug-root-children-not-styled', function(g, d, e){
+        var result = null, root;
+        if(d && e){
+            root = d.documentElement;
+            e.style.cssText = 'width:40px;height:40px;';
+
+            try{
+                root.insertBefore(e, root.firstChild);
+
+                result = e.clientWidth == 0;
+
+                root.removeChild(e);
+            }catch(ex){}
+
+            e.style.cssText = '';
+        }
+        return result;
+    });
+
     addtest('bug-contains', function(g, d, e){
         var e2 = d.createElement('div');
         if(e && e2 && e.contains){
