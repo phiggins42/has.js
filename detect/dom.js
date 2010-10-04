@@ -91,8 +91,8 @@
     });
     
     addtest("dom-html5-fixed", function(g, d, e){
-        el.innerHTML = "<nav>a</nav>";
-        return el.childNodes.length == 1;
+        e.innerHTML = "<nav>a</nav>";
+        return e.childNodes.length == 1;
     });
     
 })(has, has.add, has.cssprop);
