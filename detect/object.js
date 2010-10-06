@@ -21,10 +21,10 @@
               obj.__proto__ == Object.prototype) {
             // test if it's writable and restorable
             arr.__proto__ = obj;
-            supported = typeof arr.push == 'undefined';
+            supported = typeof arr.push == "undefined";
             arr.__proto__ = backup;
         }
-        return supported && typeof arr.push == 'function';
+        return supported && typeof arr.push == "function";
     });
 
     addtest("object-getprototypeof", function(){

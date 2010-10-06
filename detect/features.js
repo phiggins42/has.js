@@ -9,23 +9,23 @@
         return !!("console" in global);
     });
 
-    if(!has('is-browser')){ return; }
+    if(!has("is-browser")){ return; }
 
     // The following three tests should be enough to let the
     // libraries handle their own branching for XHR ^bf
     addtest("native-xhr", function(g){
-        return has.isHostType(g, 'XMLHttpRequest');
+        return has.isHostType(g, "XMLHttpRequest");
     });
 
     addtest("activex", function(g){
-        return has.isHostType(g, 'ActiveXObject');
+        return has.isHostType(g, "ActiveXObject");
     });
 
     addtest("activex-enabled", function(g){
         var supported = null;
-        if(has('native-activexobject')){
+        if(has("native-activexobject")){
             try{
-                supported = !!(new ActiveXObject('htmlfile'));
+                supported = !!(new ActiveXObject("htmlfile"));
             }catch(e){
                 supported = false;
             }
@@ -34,13 +34,13 @@
     });
 
     // FROM cft.js
-    addtest('native-has-attribute', function(g, d){
+    addtest("native-has-attribute", function(g, d){
         if(d.createElement){
-            var i = d.createElement('iframe'),
+            var i = d.createElement("iframe"),
                 root = d.documentElement,
                 frames = g.frames;
             if(root && root.appendChild && root.removeChild){
-                i.style.display = 'none';
+                i.style.display = "none";
                 root.appendChild(i);
                 // some clients (e.g. Blackberry 9000 (Bold)) throw error when accesing frame's document
                 try{
@@ -48,8 +48,8 @@
                     if(frame){
                         var doc = frame.document;
                         if(doc && doc.write){
-                            doc.write('<html><head><title></title></head><body></body></html>');
-                            var present = doc.documentElement ? ('hasAttribute' in doc.documentElement) : false;
+                            doc.write("<html><head><title></title></head><body></body></html>");
+                            var present = doc.documentElement ? ("hasAttribute" in doc.documentElement) : false;
                             root.removeChild(i);
                             i = null;
                             return present;
@@ -80,8 +80,8 @@
         return !!global.postMessage;
     });
         
-    addtest('native-orientation',function(global){
-        return 'ondeviceorientation' in global;
+    addtest("native-orientation",function(global){
+        return "ondeviceorientation" in global;
     });
     
     /*
@@ -104,13 +104,13 @@
     });
     
     // non-browser specific
-    addtest('eval-global-scope', function(g){
-        var fnId = '__eval' + Number(new Date()),
+    addtest("eval-global-scope", function(g){
+        var fnId = "__eval" + Number(new Date()),
             passed = false;
 
         try{
             // catch indirect eval call errors (i.e. in such clients as Blackberry 9530)
-            g.eval('var ' + fnId + '=true');
+            g.eval("var " + fnId + "=true");
         }catch(e){}
         passed = (g[fnId] === true);
         if(passed){
