@@ -124,5 +124,7 @@
         }
         return supported;
     });
+    
+    // FIXME: to bforbes, we have css-selectable and dom-selectable in dojo-fd. 
 
 })(has, has.add, has.cssprop);
