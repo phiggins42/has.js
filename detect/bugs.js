@@ -29,7 +29,7 @@
 
     addtest('bug-contains', function(g, d, e){
         var e2 = d.createElement('div');
-        if(e && e2 && e.contains){
+        if(e && e2 && has.isHostType(e, 'contains')){
             return e.contains(e2);
         }
         return null;
@@ -51,7 +51,7 @@
     });
 
     addtest('bug-typeof-nodelist-function', function(g, d){
-        if(d.forms){
+        if(has.isHostType(d, 'forms')){
             return (typeof d.forms == FN);
         }
         return null;
@@ -59,7 +59,7 @@
 
     // IE returns comment nodes as part of `getElementsByTagName` results
     addtest('bug-getelementsbytagname-returns-comment-nodes', function(g, d, e){
-        if(e && e.getElementsByTagName){
+        if(e && has.isHostType(e, 'getElementsByTagName')){
             e.innerHTML = '<span>a</span><!--b-->';
             var all = e.getElementsByTagName('*');
             // IE5.5 returns a 0-length collection when calling getElementsByTagName with wildcard
@@ -95,7 +95,7 @@
 
 
     addtest('bug-properties-are-attributes', function(g, d, e){
-        if(e && e.getAttribute){
+        if(e && has.isHostType(e, 'getAttribute')){
             e.__foo = 'bar';
             var buggy = (e.getAttribute('__foo') === 'bar');
             return buggy;
@@ -262,7 +262,7 @@
 
     addtest('bug-xpath-position', function(g, d){
         var isBuggy = null;
-        if(d.evaluate && g.XPathResult){
+        if(has.isHostType(d, 'evaluate') && g.XPathResult){
             var el = d.createElement('div');
             el.innerHTML = '<p>a</p><p>b</p>'
             var xpath = ".//*[local-name()='p' or local-name()='P'][position() = 2]";
@@ -333,7 +333,7 @@
     addtest('bug-array-concat-arguments', function(g){
         return (function(){
             if(has('bug-arguments-instanceof-array')){
-                return [].concat(arguments)[0] !== 1;
+                return [].concat(arguments)[0] != 1;
             }
             return null;
         })(1,2);
