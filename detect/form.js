@@ -59,7 +59,7 @@
         }
     }
     
-    forEach("autocomplete autofocus list placeholder max min multiple pattern required step".split(" "), function(t){
+    forEach(["autocomplete", "autofocus", "list", "placeholder", "max", "min", "multiple", "pattern", "required", "step"], function(t){
         // Run through HTML5's new input attributes to see if the UA understands any.
         // We're using f which is the <input> element created early on
         // Mike Taylr has created a comprehensive resource for testing these attributes
@@ -71,7 +71,7 @@
         });
     });
 
-    forEach("search tel url email datetime date month week time datetime-local number range color".split(" "), function(t){
+    forEach(["search", "tel", "url", "email", "datetime", "date", "month", "week", "time", "datetime-local", "number", "range", "color"], function(t){
         addtest("input-" + t, function(g, d){
             return testProp(t, d, d.documentElement);
         });
