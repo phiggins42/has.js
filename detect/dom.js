@@ -15,20 +15,20 @@
     
     addtest("dom-dataset", function(g, d, e){
         e.setAttribute("data-a-b", "c");
-        return has.isHostType(e, 'dataset') && e.dataset.aB == "c";
+        return has.isHostType(e, "dataset") && e.dataset.aB == "c";
     });
     
     // works in all but IE < 9
-    addtest('dom-addeventlistener', function(g, d) {
-        return has.isHostType(d, 'addEventListener');
+    addtest("dom-addeventlistener", function(g, d) {
+        return has.isHostType(d, "addEventListener");
     }, true);
     
     // should fail in webkit, as they dont support it.
-    addtest('dom-attrmodified', function(g, d, el){
+    addtest("dom-attrmodified", function(g, d, el){
         var supported = null,
             listener = function(){ supported = true; };
         
-        if(has('dom-addeventlistener')){
+        if(has("dom-addeventlistener")){
             supported = false;
             el.addEventListener("DOMAttrModified", listener, false);
             el.setAttribute("___TEST___", true);
@@ -38,11 +38,11 @@
         return supported;
     });
     
-    addtest('dom-subtreemodified', function(g, d, el){
+    addtest("dom-subtreemodified", function(g, d, el){
         var supported = null,
             listener = function(){ supported = true; };
         
-        if(has('dom-addeventlistener')){
+        if(has("dom-addeventlistener")){
             supported = false;
             el.appendChild(d.createElement("div"));
             el.addEventListener("DOMSubtreeModified", listener, false);
@@ -53,22 +53,22 @@
     });
     
     //  FROM cft.js
-    addtest('dom-children', function(g, d, el){
+    addtest("dom-children", function(g, d, el){
         var supported = null;
         if(el && has.isHostType(el, "children")){
             var div = el.appendChild(d.createElement("div")),
                 children = el.children;
             
             // Safari 2.x returns ALL children including text nodes
-            el.appendChild(d.createTextNode('x'));
+            el.appendChild(d.createTextNode("x"));
             div.appendChild(div.cloneNode(false));
             supported = !!children && children.length == 1 && children[0] == div;
         }
         return supported;
     });
     
-    addtest('dom-tagname-uppercase', function(g, d, el){
-        return el ? el.nodeName == 'DIV' : null;
+    addtest("dom-tagname-uppercase", function(g, d, el){
+        return el ? el.nodeName == "DIV" : null;
     });
     
     // FIXME: these don't need to be here, was just doing first pass at inspection ^ph
@@ -81,8 +81,8 @@
         var unsupported = !has("dom-html5");
         if(unsupported){
             // shim it:
-            'abbr article aside audio canvas details figcaption figure footer header ' +
-            'hgroup mark meter nav output progress section summary time video'.replace(/\w+/g,function(n){ 
+            ("abbr article aside audio canvas details figcaption figure footer header " +
+            "hgroup mark meter nav output progress section summary time video").replace(/\w+/g,function(n){ 
                 d.createElement(n) 
             });
         }

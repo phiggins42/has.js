@@ -1,9 +1,9 @@
 (function(has, addtest, cssprop){
 
-    var video = document.createElement('video');
+    var video = document.createElement("video");
 
     addtest("video", function() {
-        return !!video.canPlayType
+        return has.isHostType(video, "canPlayType");
     });
 
     addtest("video-h264-baseline", function() {

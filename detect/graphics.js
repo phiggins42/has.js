@@ -7,15 +7,15 @@
     var elem = document.createElement( "canvas" ); // FIXME: needs to be self-containedish ^ph
 
     addtest("canvas", function() { 
-        return !!(elem.getContext && elem.getContext('2d'));
+        return !!(elem.getContext && elem.getContext("2d"));
     });
     
     addtest("canvas-text", function() {
-        return !!(has("canvas") && typeof elem.getContext('2d').fillText == FN);
+        return has("canvas") && typeof elem.getContext("2d").fillText == FN;
     });
     
     addtest("svg", function(global) {
-        return !!('SVGAngle' in global);
+        return "SVGAngle" in global;
     });
     
     addtest("vml", function(global) {
@@ -32,7 +32,7 @@
         div.innerHTML = '<v:shape adj="1"/>';
         vml = div.firstChild;
 
-        return !!('adj' in vml);    
+        return "adj" in vml;    
     });
 
 })(has, has.add, has.cssprop);

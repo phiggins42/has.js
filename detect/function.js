@@ -5,9 +5,9 @@
         return "bind" in Function.prototype;
     });
 
-    addtest("function-caller", (function(undefined) { 
-        function test() { return test.caller !== undefined; }
+    addtest("function-caller", function() { 
+        function test(undefined) { return test.caller !== undefined; }
         return test();
-    })());
+    });
 
 })(has, has.add, has.cssprop);
