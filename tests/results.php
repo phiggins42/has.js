@@ -82,14 +82,18 @@
             foreach($results as $test){
                 foreach($test as $k => $v){
                     if($v == "true"){
-                        print $v . ":";
+                    //    print $v . ":";
                     }
-                    print $k . "<br>";
+                    //print $k . "<br>";
                 }
             }
         }
     
     ?>
+    
+    <h1>Thanks!</h1>
+    
+    <!--
     <table>
         <thead>
             <tr>
@@ -112,5 +116,6 @@
             ?>
         </tbody>
     </table>
+    -->
 </body>
 </html>
