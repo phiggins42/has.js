@@ -357,12 +357,14 @@
     });
     
     addtest("bug-bgimagecache", function(g, d){
+        var hasit = false;
         try{
             d.execCommand("BackgroundImageCache", false, true);
+            hasit = true;
         }catch(e){
             // sane browsers don't have cache "issues"
         }
-        return true;
+        return hasit;
     });
 
 })(has, has.add, has.cssprop);
