@@ -352,9 +352,17 @@
         return !/^\s+$/.test(str);
     });
 
-	addtest('bug-tofixed-rounding', function(){
-		return (0.9).toFixed() == 0;
-	});
-
+    addtest('bug-tofixed-rounding', function(){
+        return (0.9).toFixed() == 0;
+    });
     
+    addtest("bug-bgimagecache", function(g, d){
+        try{
+            d.execCommand("BackgroundImageCache", false, true);
+        }catch(e){
+            // sane browsers don't have cache "issues"
+        }
+        return true;
+    });
+
 })(has, has.add, has.cssprop);
