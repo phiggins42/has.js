@@ -103,9 +103,7 @@
         try{
             d.createElement("<input type='hidden' name='hasjs'>");
             canCreate = true;
-        }catch(e){
-            console.warn("woops", e);
-        }
+        }catch(e){}
         return canCreate;
     });
     
