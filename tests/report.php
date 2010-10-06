@@ -5,4 +5,4 @@ $fp = fopen("results.data", "a+");
 fputs($fp, $data . "\n");
 fclose($fp);
 
-header("Location: results.php");
+print "<h1>Thanks</h1>";
