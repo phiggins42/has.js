@@ -95,4 +95,15 @@
         return el.childNodes.length == 1;
     });
     
+    addtest("dom-create-attr", function(g, d){
+        var canCreate = false;
+        try{
+            d.createElement("<input type='hidden' name='hasjs'>");
+            canCreate = true;
+        }catch(e){
+            console.warn("woops", e);
+        }
+        return canCreate;
+    });
+    
 })(has, has.add, has.cssprop);
