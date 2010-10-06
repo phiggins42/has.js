@@ -2,7 +2,7 @@
     
     var toString = {}.toString,
         EMPTY_ARRAY = [],
-        FUNCTION_CLASS = '[object Function]';
+        FUNCTION_CLASS = "[object Function]";
     
     // Array tests
     addtest("array-every", function(){
@@ -53,10 +53,10 @@
             has("array-some");
     });
     
-    addtest('array-slice-nodelist', function(g, d, el){
+    addtest("array-slice-nodelist", function(g, d, el){
         var supported = true, de = d.documentElement, id = de.id;
         // Opera 9.25 bug
-        de.id = 'length';
+        de.id = "length";
         // older Safari will return an empty array
         try { supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0]; } catch(e) { }
         de.id = id;
