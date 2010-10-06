@@ -69,6 +69,10 @@
     addtest("css-opacity", function(g, d, e){
         return cssprop('opacity', e);
     });
+    
+    addtest("css-opacity-filter", function(g, d){
+        return !has("css-opacity") && (typeof d.documentElement.filters !== "undefined");
+    });
 
     addtest("css-resize", function(g, d, e){
         return cssprop('resize', e);
