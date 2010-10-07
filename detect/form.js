@@ -31,6 +31,8 @@
         
         return bool;
     }
+    
+    //  @jdalton: I tried using the has.isHostType, but it nose dived on all but the `validity` prop
 
     addtest("input-attribute-autocomplete", function(){
         return ("autocomplete" in input);
@@ -84,35 +86,37 @@
         return ("step" in input);
     });
     
-    addtest("form-attribute-selectedoption", function(){
+    addtest("input-attribute-selectedoption", function(){
         return ("selectedOption" in input);
     });
 
-    addtest("form-attribute-indeterminate ", function(){
+    addtest("input-attribute-indeterminate ", function(){
         return ("indeterminate " in input);
     });
 
-    addtest("form-attribute-willvalidate", function(){
+    addtest("input-attribute-willvalidate", function(){
         return ("willValidate" in input);
     });
 
-    addtest("form-attribute-valueasnumber", function(){
+    addtest("input-attribute-valueasnumber", function(){
         return ("valueAsNumber" in input);
     });
 
-    addtest("form-attribute-valueasdate", function(){
+    addtest("input-attribute-valueasdate", function(){
         return ("valueAsDate" in input);
     });
 
-    addtest("form-attribute-validity", function(){
-        return ("validity" in input);
+    addtest("input-attribute-validity", function(){
+        //return ("validity" in input);
+        
+        return has.isHostType(input, "validity");
     });
 
-    addtest("form-attribute-validationmessage", function(){
+    addtest("input-attribute-validationmessage", function(){
         return ("validationMessage" in input);
     });
 
-    addtest("form-attribute-willvalidate", function(){
+    addtest("input-attribute-willvalidate", function(){
         return ("willValidate" in input);
     });
 
