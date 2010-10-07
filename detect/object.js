@@ -6,13 +6,9 @@
     // just need to ensure they are the same across detect/*.js 
     // so we can wrap in a single (fn(){})() at 'build' ^ph
     var STR = "string",
-        FN = "function"
+        FN = "function", 
+        OBJECT = Object
     ;   
-
-    // Object tests // break into detect/object.js
-    addtest("object-create", function(){
-        return "create" in Object;
-    });
 
     // true for Gecko, Webkit, Opera 10.5+
     addtest("object-__proto__", function(){
@@ -27,57 +23,63 @@
         return supported && typeof arr.push == "function";
     });
 
-    addtest("object-getprototypeof", function(){
-        return "getPrototypeOf" in Object;
+    addtest("object-create", function(){
+        return ("create" in OBJECT);
     });
     
+    addtest("object-getprototypeof", function(){
+        return ("getPrototypeOf" in OBJECT);
+    });
+
     addtest("object-seal", function(g){
-        var o = Object;
-        return ("seal" in o) && ("freeze" in o) && ("isSealed" in o) && ("isFrozen" in o);
+        return ("seal" in OBJECT);
+    });
+
+    addtest("object-freeze", function(g){
+        return ("freeze" in OBJECT);
+    });
+
+    addtest("object-issealed", function(g){
+        return ("isSealed" in OBJECT);
+    });
+
+    addtest("object-isfrozen", function(g){
+        return ("isFrozen" in OBJECT);
     });
     
     addtest("object-keys", function(){
-        return "keys" in Object;
+        return "keys" in OBJECT;
     });
 
     addtest("object-preventextensions", function(){
-        return ("preventExtensions" in Object);
+        return ("preventExtensions" in OBJECT);
     });
     
     addtest("object-isextensible", function(){
-        return ("isExtensible" in Object);
+        return ("isExtensible" in OBJECT);
     });
 
     addtest("object-defineproperty", function(){
-        var o = Object;
-        return ("defineProperty" in o);
+        return ("defineProperty" in OBJECT);
     });
 
     addtest("object-defineproperties", function(){
-        var o = Object;
-        return ("defineProperties" in o);
+        return ("defineProperties" in OBJECT);
     });
 
     addtest("object-getownpropertydescriptor", function(){
-        var o = Object;
-        return ("getOwnPropertyDescriptor" in o);
+        return ("getOwnPropertyDescriptor" in OBJECT);
     });
     
     addtest("object-getownpropertynames", function(){
-        var o = Object;
-        return ("getOwnPropertyNames" in o);
+        return ("getOwnPropertyNames" in OBJECT);
     });
-    /*
-    addtest("object-properties", function(){
-        var o = Object;
-        return ("defineProperty" in o) && ("defineProperties" in o) &&
-            ("getOwnPropertyDescriptor" in o) && ("getOwnPropertyNames" in o);
-    });
-    */
     
     addtest("object-es5", function(){
-        return has("object-create") && has("object-getprototypeof") && has("object-seal") &&
-            has("object-keys") && has("object-extensible") && has("object-properties");
+        return has("object-create") && has("object-defineproperties") && has("object-defineproperty") && 
+                has("object-freeze") && has("object-getownpropertydescriptor") && has("object-getownpropertynames") && 
+                has("object-getprototypeof") && has("object-isextensible") && has("object-isfrozen") && 
+                has("object-issealed") && has("object-keys") && has("object-preventextensions") && has("object-seal");
     });
 
 
