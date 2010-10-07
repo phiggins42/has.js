@@ -3,8 +3,6 @@
     var STR = "string",
         FN = "function"
     ;
-
-    
     
     var input = document.createElement("input");
 
@@ -16,11 +14,11 @@
 
         // chrome likes to falsely purport support, so we feed it a textual value
         // if that doesnt succeed then we know there's a custom UI
-        if (bool) {  
+        if(bool){  
             
             input.value = ":)";
 
-            if (/^range$/.test(input.type) && input.style.WebkitAppearance !== undefined){
+            if(/^range$/.test(input.type) && input.style.WebkitAppearance !== undefined){
               
               
               del.appendChild(input);
@@ -35,19 +33,19 @@
 
               del.removeChild(input);
 
-            } else if (/^(search|tel)$/.test(input.type)){
+            }else if(/^(search|tel)$/.test(input.type)){
               // spec doesnt define any special parsing or detectable UI 
               //   behaviors so we pass these through as true
 
               // interestingly, opera fails the earlier test, so it doesn't
               //  even make it here.
 
-            } else if (/^(url|email)$/.test(input.type)) {
+            }else if(/^(url|email)$/.test(input.type)){
 
               // real url and email support comes with prebaked validation.
               bool = input.checkValidity && input.checkValidity() === false;
 
-            } else {
+            }else{
               // if the upgraded input compontent rejects the :) text, we got a winner
               bool = input.value != smile;
             }
@@ -109,88 +107,55 @@
     });
 
     addtest("input-type-search", function(g, d){
-        return testProp( 'search' , d );
+        return testProp("search", d);
     });
 
     addtest("input-type-tel", function(g, d){
-        return testProp( 'tel' , d );
+        return testProp("tel", d);
     });
 
     addtest("input-type-url", function(g, d){
-        return testProp( 'url' , d );
+        return testProp("url", d);
     });
 
     addtest("input-type-email", function(g, d){
-        return testProp( 'email' , d );
+        return testProp("email", d);
     });
 
     addtest("input-type-datetime", function(g, d){
-        return testProp( 'datetime' , d );
+        return testProp("datetime", d);
     });
 
     addtest("input-type-date", function(g, d){
-        return testProp( 'date' , d );
+        return testProp("date", d);
     });
 
     addtest("input-type-month", function(g, d){
-        return testProp( 'month' , d );
+        return testProp("month", d);
     });
 
     addtest("input-type-week", function(g, d){
-        return testProp( 'week' , d );
+        return testProp("week", d);
     });
 
     addtest("input-type-time", function(g, d){
-        return testProp( 'time' , d );
+        return testProp("time", d);
     });
 
     addtest("input-type-datetime-local", function(g, d){
-        return testProp( 'datetime-local' , d );
+        return testProp("datetime-local", d);
     });
 
     addtest("input-type-number", function(g, d){
-        return testProp( 'number' , d );
+        return testProp("number", d);
     });
 
     addtest("input-type-range", function(g, d){
-        return testProp( 'range' , d );
+        return testProp("range", d);
     });
 
     addtest("input-type-color", function(g, d){
-        return testProp( 'color' , d );
+        return testProp("color", d);
     });
     
-    
-    
-    /*
-    // not to spec. just enough to do form.js
-    function forEach(a, c){
-        for(var i = 0, l = a.length; i < l; i++){
-            c.call(a, a[i], i, a);
-        }
-    }
-    
-    
-    forEach(["autocomplete", "autofocus", "list", "placeholder", "max", "min", "multiple", "pattern", "required", "step"], function(t){
-        // Run through HTML5's new input attributes to see if the UA understands any.
-        // We're using f which is the <input> element created early on
-        // Mike Taylr has created a comprehensive resource for testing these attributes
-        //   when applied to all input types: 
-        //   http://miketaylr.com/code/input-type-attr.html
-        // spec: http://www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
-        addtest("form-" + t, function(){
-        
-            console.log( input[t] );
-            
-            
-            return !!(t in input);
-        });
-    });
-    
-    forEach(["search", "tel", "url", "email", "datetime", "date", "month", "week", "time", "datetime-local", "number", "range", "color"], function(t){
-        addtest("input-" + t, function(g, d){
-            return testProp(t, d, d.documentElement);
-        });
-    });
-    */
 })(has, has.add, has.cssprop);
