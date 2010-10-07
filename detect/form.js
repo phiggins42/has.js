@@ -10,7 +10,7 @@
         
         input.setAttribute("type", prop);
         
-        var bool = input.type !== "text", del   = document.documentElement;
+        var bool = input.type !== "text", del = doc.documentElement;
 
         // chrome likes to falsely purport support, so we feed it a textual value
         // if that doesnt succeed then we know there's a custom UI
@@ -47,11 +47,11 @@
 
             }else{
               // if the upgraded input compontent rejects the :) text, we got a winner
-              bool = input.value != smile;
+              bool = input.value != ":)";
             }
         }
 
-        return !!bool;
+        return bool;
     }
     
     addtest("input-attribute-autocomplete", function(){
