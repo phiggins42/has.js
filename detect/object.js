@@ -39,16 +39,41 @@
     addtest("object-keys", function(){
         return "keys" in Object;
     });
-    
-    addtest("object-extensible", function(){
-        return ("preventExtensions" in Object) && ("isExtensible" in Object);
+
+    addtest("object-preventextensions", function(){
+        return ("preventExtensions" in Object);
     });
     
+    addtest("object-isextensible", function(){
+        return ("isExtensible" in Object);
+    });
+
+    addtest("object-defineproperty", function(){
+        var o = Object;
+        return ("defineProperty" in o);
+    });
+
+    addtest("object-defineproperties", function(){
+        var o = Object;
+        return ("defineProperties" in o);
+    });
+
+    addtest("object-getownpropertydescriptor", function(){
+        var o = Object;
+        return ("getOwnPropertyDescriptor" in o);
+    });
+    
+    addtest("object-getownpropertynames", function(){
+        var o = Object;
+        return ("getOwnPropertyNames" in o);
+    });
+    /*
     addtest("object-properties", function(){
         var o = Object;
         return ("defineProperty" in o) && ("defineProperties" in o) &&
             ("getOwnPropertyDescriptor" in o) && ("getOwnPropertyNames" in o);
     });
+    */
     
     addtest("object-es5", function(){
         return has("object-create") && has("object-getprototypeof") && has("object-seal") &&
