@@ -34,89 +34,89 @@
     
     //  @jdalton: I tried using the has.isHostType, but it nose dived on all but the `validity` prop
 
-    addtest("input-attribute-autocomplete", function(){
+    addtest("input-attr-autocomplete", function(){
         return ("autocomplete" in input);
     });
 
-    addtest("input-attribute-autofocus", function(){
+    addtest("input-attr-autofocus", function(){
         return ("autofocus" in input);
     });
 
-    addtest("input-attribute-list", function(){
+    addtest("input-attr-list", function(){
         return ("list" in input);
     });
 
-    addtest("input-attribute-placeholder", function(){
+    addtest("input-attr-placeholder", function(){
         return ("placeholder" in input);
     });
 
-    addtest("input-attribute-max", function(){
+    addtest("input-attr-max", function(){
         return ("max" in input);
     });
     
-    addtest("input-attribute-maxlength", function(){
+    addtest("input-attr-maxlength", function(){
         return ("maxLength" in input);
     });
 
-    addtest("input-attribute-min", function(){
+    addtest("input-attr-min", function(){
         return ("min" in input);
     });
 
-    addtest("input-attribute-multiple", function(){
+    addtest("input-attr-multiple", function(){
         return ("multiple" in input);
     });
 
-    addtest("input-attribute-pattern", function(){
+    addtest("input-attr-pattern", function(){
         return ("pattern" in input);
     });
 
-    addtest("input-attribute-readonly", function(){
+    addtest("input-attr-readonly", function(){
         return ("readOnly" in input);
     });
     
-    addtest("input-attribute-required", function(){
+    addtest("input-attr-required", function(){
         return ("required" in input);
     });
 
-    addtest("input-attribute-size", function(){
+    addtest("input-attr-size", function(){
         return ("size" in input);
     });
 
-    addtest("input-attribute-step", function(){
+    addtest("input-attr-step", function(){
         return ("step" in input);
     });
     
-    addtest("input-attribute-selectedoption", function(){
+    addtest("input-attr-selectedoption", function(){
         return ("selectedOption" in input);
     });
 
-    addtest("input-attribute-indeterminate ", function(){
+    addtest("input-attr-indeterminate ", function(){
         return ("indeterminate " in input);
     });
 
-    addtest("input-attribute-willvalidate", function(){
+    addtest("input-attr-willvalidate", function(){
         return ("willValidate" in input);
     });
 
-    addtest("input-attribute-valueasnumber", function(){
+    addtest("input-attr-valueasnumber", function(){
         return ("valueAsNumber" in input);
     });
 
-    addtest("input-attribute-valueasdate", function(){
+    addtest("input-attr-valueasdate", function(){
         return ("valueAsDate" in input);
     });
 
-    addtest("input-attribute-validity", function(){
+    addtest("input-attr-validity", function(){
         //return ("validity" in input);
         
         return has.isHostType(input, "validity");
     });
 
-    addtest("input-attribute-validationmessage", function(){
+    addtest("input-attr-validationmessage", function(){
         return ("validationMessage" in input);
     });
 
-    addtest("input-attribute-willvalidate", function(){
+    addtest("input-attr-willvalidate", function(){
         return ("willValidate" in input);
     });
 
