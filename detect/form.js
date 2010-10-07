@@ -6,54 +6,32 @@
     
     var input = document.createElement("input");
 
-    function testProp(prop, doc){
+    function supportsModernInputProp( thing, prop ) {
         
-        input.setAttribute("type", prop);
+        thing.setAttribute("type", prop);
         
-        var bool = input.type !== "text", del = doc.documentElement;
-
-        // chrome likes to falsely purport support, so we feed it a textual value
-        // if that doesnt succeed then we know there's a custom UI
-        if(bool){  
+        var bool = thing.type !== "text";
+        
+        if(bool) {
+            input.value = "\\<<---x";
             
-            input.value = ":)";
-
-            if(/^range$/.test(input.type) && input.style.WebkitAppearance !== undefined){
-              
-              
-              del.appendChild(input);
-
-              // Safari 2-4 allows the smiley as a value, despite making a slider
-              bool =  doc.defaultView.getComputedStyle && 
-                      doc.defaultView.getComputedStyle(input, null).WebkitAppearance !== 'textfield' && 
-
-                      // mobile android web browser has false positive, so must
-                      // check the height to see if the widget is actually there.
-                      (input.offsetHeight !== 0);
-
-              del.removeChild(input);
-
-            }else if(/^(search|tel)$/.test(input.type)){
-              // spec doesnt define any special parsing or detectable UI 
-              //   behaviors so we pass these through as true
-
-              // interestingly, opera fails the earlier test, so it doesn't
-              //  even make it here.
-
-            }else if(/^(url|email)$/.test(input.type)){
-
-              // real url and email support comes with prebaked validation.
-              bool = input.checkValidity && input.checkValidity() === false;
-
+            //  From the original `testProp` function
+            if(/^(search|tel)$/.test(input.type)){
+                //  spec doesnt define any special parsing or detectable UI 
+                //  behaviors so we pass these through as true
+                //  interestingly, opera fails the earlier test, so it doesn't
+                //  even make it here.
+                
+                //  this fakes out the value test
             }else{
-              // if the upgraded input compontent rejects the :) text, we got a winner
-              bool = input.value != ":)";
-            }
+                //  if the upgraded input compontent rejects the :) text, we got a winner
+                bool = input.value != "\\<<---x";
+            }            
         }
-
+        
         return bool;
     }
-    
+
     addtest("input-attribute-autocomplete", function(){
         return ("autocomplete" in input);
     });
@@ -73,9 +51,9 @@
     addtest("input-attribute-max", function(){
         return ("max" in input);
     });
-
+    
     addtest("input-attribute-maxlength", function(){
-        return ("maxlength" in input);
+        return ("maxLength" in input);
     });
 
     addtest("input-attribute-min", function(){
@@ -91,7 +69,7 @@
     });
 
     addtest("input-attribute-readonly", function(){
-        return ("readonly" in input);
+        return ("readOnly" in input);
     });
     
     addtest("input-attribute-required", function(){
@@ -105,57 +83,110 @@
     addtest("input-attribute-step", function(){
         return ("step" in input);
     });
+    
+    addtest("form-attribute-selectedoption", function(){
+        return ("selectedOption" in input);
+    });
+
+    addtest("form-attribute-indeterminate ", function(){
+        return ("indeterminate " in input);
+    });
+
+    addtest("form-attribute-willvalidate", function(){
+        return ("willValidate" in input);
+    });
+
+    addtest("form-attribute-valueasnumber", function(){
+        return ("valueAsNumber" in input);
+    });
+
+    addtest("form-attribute-valueasdate", function(){
+        return ("valueAsDate" in input);
+    });
+
+    addtest("form-attribute-validity", function(){
+        return ("validity" in input);
+    });
+
+    addtest("form-attribute-validationmessage", function(){
+        return ("validationMessage" in input);
+    });
+
+    addtest("form-attribute-willvalidate", function(){
+        return ("willValidate" in input);
+    });
+
+
 
     addtest("input-type-search", function(g, d){
-        return testProp("search", d);
+        return supportsModernInputProp(input, "search");
     });
 
     addtest("input-type-tel", function(g, d){
-        return testProp("tel", d);
+        return supportsModernInputProp(input, "tel");
     });
 
     addtest("input-type-url", function(g, d){
-        return testProp("url", d);
+        // real url and email support comes with prebaked validation.
+        return supportsModernInputProp(input, "email") && input.checkValidity;
     });
 
     addtest("input-type-email", function(g, d){
-        return testProp("email", d);
+        // real url and email support comes with prebaked validation.
+        return supportsModernInputProp(input, "email") && input.checkValidity;
     });
 
     addtest("input-type-datetime", function(g, d){
-        return testProp("datetime", d);
+        return supportsModernInputProp(input, "datetime");
     });
 
     addtest("input-type-date", function(g, d){
-        return testProp("date", d);
+        return supportsModernInputProp(input, "date");
     });
 
     addtest("input-type-month", function(g, d){
-        return testProp("month", d);
+        return supportsModernInputProp(input, "month");
     });
 
     addtest("input-type-week", function(g, d){
-        return testProp("week", d);
+        return supportsModernInputProp(input, "week");
     });
 
     addtest("input-type-time", function(g, d){
-        return testProp("time", d);
+        return supportsModernInputProp(input, "time");
     });
 
     addtest("input-type-datetime-local", function(g, d){
-        return testProp("datetime-local", d);
+        return supportsModernInputProp(input, "datetime-local");
     });
 
     addtest("input-type-number", function(g, d){
-        return testProp("number", d);
+        return supportsModernInputProp(input, "number");
     });
 
     addtest("input-type-range", function(g, d){
-        return testProp("range", d);
+        var bool  = supportsModernInputProp(input, "range"), 
+            del   = document.documentElement;
+        
+        if(bool && input.style.WebkitAppearance !== undefined) {
+            del.appendChild(input);
+
+            // Safari 2-4 allows the smiley as a value, despite making a slider
+            bool =  doc.defaultView.getComputedStyle && 
+                    doc.defaultView.getComputedStyle(input, null).WebkitAppearance !== 'textfield' && 
+
+                    // mobile android web browser has false positive, so must
+                    // check the height to see if the widget is actually there.
+                    (input.offsetHeight !== 0);
+
+            del.removeChild(input);
+        }
+        
+        return bool;
     });
 
     addtest("input-type-color", function(g, d){
-        return testProp("color", d);
+        return supportsModernInputProp(input, "color");
     });
     
 })(has, has.add, has.cssprop);
