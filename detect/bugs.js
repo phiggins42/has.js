@@ -372,16 +372,9 @@
         return !/^\s+$/.test(str);
     });
 
-<<<<<<< HEAD
-    addtest('bug-tofixed-rounding', function(){
-        return (0.9).toFixed() == 0;
-    });
-
-=======
     addtest("bug-tofixed-rounding", function(){
         return (0.9).toFixed() == 0;
     });
->>>>>>> upstream/master
     
     addtest("bug-bgimagecache", function(g, d){
         var supported = false;
