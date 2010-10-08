@@ -86,6 +86,17 @@ Something resembling a "builder" is coming.
   
 There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.net**
 
+## Conventions
+
+Internally, we follow these conventions:
+
+    + All Strings are quoted using double-quotes **"**
+    + Test names are lowercase, hyphen separated strings. Enclosed in double-quotes
+        + Tests are passed `g`, `d`, and `n`. Use these aliases always.
+    + Globals are as follows, available as used but will be reduced to a single ref:
+        + STR == "string"
+        + FN == "function"
+
 ## License 
 
 Tentatively, **has.js** is available under the Academic Free License, New BSD License, and the MIT License. Providing this common code under multiple licenses requires us to have all contributors agree to a [CLA](http://dojofoundation.org/cla).

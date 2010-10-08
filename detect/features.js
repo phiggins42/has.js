@@ -34,7 +34,7 @@
     });
 
     // FROM cft.js
-    addtest("native-has-attribute", function(g, d){
+    addtest("native-has-attr", function(g, d){
         if(d.createElement){
             var i = d.createElement("iframe"),
                 root = d.documentElement,

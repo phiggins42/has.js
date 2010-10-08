@@ -94,4 +94,16 @@
         return e.childNodes.length == 1;
     });
     
+    // TODO: see
+    // http://msdn.microsoft.com/en-us/library/ms536389(VS.85).aspx vs
+    // http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-2141741547
+    addtest("dom-create-attr", function(g, d){
+        var canCreate = false;
+        try{
+            d.createElement("<input type='hidden' name='hasjs'>");
+            canCreate = true;
+        }catch(e){}
+        return canCreate;
+    });
+    
 })(has, has.add, has.cssprop);
