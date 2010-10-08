@@ -1,4 +1,4 @@
-(function(has, addtest, cssprops){
+(function(has, addtest, cssprop){
 
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
@@ -83,4 +83,4 @@
     });
 
 
-})(has, has.add, has.cssprops);
+})(has, has.add, has.cssprop);

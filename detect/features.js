@@ -122,5 +122,35 @@
         }
         return passed;
     });
+    
+    // in chrome incognito mode, openDatabase is truthy, but using it
+    //   will throw an exception: http://crbug.com/42380
+    // we create a dummy database. there is no way to delete it afterwards. sorry. 
+    addtest("native-sql-db", function(g){
+        var result = !!g.openDatabase;
+        if(result){
+            try{
+                result = !!openDatabase( mod + "testdb", "1.0", mod + "testdb", 2e4);
+            }catch(e){
+                result = false;
+            }
+        }
+        return result;
+    });
+    
+    // FIXME: hosttype
+    addtest("native-indexeddb", function(g){
+        return !!g["indexedDB"];
+    });
+    
+    addtest("native-history-state", function(g){
+        return !!(g.history && history.pushState);
+    });
+    
+    addtest("native-websockets", function(g){
+        return ('WebSocket' in g);
+    });
+    
+    
 
 })(has, has.add, has.cssprop);

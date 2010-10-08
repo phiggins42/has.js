@@ -122,4 +122,5 @@
         }
         return supported;
     });
+    
 })(has, has.add, has.cssprop);
