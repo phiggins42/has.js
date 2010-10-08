@@ -78,6 +78,10 @@
         return cssprop("resize", e);
     });
 
+    addtest("css-selectable", function(g, d, e){
+        return cssprop("userSelect", e);
+    });
+
     addtest("css-text-overflow", function(g, d, e){
         return cssprop("textOverflow", e);
     });
@@ -124,7 +128,5 @@
         }
         return supported;
     });
-    
-    // FIXME: to bforbes, we have css-selectable and dom-selectable in dojo-fd. 
 
 })(has, has.add, has.cssprop);

@@ -106,4 +106,20 @@
         return canCreate;
     });
     
+    addtest("dom-selectable", function(g, d){
+        var supported = null;
+        var head = d.getElementsByTagName("head")[0];
+        if(head.appendChild && head.removeChild){
+            var e = d.createElement("div");
+            head.appendChild(e);
+            try{
+                e.unselectable = "on";
+                supported = !!(typeof e.attributes.unselectable != "undefined" &&
+                    e.attributes.unselectable.value == "on");
+            }catch(e){}
+            head.removeChild(e);
+            e = null;
+        }
+        return supported;
+    });
 })(has, has.add, has.cssprop);
