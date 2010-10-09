@@ -5,6 +5,7 @@
     ;   
 
     // FIXME: isn't really native
+    // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
     addtest("native-console", function(global){
         return !!("console" in global);
     });
@@ -127,10 +128,12 @@
     //   will throw an exception: http://crbug.com/42380
     // we create a dummy database. there is no way to delete it afterwards. sorry. 
     addtest("native-sql-db", function(g){
-        var result = !!g.openDatabase;
+        var result = !!g.openDatabase,
+            dbname = "hasjstestdb";
+            
         if(result){
             try{
-                result = !!openDatabase( mod + "testdb", "1.0", mod + "testdb", 2e4);
+                result = !!openDatabase( dbname, "1.0", dbname, 2e4);
             }catch(e){
                 result = false;
             }
