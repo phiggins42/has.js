@@ -129,7 +129,7 @@
         return supported;
     });
     
-    // FIXME: modernizr has backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
-    // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface (async)
+    // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
+    // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
 })(has, has.add, has.cssprop);

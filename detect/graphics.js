@@ -34,5 +34,20 @@
 
         return "adj" in vml;    
     });
+    
+    
+    addtest("canvas-webgl", function() {
+      var webgl = doc.createElement( 'canvas' ); 
+      
+      try {
+          if (webgl.getContext('webgl')){ return true; }
+      } catch(e){	}
+      
+      try {
+          if (webgl.getContext('experimental-webgl')){ return true; }
+      } catch(e){	}
+
+      return false;
+    });
 
 })(has, has.add, has.cssprop);
