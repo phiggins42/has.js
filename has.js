@@ -21,11 +21,30 @@ has = (function(g, d){
         testCache = {}
     ;
     
-    function has(/* String */name){
-        if(typeof testCache[name] == "function"){
-            testCache[name] = testCache[name](g, d, el);
-        }
-        return testCache[name]; // Boolean
+    function has(/* String */names){
+		var hasSupport = true,
+			names = names.split(','),
+			name,
+			i = 0,
+			l = names.length;
+
+		// Loop through each test name, break early if we get a false test result
+		while (i < l) {
+			if (!hasSupport) break;
+			
+			// Make sure there's no pre-/suffixed spaces 
+			name = names[i].replace(/^\s*|\s*$/g, '');
+
+			// If the test hasn't been run yet, run it
+			if (typeof testCache[name] == "function") {
+				testCache[name] = testCache[name](g, d, el);
+			}
+			
+			hasSupport = testCache[name];
+			i++;
+		}
+
+        return hasSupport; // Boolean
     }
     
     function add(/* String */name, /* Function */test, /* Boolean? */now){
