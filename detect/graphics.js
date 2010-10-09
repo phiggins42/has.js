@@ -41,7 +41,7 @@
 
         var vml;
 
-        div.innerHTML = '<v:shape adj="1"/>';
+        e.innerHTML = '<v:shape adj="1"/>';
         vml = div.firstChild;
 
         return "adj" in vml;
