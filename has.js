@@ -18,7 +18,7 @@ has = (function(g, d){
     var NON_HOST_TYPES = { "boolean": 1, "number": 1, "string": 1, "undefined": 1 },
         el = d && d.createElement("DiV"),
         prefixes = ["Webkit", "Moz", "O", "ms", "Khtml"],
-        testCache = {}
+        testCache = has._tests = {}
     ;
     
     function has(/* String */name){
