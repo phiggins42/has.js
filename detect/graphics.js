@@ -18,6 +18,19 @@
         return "SVGAngle" in global;
     });
     
+    addtest("svg-inlinesvg", function(global,d,e) {
+        e.innerHTML = "<svg/>";
+        return (e.firstChild && e.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+    });
+    
+    addtest("svg-smil", function(g,d) {
+        return !!d.createElementNS && /SVG/.test(tostring.call(d.createElementNS(ns.svg,"animate")));
+    });
+
+    addtest("svg-clippaths", function(g,d) {
+        return !!d.createElementNS && /SVG/.test(tostring.call(d.createElementNS(ns.svg,"clipPath")));
+    });
+    
     addtest("vml", function(global) {
         /*
           Sources:
