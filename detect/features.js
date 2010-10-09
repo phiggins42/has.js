@@ -6,12 +6,11 @@
 
     // FIXME: isn't really native
     // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
-    addtest("native-console", function(global){
-        return !!("console" in global);
+    addtest("native-console", function(g){
+        return !!("console" in g);
     });
 
     if(!has("is-browser")){ return; }
-
 
     addtest("native-xhr", function(g){
         return has.isHostType(g, "XMLHttpRequest");
@@ -161,6 +160,4 @@
         return ('WebSocket' in g);
     });
     
-    
-
 })(has, has.add, has.cssprop);

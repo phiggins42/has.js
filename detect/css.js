@@ -26,7 +26,7 @@
         return isContentBox;
     });
 
-    addtest("css-position-fixed", function(g, d) {
+    addtest("css-position-fixed", function(g, d){
         var test = d.createElement("div"),
             control = test.cloneNode(false),
             fake = false,
