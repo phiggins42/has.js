@@ -13,7 +13,7 @@
         var bool = thing.type !== "text";
         
         if(bool) {
-            input.value = "\\<<---x";
+            input.value = "☺";
             
             //  From the original `testProp` function
             if(/^(search|tel)$/.test(input.type)){
@@ -25,7 +25,7 @@
                 //  this fakes out the value test
             }else{
                 //  if the upgraded input compontent rejects the :) text, we got a winner
-                bool = input.value != "\\<<---x";
+                bool = input.value != "☺";
             }            
         }
         
@@ -172,6 +172,7 @@
         var bool  = supportsModernInputProp(input, "range"), 
             del   = document.documentElement;
         
+        // WebKit has a few false positives, so we go more robust 
         if(bool && input.style.WebkitAppearance !== undefined) {
             del.appendChild(input);
 
