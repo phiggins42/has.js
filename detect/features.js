@@ -149,6 +149,7 @@
     });
     
     // FIXME: hosttype
+    // FIXME: moz and webkit now ship this prefixed. check all possible prefixes. ^pi
     addtest("native-indexeddb", function(g){
         return !!g["indexedDB"];
     });
