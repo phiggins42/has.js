@@ -12,12 +12,19 @@
 
     if(!has("is-browser")){ return; }
 
-    // The following three tests should be enough to let the
-    // libraries handle their own branching for XHR ^bf
+
     addtest("native-xhr", function(g){
         return has.isHostType(g, "XMLHttpRequest");
     });
-
+    
+    addtest("native-cors-xhr", function(g){
+        return has('native-xhr') && "withCredentials" in new XMLHttpRequest;
+    });
+    
+    addtest("native-xhr-uploadevents", function(g){
+        return has('native-xhr') && "upload" in new XMLHttpRequest;
+    });
+    
     addtest("activex", function(g){
         return has.isHostType(g, "ActiveXObject");
     });
