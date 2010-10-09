@@ -81,6 +81,10 @@
     addtest("css-selectable", function(g, d, e){
         return cssprop("userSelect", e);
     });
+    
+    addtest("css-pointerevents", function(g, d, e){
+        return cssprop("pointerEvents", e);
+    });
 
     addtest("css-text-overflow", function(g, d, e){
         return cssprop("textOverflow", e);
