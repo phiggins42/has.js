@@ -26,7 +26,7 @@
         return isContentBox;
     });
 
-    addtest("css-position-fixed", function(g, d) {
+    addtest("css-position-fixed", function(g, d){
         var test = d.createElement("div"),
             control = test.cloneNode(false),
             fake = false,
@@ -81,6 +81,10 @@
     addtest("css-selectable", function(g, d, e){
         return cssprop("userSelect", e);
     });
+    
+    addtest("css-pointerevents", function(g, d, e){
+        return cssprop("pointerEvents", e);
+    });
 
     addtest("css-text-overflow", function(g, d, e){
         return cssprop("textOverflow", e);
@@ -129,7 +133,7 @@
         return supported;
     });
     
-    // FIXME: modernizr has backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
-    // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface (async)
+    // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
+    // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
 })(has, has.add, has.cssprop);

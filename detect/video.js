@@ -6,8 +6,13 @@
         return has.isHostType(video, "canPlayType");
     });
 
+    // note: in FF 3.5.1 and 3.5.0 only, "no" was a return value instead of empty string.
+
     addtest("video-h264-baseline", function() {
-        return has("video") && video.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+        // workaround required for ie9, who doesn't report video support without audio codec specified.
+        //   bug 599718 @ msft connect
+        var h264 = 'video/mp4; codecs="avc1.42E01E';
+        return has("video") && (video.canPlayType(h264 + '"') || video.canPlayType(h264 + ', mp4a.40.2"'));
     });
 
     addtest("video-ogg-theora", function() {

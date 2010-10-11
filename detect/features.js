@@ -5,18 +5,25 @@
     ;   
 
     // FIXME: isn't really native
-    addtest("native-console", function(global){
-        return !!("console" in global);
+    // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
+    addtest("native-console", function(g){
+        return !!("console" in g);
     });
 
     if(!has("is-browser")){ return; }
 
-    // The following three tests should be enough to let the
-    // libraries handle their own branching for XHR ^bf
     addtest("native-xhr", function(g){
         return has.isHostType(g, "XMLHttpRequest");
     });
-
+    
+    addtest("native-cors-xhr", function(g){
+        return has('native-xhr') && "withCredentials" in new XMLHttpRequest;
+    });
+    
+    addtest("native-xhr-uploadevents", function(g){
+        return has('native-xhr') && "upload" in new XMLHttpRequest;
+    });
+    
     addtest("activex", function(g){
         return has.isHostType(g, "ActiveXObject");
     });
@@ -127,10 +134,12 @@
     //   will throw an exception: http://crbug.com/42380
     // we create a dummy database. there is no way to delete it afterwards. sorry. 
     addtest("native-sql-db", function(g){
-        var result = !!g.openDatabase;
+        var result = !!g.openDatabase,
+            dbname = "hasjstestdb";
+            
         if(result){
             try{
-                result = !!openDatabase( mod + "testdb", "1.0", mod + "testdb", 2e4);
+                result = !!openDatabase( dbname, "1.0", dbname, 2e4);
             }catch(e){
                 result = false;
             }
@@ -151,6 +160,4 @@
         return ('WebSocket' in g);
     });
     
-    
-
 })(has, has.add, has.cssprop);
