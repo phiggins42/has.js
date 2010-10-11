@@ -20,16 +20,22 @@
     });
     
     addtest("svg-inlinesvg", function(g, d, e){
+        var supported = null;
         e.innerHTML = "<svg/>";
-        return (e.firstChild && e.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+
+        supported = (e.firstChild && e.firstChild.namespaceURI) == 'http://www.w3.org/2000/svg';
+
+        e.innerHTML = '';
+        return supported;
     });
     
+    var svgNS = 'http://www.w3.org/2000/svg';
     addtest("svg-smil", function(g, d){
-        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(ns.svg,"animate")));
+        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(svgNS,"animate")));
     });
 
     addtest("svg-clippaths", function(g, d){
-        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(ns.svg,"clipPath")));
+        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(svgNS,"clipPath")));
     });
     
     addtest("vml", function(g, d, e){
