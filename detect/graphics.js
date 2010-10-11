@@ -1,7 +1,8 @@
 (function(has, addtest, cssprop){
 
     var FN = "function",
-        STR = "string"
+        STR = "string",
+        toString = {}.toString
     ;
 
     var elem = document.createElement("canvas"); // FIXME: needs to be self-containedish ^ph
@@ -24,11 +25,11 @@
     });
     
     addtest("svg-smil", function(g, d){
-        return !!d.createElementNS && /SVG/.test(tostring.call(d.createElementNS(ns.svg,"animate")));
+        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(ns.svg,"animate")));
     });
 
     addtest("svg-clippaths", function(g, d){
-        return !!d.createElementNS && /SVG/.test(tostring.call(d.createElementNS(ns.svg,"clipPath")));
+        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(ns.svg,"clipPath")));
     });
     
     addtest("vml", function(g, d, e){
@@ -38,25 +39,29 @@
           http://msdn.microsoft.com/en-us/library/bb263897(v=VS.85).aspx
           http://www.svg-vml.net/Zibool-compar.htm
         */          
-
-        var vml;
+        var vml, supported;
 
         e.innerHTML = '<v:shape adj="1"/>';
-        vml = div.firstChild;
+        vml = e.firstChild;
 
-        return "adj" in vml;
+        supported = "adj" in vml;
+
+        vml = null;
+        e.innerHTML = '';
+
+        return supported;
     });
     
     addtest("canvas-webgl", function(){
-      try{
-          if(elem.getContext('webgl')){ return true; }
-      }catch(e){}
-      
-      try{
-          if(elem.getContext('experimental-webgl')){ return true; }
-      }catch(e){}
+        try{
+            if(elem.getContext('webgl')){ return true; }
+        }catch(e){}
 
-      return false;
+        try{
+            if(elem.getContext('experimental-webgl')){ return true; }
+        }catch(e){}
+
+        return false;
     });
 
 })(has, has.add, has.cssprop);
