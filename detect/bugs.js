@@ -27,6 +27,25 @@
         return null;
     });
 
+    addtest("bug-computed-style-hidden-zero-height", function(g, d){
+        var buggy = null;
+
+        if(has("dom-computed-style")){
+            var docEl = d.documentElement,
+                style = docEl.style,
+                display = style.display;
+
+            style.display = "none";
+
+            var cs = d.defaultView.getComputedStyle(docEl, null);
+            buggy = cs && cs.height == "0px";
+
+            style.display = display;
+        }
+
+        return buggy;
+    });
+
     addtest("bug-root-children-not-styled", function(g, d, e){
         var result = null, root;
         if(d && e){

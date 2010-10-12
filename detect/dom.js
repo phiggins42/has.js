@@ -122,5 +122,13 @@
         }
         return supported;
     });
+
+    addtest("dom-computed-style", function(g, d){
+        return has.isHostType(d, "defaultView") && has.isHostType(d.defaultView, "getComputedStyle");
+    });
+
+    addtest("dom-current-style", function(g, d){
+        return !has("dom-computed-style") && has.isHostType(d.documentElement, "currentStyle");
+    });
     
 })(has, has.add, has.cssprop);
