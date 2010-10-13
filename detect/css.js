@@ -83,7 +83,7 @@
     });
 
     addtest("css-style-float", function(g, d, e){
-        return (typeof e.style.styleFloat == STR);
+        return e ? typeof e.style.styleFloat == STR : null;
     });
     
     addtest("css-pointerevents", function(g, d, e){
