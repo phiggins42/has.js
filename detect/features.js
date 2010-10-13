@@ -30,7 +30,7 @@
 
     addtest("activex-enabled", function(g){
         var supported = null;
-        if(has("native-activexobject")){
+        if(has("activex")){
             try{
                 supported = !!(new ActiveXObject("htmlfile"));
             }catch(e){
