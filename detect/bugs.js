@@ -27,6 +27,25 @@
         return null;
     });
 
+    addtest("bug-computed-style-hidden-zero-height", function(g, d){
+        var buggy = null;
+
+        if(has("dom-computed-style")){
+            var docEl = d.documentElement,
+                style = docEl.style,
+                display = style.display;
+
+            style.display = "none";
+
+            var cs = d.defaultView.getComputedStyle(docEl, null);
+            buggy = cs && cs.height == "0px";
+
+            style.display = display;
+        }
+
+        return buggy;
+    });
+
     addtest("bug-root-children-not-styled", function(g, d, e){
         var result = null, root;
         if(d && e){
@@ -366,10 +385,20 @@
         return true;
     });
 
-    addtest("bug-regexp-whitespace", function(){
-        var str = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
-                "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029";
-        return !/^\s+$/.test(str);
+    // ES5 added <BOM> (\uFEFF) as a whitespace character
+    var whitespace = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
+        "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";
+
+    addtest("bug-es5-trim", function(){
+        var buggy = null;
+        if(has("string-trim")){
+            buggy = !!whitespace.trim();
+        }
+        return buggy;
+    });
+
+    addtest("bug-es5-regexp", function(){
+        return !/^\s+$/.test(whitespace);
     });
 
     addtest("bug-tofixed-rounding", function(){
