@@ -48,7 +48,7 @@
     });
     
     addtest("object-keys", function(){
-        return "keys" in OBJECT;
+        return ("keys" in OBJECT);
     });
 
     addtest("object-preventextensions", function(){

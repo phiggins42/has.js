@@ -60,15 +60,15 @@ You can register and run a test immediately by passing a truthy value after the 
 This is preferred over what would seem a much more effective version:
 
     // this is not wrapped in a function, and should be:
-    has.add("some-other-test", !!("foo" in bar)); // or whatever
+    has.add("some-other-test", ("foo" in bar)); // or whatever
     
-By forcing a function wrapper around the test logic we are able to defer execution until needed, as well as provide a normalize way for 
+By forcing a function wrapper around the test logic we are able to defer execution until needed, as well as provide a normalized way for 
 each test to have it's own execution context. This way, we can remove some or all the tests we do not need in whatever upstream library
-should adopt has.
+should adopt _has_.
 
 ## Platform Builds
 
-Something resembling a "builder" is coming. 
+Something resembling a "builder" is coming. A basic dependency matcher and test lister is provided in `build/`
 
 ## Contribute
 
@@ -96,6 +96,11 @@ Internally, we follow these conventions:
     + Globals are as follows, available as used but will be reduced to a single ref:
         + STR == "string"
         + FN == "function"
+    + Tests return Booleans. Sometimes, you must coerce a boolean:
+        + DO return !!(someExpression) as necessary
+        + DO N0T return !!("x" in y) or anything else that would otherwise return a boolean, eg
+            + x !== y, x > y, x typeof y
+        + DO wrap expressions in parens: eg return ("x" in y)
 
 ## License 
 

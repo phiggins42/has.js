@@ -121,8 +121,8 @@ has = (function(g, d){
     has.cssprop = cssprop;
     has.isHostType = isHostType;
 
-    has.add('is-browser', function(global, document, element){
-        return (typeof document != 'undefined' && typeof element != 'undefined' && typeof navigator != 'undefined');
+    has.add("dom", function(global, document, element){
+        return (typeof document != "undefined" && typeof element != "undefined" && typeof navigator != "undefined");
     }, true);
     
     return has;
