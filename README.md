@@ -96,6 +96,11 @@ Internally, we follow these conventions:
     + Globals are as follows, available as used but will be reduced to a single ref:
         + STR == "string"
         + FN == "function"
+    + Tests return Booleans. Sometimes, you must coerce a boolean:
+        + DO return !!(someExpression) as necessary
+        + DO N0T return !!("x" in y) or anything else that would otherwise return a boolean, eg
+            + x !== y, x > y, x typeof y
+        + DO wrap expressions in parens: eg return ("x" in y)
 
 ## License 
 
