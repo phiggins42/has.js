@@ -13,7 +13,7 @@
         var bool = thing.type !== "text";
         
         if(bool) {
-            input.value = "☺";
+            input.value = ":)";
             
             //  From the original `testProp` function
             if(/^(search|tel)$/.test(input.type)){
@@ -25,7 +25,7 @@
                 //  this fakes out the value test
             }else{
                 //  if the upgraded input compontent rejects the :) text, we got a winner
-                bool = input.value != "☺";
+                bool = input.value != ":)";
             }            
         }
         
