@@ -8,7 +8,7 @@
     var elem = document.createElement("canvas"); // FIXME: needs to be self-containedish ^ph
 
     addtest("canvas", function(){ 
-        return (elem.getContext && elem.getContext("2d");
+        return (elem.getContext && elem.getContext("2d"));
     });
     
     addtest("canvas-text", function(){
