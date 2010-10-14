@@ -35,89 +35,89 @@
     //  @jdalton: I tried using the has.isHostType, but it nose dived on all but the `validity` prop
 
     addtest("input-attr-autocomplete", function(){
-        return "autocomplete" in input;
+        return ("autocomplete" in input);
     });
 
     addtest("input-attr-autofocus", function(){
-        return "autofocus" in input;
+        return ("autofocus" in input);
     });
 
     addtest("input-attr-list", function(){
-        return "list" in input;
+        return ("list" in input);
     });
 
     addtest("input-attr-placeholder", function(){
-        return "placeholder" in input;
+        return ("placeholder" in input);
     });
 
     addtest("input-attr-max", function(){
-        return "max" in input;
+        return ("max" in input);
     });
     
     addtest("input-attr-maxlength", function(){
-        return "maxLength" in input;
+        return ("maxLength" in input);
     });
 
     addtest("input-attr-min", function(){
-        return "min" in input;
+        return ("min" in input);
     });
 
     addtest("input-attr-multiple", function(){
-        return "multiple" in input;
+        return ("multiple" in input);
     });
 
     addtest("input-attr-pattern", function(){
-        return "pattern" in input;
+        return ("pattern" in input);
     });
 
     addtest("input-attr-readonly", function(){
-        return "readOnly" in input;
+        return ("readOnly" in input);
     });
     
     addtest("input-attr-required", function(){
-        return "required" in input;
+        return ("required" in input);
     });
 
     addtest("input-attr-size", function(){
-        return "size" in input;
+        return ("size" in input);
     });
 
     addtest("input-attr-step", function(){
-        return "step" in input;
+        return ("step" in input);
     });
     
     addtest("input-attr-selectedoption", function(){
-        return "selectedOption" in input;
+        return ("selectedOption" in input);
     });
 
     addtest("input-attr-indeterminate ", function(){
-        return "indeterminate " in input;
+        return ("indeterminate " in input);
     });
 
     addtest("input-attr-willvalidate", function(){
-        return "willValidate" in input;
+        return ("willValidate" in input);
     });
 
     addtest("input-attr-valueasnumber", function(){
-        return "valueAsNumber" in input;
+        return ("valueAsNumber" in input);
     });
 
     addtest("input-attr-valueasdate", function(){
-        return "valueAsDate" in input;
+        return ("valueAsDate" in input);
     });
 
     addtest("input-attr-validity", function(){
-        //return "validity" in input;
+        //return ("validity" in input);
         
         return has.isHostType(input, "validity");
     });
 
     addtest("input-attr-validationmessage", function(){
-        return "validationMessage" in input;
+        return ("validationMessage" in input);
     });
 
     addtest("input-attr-willvalidate", function(){
-        return "willValidate" in input;
+        return ("willValidate" in input);
     });
 
 
