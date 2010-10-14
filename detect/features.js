@@ -98,16 +98,16 @@
      * ^rw
      */
 
-    addtest("native-worker", function(global){
-        return !!("Worker" in global);
+    addtest("native-worker", function(g){
+        return !!("Worker" in g);
     });
 
-    addtest("native-sharedworker", function(global){
-        return !!("SharedWorker" in global);
+    addtest("native-sharedworker", function(g){
+        return !!("SharedWorker" in g);
     });    
     
-    addtest("native-eventsource", function(global){
-        return !!("EventSource" in global);
+    addtest("native-eventsource", function(g){
+        return !!("EventSource" in g);
     });
     
     // non-browser specific
@@ -151,6 +151,16 @@
     addtest("native-indexeddb", function(g){
         return !!g["indexedDB"];
     });
+    
+    
+    addtest("native-localstorage", function (g) {
+      return !!(g.localStorage && localStorage.setItem);
+    });
+
+    addtest("native-sessionstorage", function (g) {
+      return !!(g.sessionStorage && sessionStorage.setItem);
+    });
+    
     
     addtest("native-history-state", function(g){
         return !!(g.history && history.pushState);
