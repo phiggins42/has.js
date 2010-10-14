@@ -15,7 +15,7 @@
     });
     
     addtest("json-stringify", function(g){
-        return "JSON" in g && typeof JSON.stringify == FN && JSON.stringify({a:true}) == '{"a":true}';
+        return ("JSON" in g && typeof JSON.stringify == FN && JSON.stringify({a:true}) == '{"a":true}');
     });
 
 })(has, has.add, has.cssprop);

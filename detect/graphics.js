@@ -8,7 +8,7 @@
     var elem = document.createElement("canvas"); // FIXME: needs to be self-containedish ^ph
 
     addtest("canvas", function(){ 
-        return !!(elem.getContext && elem.getContext("2d"));
+        return (elem.getContext && elem.getContext("2d"));
     });
     
     addtest("canvas-text", function(){
@@ -16,7 +16,7 @@
     });
     
     addtest("svg", function(g){
-        return "SVGAngle" in g;
+        return ("SVGAngle" in g);
     });
     
     var svgNS = "http://www.w3.org/2000/svg";
