@@ -81,6 +81,7 @@ Something resembling a "builder" is coming. A basic dependency matcher and test 
   + [Andrée Hansson](http://github.com/peol)
   + [Peter Higgins](http://higginsforpresident.net) - Dojo Project Lead
   + [Paul Irish](http://paulirish.com) - jQuery Dev Team
+  + [Weston Ruter](http://weston.ruter.net/) - X-Team/XHTMLized developer
   + [Rick Waldron](http://github.com/rwldrn/)
   + [Juriy Zaytsev](http://perfectionkills.com) - @kangax, nuff' said.
   
