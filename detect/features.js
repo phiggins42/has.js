@@ -155,11 +155,21 @@
     
     
     addtest("native-localstorage", function (g) {
-      return g.localStorage && localStorage.setItem;
+      //  Thanks Modernizr!
+      try {
+        return g.localStorage && localStorage.setItem;
+      } catch(e) {
+        return false;
+      }      
     });
 
     addtest("native-sessionstorage", function (g) {
-      return g.sessionStorage && sessionStorage.setItem;
+      //  Thanks Modernizr!
+      try {
+        return g.sessionStorage && sessionStorage.setItem;
+      } catch(e){
+        return false;
+      }    
     });
     
     
