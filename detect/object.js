@@ -24,27 +24,27 @@
     });
 
     addtest("object-create", function(){
-        return ("create" in OBJECT);
+        return "create" in OBJECT;
     });
     
     addtest("object-getprototypeof", function(){
-        return ("getPrototypeOf" in OBJECT);
+        return "getPrototypeOf" in OBJECT;
     });
 
     addtest("object-seal", function(g){
-        return ("seal" in OBJECT);
+        return "seal" in OBJECT;
     });
 
     addtest("object-freeze", function(g){
-        return ("freeze" in OBJECT);
+        return "freeze" in OBJECT;
     });
 
     addtest("object-issealed", function(g){
-        return ("isSealed" in OBJECT);
+        return "isSealed" in OBJECT;
     });
 
     addtest("object-isfrozen", function(g){
-        return ("isFrozen" in OBJECT);
+        return "isFrozen" in OBJECT;
     });
     
     addtest("object-keys", function(){
@@ -52,27 +52,27 @@
     });
 
     addtest("object-preventextensions", function(){
-        return ("preventExtensions" in OBJECT);
+        return "preventExtensions" in OBJECT;
     });
     
     addtest("object-isextensible", function(){
-        return ("isExtensible" in OBJECT);
+        return "isExtensible" in OBJECT;
     });
 
     addtest("object-defineproperty", function(){
-        return ("defineProperty" in OBJECT);
+        return "defineProperty" in OBJECT;
     });
 
     addtest("object-defineproperties", function(){
-        return ("defineProperties" in OBJECT);
+        return "defineProperties" in OBJECT;
     });
 
     addtest("object-getownpropertydescriptor", function(){
-        return ("getOwnPropertyDescriptor" in OBJECT);
+        return "getOwnPropertyDescriptor" in OBJECT;
     });
     
     addtest("object-getownpropertynames", function(){
-        return ("getOwnPropertyNames" in OBJECT);
+        return "getOwnPropertyNames" in OBJECT;
     });
     
     addtest("object-es5", function(){
