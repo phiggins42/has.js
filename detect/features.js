@@ -7,7 +7,7 @@
     // FIXME: isn't really native
     // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
     addtest("native-console", function(g){
-        return !!("console" in g);
+        return "console" in g;
     });
 
     if(!has("is-browser")){ return; }
@@ -83,12 +83,12 @@
         return !!navigator.geolocation;
     });
 
-    addtest("native-crosswindowmessaging", function(global) {
-        return !!global.postMessage;
+    addtest("native-crosswindowmessaging", function(g) {
+        return !!g.postMessage;
     });
         
-    addtest("native-orientation",function(global){
-        return "ondeviceorientation" in global;
+    addtest("native-orientation",function(g){
+        return "ondeviceorientation" in g;
     });
     
     /*
@@ -99,15 +99,15 @@
      */
 
     addtest("native-worker", function(g){
-        return !!("Worker" in g);
+        return "Worker" in g;
     });
 
     addtest("native-sharedworker", function(g){
-        return !!("SharedWorker" in g);
+        return "SharedWorker" in g;
     });    
     
     addtest("native-eventsource", function(g){
-        return !!("EventSource" in g);
+        return "EventSource" in g;
     });
     
     // non-browser specific
@@ -155,20 +155,20 @@
     
     
     addtest("native-localstorage", function (g) {
-      return !!(g.localStorage && localStorage.setItem);
+      return g.localStorage && localStorage.setItem;
     });
 
     addtest("native-sessionstorage", function (g) {
-      return !!(g.sessionStorage && sessionStorage.setItem);
+      return g.sessionStorage && sessionStorage.setItem;
     });
     
     
     addtest("native-history-state", function(g){
-        return !!(g.history && history.pushState);
+        return g.history && history.pushState;
     });
     
     addtest("native-websockets", function(g){
-        return ('WebSocket' in g);
+        return "WebSocket" in g;
     });
     
 })(has, has.add, has.cssprop);
