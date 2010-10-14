@@ -10,7 +10,7 @@
         return ("console" in g);
     });
 
-    if(!has("is-browser")){ return; }
+    if(!has("dom-env")){ return; }
 
     addtest("native-xhr", function(g){
         return has.isHostType(g, "XMLHttpRequest");
