@@ -6,9 +6,9 @@
         }
         var result = null;
         if(e && e.style){
-            e.style.width = '1';
-            result = e.style.width === '1px';
-            e.style.cssText = '';
+            e.style.width = "1";
+            result = e.style.width === "1px";
+            e.style.cssText = "";
         }
         return result;
     });
@@ -19,7 +19,7 @@
     });
     
     // works in all but IE < 9
-    addtest("dom-addeventlistener", function(g, d) {
+    addtest("dom-addeventlistener", function(g, d){
         return has.isHostType(d, "addEventListener");
     }, true);
     
@@ -121,6 +121,14 @@
             e = null;
         }
         return supported;
+    });
+
+    addtest("dom-computed-style", function(g, d){
+        return has.isHostType(d, "defaultView") && has.isHostType(d.defaultView, "getComputedStyle");
+    });
+
+    addtest("dom-current-style", function(g, d){
+        return !has("dom-computed-style") && has.isHostType(d.documentElement, "currentStyle");
     });
     
 })(has, has.add, has.cssprop);
