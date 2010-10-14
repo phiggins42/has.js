@@ -170,15 +170,16 @@
 
     addtest("input-type-range", function(g, d){
         var bool  = supportsModernInputProp(input, "range"), 
-            del   = document.documentElement;
+            del   = d.documentElement,
+            dv    = d.defaultView;
         
         // WebKit has a few false positives, so we go more robust 
         if(bool && input.style.WebkitAppearance !== undefined) {
             del.appendChild(input);
 
             // Safari 2-4 allows the smiley as a value, despite making a slider
-            bool =  doc.defaultView.getComputedStyle && 
-                    doc.defaultView.getComputedStyle(input, null).WebkitAppearance !== 'textfield' && 
+            bool =  dv.getComputedStyle &&
+                    dv.getComputedStyle(input, null).WebkitAppearance !== 'textfield' && 
 
                     // mobile android web browser has false positive, so must
                     // check the height to see if the widget is actually there.
