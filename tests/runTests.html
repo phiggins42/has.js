@@ -11,6 +11,10 @@
             .na {
                 color:blue;
             }
+            .error {
+                background-color: red;
+                color: black;
+            }
             #ua {
                 font-weight:bold;
             }
@@ -115,7 +119,10 @@
                 if(result === null){
                     return "na";
                 }
-                if(isBug && result != 'error'){
+                if(result == "error"){
+                    return "error";
+                }
+                if(isBug){
                     return (result ? "no" : "yes");
                 }
                 return (result ? "yes" : "no");
@@ -149,12 +156,12 @@
                 }
                 
                 if(r == "error"){
-                    special = r.ERROR_MSG;
+                    special = ": " + r.ERROR_MSG;
                 }
                 
                 data.push("<input type='hidden' name='", key, "' value='", r + special ,"'>");
                 html.push("<li>", key ," <em class='", resultClass(r, bugRE.test(key)), "'>",
-                    (r === null ? 'n/a' : !!r) , "</em>", special, "</li>");
+                    (r === null ? 'n/a' : (r == "error" ? r : !!r)) , "</em>", special, "</li>");
             };
 
             if(has('array-foreach')){

@@ -108,7 +108,7 @@ has = (function(g, d){
                 ret[i] = has(i);
             }catch(e){
                 ret[i] = "error";
-                ret[i].ERROR_MSG = e;
+                ret[i].ERROR_MSG = e.toString();
             }
         }
         return ret; // Object
