@@ -1,86 +1,89 @@
 (function(has, addtest, cssprop){
 
     // http://github.com/kangax/cft
-    var STR = "string",
-        FN = "function"
-    ;   
+    var toString = {}.toString,
+        STR = "string",
+        FN = "function",
+        FUNCTION_CLASS = "[object Function]"
+    ;
 
-    // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto") 
+    if(!has("dom")){ return; }
+
+    // Opera 9.x (possibly other versions as well) returns actual values (instead of "auto")
     // for statically positioned elements
     addtest("bug-computed-values-for-static", function(g, d){
-        var view = d.defaultView;
-        if (view && view.getComputedStyle) {
-            var de = d.documentElement;
-            var position = null;
-            var style = view.getComputedStyle(de, null);
+        var computed,
+            de = d.documentElement,
+            view = d.defaultView,
+            style = d.style,
+            position = null,
+            buggy = position;
+
+        if (has("dom-computed-style")) {
             // if element is not statically positioned, make it as such, then restore
-            if(style.position !== "static"){
-                position = style.position;
-                de.style.position = "";
+            computed = view.getComputedStyle(de, null);
+            if(computed.position != "static"){
+                position = computed.position;
+                style.position = "";
             }
-            var result = (view.getComputedStyle(de, null).left !== "auto");
+            buggy = !!(buggy = view.getComputedStyle(de, null)) && buggy.left != "auto";
             if(position !== null){
-                de.style.position = position;
+                style.position = position;
             }
-            return result;
         }
-        return null;
-    });
-
-    addtest("bug-computed-style-hidden-zero-height", function(g, d){
-        var buggy = null;
-
-        if(has("dom-computed-style")){
-            var docEl = d.documentElement,
-                style = docEl.style,
-                display = style.display;
-
-            style.display = "none";
-
-            var cs = d.defaultView.getComputedStyle(docEl, null);
-            buggy = cs && cs.height == "0px";
-
-            style.display = display;
-        }
-
         return buggy;
     });
 
-    addtest("bug-root-children-not-styled", function(g, d, e){
-        var result = null, root;
-        if(d && e){
-            root = d.documentElement;
-            e.style.cssText = "width:40px;height:40px;";
+    addtest("bug-computed-style-hidden-zero-height", function(g, d){
+        var css,
+            de = d.documentElement,
+            style = de.style,
+            display = style.display,
+            buggy = null;
 
-            try{
-                root.insertBefore(e, root.firstChild);
-
-                result = e.clientWidth == 0;
-
-                root.removeChild(e);
-            }catch(ex){}
-
-            e.style.cssText = '';
+        if(has("dom-computed-style")){
+            style.display = "none";
+            cs = d.defaultView.getComputedStyle(de, null);
+            buggy = cs && cs.height == "0px";
+            style.display = display;
         }
+        return buggy;
+    });
+
+    addtest("bug-root-children-not-styled", function(g, d, el){
+        var buggy = null,
+            root = d.documentElement;
+
+        el.style.cssText = "width:40px;height:40px;";
+
+        try{
+            root.insertBefore(el, root.firstChild);
+
+            result = el.clientWidth == 0;
+
+            root.removeChild(el);
+        }catch(e){}
+
+        el.style.cssText = "";
         return result;
     });
 
-    addtest("bug-contains", function(g, d, e){
+    addtest("bug-contains", function(g, d, el){
         var e2 = d.createElement("div");
-        if(e && e2 && has.isHostType(e, "contains")){
-            return e.contains(e2);
+        if(has.isHostType(el, "contains")){
+            return el.contains(e2);
         }
         return null;
     });
 
-    addtest("bug-query-selector-ignores-caps", function(g, d, e){
+    addtest("bug-query-selector-ignores-caps", function(g, d, el){
         if(d.compatMode == "BackCompat"){
             var e2 = d.createElement("span");
-            if(e2 && e.appendChild && e.querySelector){
+            if(el.querySelector){
                 e2.className = "Test";
-                e.appendChild(e2);
+                el.appendChild(e2);
                 var buggy = (e.querySelector(".Test") !== null);
-                e.removeChild(e2);
+                el.removeChild(e2);
                 e2 = null;
                 return buggy;
             }
@@ -89,25 +92,20 @@
     });
 
     addtest("bug-typeof-nodelist-function", function(g, d){
-        if(has.isHostType(d, "forms")){
-            return (typeof d.forms == FN);
-        }
-        return null;
+        return has.isHostType(d, "forms") ? (typeof d.forms == FN) : null;
     });
 
     // IE returns comment nodes as part of `getElementsByTagName` results
-    addtest("bug-getelementsbytagname-returns-comment-nodes", function(g, d, e){
-        if(e && has.isHostType(e, "getElementsByTagName")){
-            e.innerHTML = "<span>a</span><!--b-->";
-            var all = e.getElementsByTagName("*");
-            // IE5.5 returns a 0-length collection when calling getElementsByTagName with wildcard
-            if(all.length){
-                var lastNode = e.getElementsByTagName("*")[1];
-                var buggy = !!(lastNode && lastNode.nodeType === 8);
-                lastNode = all = null;
-                e.innerHTML = "";
-                return buggy;
-            }
+    addtest("bug-getelementsbytagname-returns-comment-nodes", function(g, d, el){
+        el.innerHTML = "<span>a</span><!--b-->";
+        var all = el.getElementsByTagName("*");
+        // IE5.5 returns a 0-length collection when calling getElementsByTagName with wildcard
+        if(all.length){
+            var lastNode = el.getElementsByTagName("*")[1];
+            var buggy = !!(lastNode && lastNode.nodeType === 8);
+            lastNode = all = null;
+            el.innerHTML = "";
+            return buggy;
         }
         return null;
     });
@@ -118,87 +116,75 @@
         var elForm = d.createElement("form"),
             elInput = d.createElement("input"),
             root = d.documentElement;
-        if (elForm && elInput && elInput.setAttribute && elForm.appendChild && 
-            root && root.appendChild && root.removeChild) {
-            elInput.setAttribute("name", "test");
-            elForm.appendChild(elInput);
-            // Older Safari (e.g. 2.0.2) populates "elements" collection only when form is within a document
-            root.appendChild(elForm);
-            var isBuggy = elForm.elements ? (typeof elForm.elements["test"] == "undefined") : null;
-            root.removeChild(elForm);
-            return isBuggy;
-        }
-        return null;
+
+        elInput.setAttribute("name", "test");
+        elForm.appendChild(elInput);
+        // Older Safari (e.g. 2.0.2) populates "elements" collection only when form is within a document
+        root.appendChild(elForm);
+        var buggy = elForm.elements ? (typeof elForm.elements["test"] == "undefined") : null;
+        root.removeChild(elForm);
+        return buggy;
     });
 
-
-    addtest("bug-properties-are-attributes", function(g, d, e){
-        if(e && has.isHostType(e, "getAttribute")){
-            e.__foo = "bar";
-            var buggy = (e.getAttribute("__foo") === "bar");
-            return buggy;
+    addtest("bug-properties-are-attributes", function(g, d, el){
+        el.__foo = "bar";
+        var buggy = el.getAttribute("__foo") == "bar";
+        if (buggy) {
+          el.removeAttribute("__foo");
+        } else {
+          delete el.__foo;
         }
-        return null;
+        return buggy;
     });
 
     addtest("bug-pre-ignores-newline", function(g, d){
-        var el = d.createElement("pre");
-        var txt = d.createTextNode("xx");
-        var root = d.documentElement;
-        if(el && el.appendChild && txt && root && root.appendChild && root.removeChild){
-            el.appendChild(txt);
-            root.appendChild(el);
-            var initialHeight = el.offsetHeight;
-            el.firstChild.nodeValue = "x\nx";
-            // check if `offsetHeight` changed after adding "\n" to the value
-            var isIgnored = (el.offsetHeight === initialHeight);
-            root.removeChild(el);
-            el = txt = null;
-            return isIgnored;
-        }
-        return null;
+        var buggy,
+            de = d.documentElement,
+            el = de.appendChild(d.createElement("pre")),
+            txt = el.appendChild(d.createTextNode("xx")),
+            initialHeight = el.offsetHeight;
+
+        el.firstChild.nodeValue = "x\nx";
+        // check if `offsetHeight` changed after adding "\n" to the value
+        buggy = el.offsetHeight == initialHeight;
+        de.removeChild(el);
+        return buggy;
     });
 
-    addtest("bug-select-innerhtml", function(g, d){
-        var el = d.createElement("select"), 
-            isBuggy = true;
-        if(el){
-            el.innerHTML = "<option value='test'>test<\/option>";
-            if(el.options && el.options[0]){
-                isBuggy = el.options[0].nodeName.toUpperCase() !== "OPTION";
-            }
-            el = null;
-            return isBuggy;
+    addtest("bug-select-innerhtml", function(g, d, el){
+        var buggy = true;
+        el = d.createElement("select");
+        el.innerHTML = "<option value='test'>test<\/option>";
+        if(has.isHostType(el, "options") && el.options[0]){
+            buggy = el.options[0].nodeName.toUpperCase() != "OPTION";
         }
-        return null;
+        return buggy;
     });
 
-    addtest("bug-table-innerhtml", function(g, d){
+    addtest("bug-table-innerhtml", function(g, d, el){
+        var buggy = true;
+        el = d.createElement("table");
         try{
-            var el = d.createElement("table");
-            if(el && el.tBodies){
+            if(has.isHostType(el, "tBodies")){
                 el.innerHTML = "<tbody><tr><td>test<\/td><\/tr><\/tbody>";
-                var isBuggy = typeof el.tBodies[0] == "undefined";
-                el = null;
-                return isBuggy;
+                buggy = typeof el.tBodies[0] == "undefined";
             }
-        }catch(e){
-            return true;
-        }
+        }catch(e){}
+        return buggy;
     });
 
     addtest("bug-script-rejects-textnode-append", function(g, d){
         var s = d.createElement("script"),
-            isBuggy = false;
+            buggy = false;
         if(s && s.appendChild){
             try{
                 s.appendChild(d.createTextNode(""));
-                isBuggy = !s.firstChild || (s.firstChild && s.firstChild.nodeType !== 3);
+                buggy = !s.firstChild || (s.firstChild && s.firstChild.nodeType !== 3);
             }catch(e){
                 return true;
             }
             s = null;
-            return isBuggy;
+            return buggy;
         }
         return null;
     });
@@ -209,7 +195,7 @@
             var num = Number(new Date()),
                 name = "__test_" + num,
                 head = d.getElementsByTagName("head")[0],
-                isBuggy = false, 
+                buggy = false,
                 el;
             try{
                 el = d.createElement("<input name='"+ name +"'>");
@@ -220,10 +206,10 @@
             if(head.appendChild && head.removeChild){
                 head.appendChild(el);
                 var testElement = d.getElementById(name);
-                isBuggy = !!(testElement && (testElement.nodeName.toUpperCase() === "INPUT"));
+                buggy = !!(testElement && (testElement.nodeName.toUpperCase() === "INPUT"));
                 head.removeChild(el);
                 el = null;
-                return isBuggy;
+                return buggy;
             }
         }
         return null;
@@ -247,7 +233,7 @@
     });
 
     addtest("bug-getelementsbyname", function(g, d){
-        var isBuggy = null, 
+        var buggy = null,
             docEl = d.documentElement;
         if(docEl && docEl.appendChild && docEl.removeChild &&
             d.getElementsByName && d.createElement){
@@ -256,16 +242,16 @@
                 var uid = "x" + (Math.random() + "").slice(2);
                 el.id = uid;
                 docEl.appendChild(el);
-                isBuggy = d.getElementsByName(uid)[0] === el;
+                buggy = d.getElementsByName(uid)[0] === el;
                 docEl.removeChild(el);
-            } 
+            }
         }
-        return isBuggy;
+        return buggy;
     });
 
     addtest("bug-offset-values-positioned-inside-static", function(g, d){
-        var body = d.body, 
-            isBuggy = null;
+        var body = d.body,
+            buggy = null;
         if(body && body.insertBefore && d.createElement && d.getElementById){
             var id = "x" + (Math.random() + "").slice(2);
             var clearance = "margin:0;padding:0;border:0;visibility:hidden;";
@@ -286,95 +272,98 @@
                         // buggy, set position to relative and check if it fixes it
                         el.style.position = "relative";
                         if(el.offsetTop === 10){
-                            isBuggy = true;
+                            buggy = true;
                         }
                     }else{
-                        isBuggy = false;
+                        buggy = false;
                     }
                 }
                 body.removeChild(wrapper);
             }
             wrapper = null;
         }
-        return isBuggy;
+        return buggy;
     });
 
-    addtest("bug-xpath-position", function(g, d){
-        var isBuggy = null;
-        if(has.isHostType(d, "evaluate") && g.XPathResult){
-            var el = d.createElement("div");
-            el.innerHTML = "<p>a</p><p>b</p>"
-            var xpath = ".//*[local-name()='p' or local-name()='P'][position() = 2]";
-            var result = d.evaluate(xpath, el, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-            if(result && result.snapshotItem){
-                isBuggy = (result.snapshotItem(0).innerHTML !== "b");
+    addtest("bug-xpath-position", function(g, d, el){
+        var buggy = null,
+            xpath = ".//*[local-name()='p' or local-name()='P'][position() = 2]";
+
+        if(has.isHostType(d, "evaluate") && typeof g.XPathResult == "object"){
+            el.innerHTML = "<p>a</p><p>b</p>";
+            xpath = d.evaluate(xpath, el, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+            if(xpath && has.isHostType(xpath, "snapshotItem")){
+                buggy = xpath.snapshotItem(0).innerHTML != "b";
             }
             el.innerHTML = "";
         }
-        return isBuggy;
+        return buggy;
     });
 
-    addtest("bug-overflow-style", function(g, d, e){
-        var isBuggy = null;
-        e.innerHTML = "<p style='overflow: visible;'>x</p>";
-        var firstChild = e.firstChild;
-        if(firstChild && firstChild.style){
-            firstChild.style.overflow = "hidden";
-            isBuggy = firstChild.style.overflow !== "hidden";
+    addtest("bug-overflow-style", function(g, d, el){
+        el.innerHTML = "<p style='overflow: visible;'>x</p>";
+
+        var buggy = null,
+            style = el.firstChild && el.firstChild.style;
+  
+        if(style){
+            style.overflow = "hidden";
+            buggy = style.overflow != "hidden";
         }
-        firstChild = null;
-        e.innerHTML = "";
-        return isBuggy;
+        el.innerHTML = "";
+        return buggy;
     });
 
-    addtest("bug-qsa", function(g, d, e){
-        var isBuggy = null;
-        if(e && e.querySelectorAll){
-            e.innerHTML = "<object><param name=''></object>";
-            isBuggy = e.querySelectorAll("param").length != 1;
-            e.innerHTML = "";
+    addtest("bug-qsa", function(g, d, el){
+        var buggy = null;
+        if(has.isHostType(el, "querySelectorAll")){
+            el.innerHTML = "<object><param name=''></object>";
+            buggy = el.querySelectorAll("param").length != 1;
+            el.innerHTML = "";
         }
-        return isBuggy;
-    });    
+        return buggy;
+    });
 
 
     addtest("bug-string-split-regexp", function(){
-        var s = "a_b";
-        if(typeof s.split == FN){
-            return s.split(/(_)/).length !== 3;
+        var buggy = null, s = "a_b";
+        if(toString.call(s.split) == FUNCTION_CLASS){
+            buggy = s.split(/(_)/).length != 3;
         }
-        return null;
+        return buggy;
     });
 
     addtest("bug-function-expression", function(){
-        var g = null;
-        return (function(){
-            var f = function g(){};
-            // `g` should be resolved to `null` (the one we declared outside this function)
-            // but since named function expression identifier leaks onto the enclosing scope in IE, 
-            // it will be resolved to a function
-            return (typeof g == FN);
-        })();
-    });
-    
-    addtest("bug-string-replace-ignores-functions", function(g){
-        var s = "a";
-        if(typeof s.replace == FN){
-            return (s.replace(s, function(){ return ""; }).length !== 0);
+        // `x` should be resolved to `null` (the one we declared outside this function)
+        // but since named function expression identifier leaks onto the enclosing scope in IE,
+        // it will be resolved to a function
+        var f = function x(){},
+           buggy = typeof x == FN;
+        if (buggy) {
+          x = null;
         }
-        return null;
+        return buggy;
+    });
+
+    addtest("bug-string-replace-ignores-functions", function(){
+        var buggy = null, s = "a";
+        if(toString.call(s.replace) == FUNCTION_CLASS){
+            buggy = s.replace(s, function(){ return ""; }) != "";
+        }
+        return buggy;
     });
 
     addtest("bug-arguments-instanceof-array", function(g){
         return arguments instanceof g.Array;
     });
 
-    addtest("bug-array-concat-arguments", function(g){
+    addtest("bug-array-concat-arguments", function(){
         return (function(){
+            var buggy = null;
             if(has("bug-arguments-instanceof-array")){
-                return [].concat(arguments)[0] != 1;
+                buggy = [].concat(arguments)[0] != 1;
             }
-            return null;
+            return buggy;
         })(1,2);
     });
 
@@ -404,16 +393,16 @@
     addtest("bug-tofixed-rounding", function(){
         return (0.9).toFixed() == 0;
     });
-    
+
+    // IE bug
     addtest("bug-bgimagecache", function(g, d){
-        var supported = false;
+        var buggy = false;
         try{
+            // TODO: Fix false positive for Chrome
             d.execCommand("BackgroundImageCache", false, true);
-            supported = true;
-        }catch(e){
-            // sane browsers don't have cache "issues"
-        }
-        return supported;
+            buggy = true;
+        }catch(e){}
+        return buggy;
     });
 
 })(has, has.add, has.cssprop);
