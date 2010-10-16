@@ -1,5 +1,7 @@
 (function(has, addtest, cssprop){
 
+    if(!has("dom")){ return; }
+
     var video = document.createElement("video");
 
     addtest("video", function() {
