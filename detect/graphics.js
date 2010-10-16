@@ -5,70 +5,67 @@
         toString = {}.toString
     ;
 
-    var elem = document.createElement("canvas"); // FIXME: needs to be self-containedish ^ph
+    if(!has("dom")){ return; }
 
-    addtest("canvas", function(){ 
-        return (elem.getContext && elem.getContext("2d"));
+    // FIXME: needs to be self-containedish ^ph
+    var canvas = document.createElement("canvas");
+
+    addtest("canvas", function(){
+        return has.isHostType(canvas, "getContext") && !!canvas.getContext("2d");
     });
-    
+
+    addtest("canvas-webgl", function(){
+        var supported = false;
+        try{
+            supported = !!canvas.getContext("webgl");
+        }catch(e){}
+
+        if(!supported){
+            try{
+                supported = !!canvas.getContext("experimental-webgl");
+            }catch(e){}
+        }
+        return has("canvas") && supported;
+    });
+
     addtest("canvas-text", function(){
-        return has("canvas") && typeof elem.getContext("2d").fillText == FN;
+        return has("canvas") && typeof canvas.getContext("2d").fillText == FN;
     });
-    
+
+
+    var svgNS = "http://www.w3.org/2000/svg";
+
     addtest("svg", function(g){
         return ("SVGAngle" in g);
     });
-    
-    var svgNS = "http://www.w3.org/2000/svg";
 
-    addtest("svg-inlinesvg", function(g, d, e){
+    addtest("svg-inlinesvg", function(g, d, el){
         var supported = null;
-        e.innerHTML = "<svg/>";
-
-        supported = (e.firstChild && e.firstChild.namespaceURI) == svgNS;
-
-        e.innerHTML = "";
+        el.innerHTML = "<svg/>";
+        supported = (el.firstChild && el.firstChild.namespaceURI) == svgNS;
+        el.innerHTML = "";
         return supported;
     });
-    
+
     addtest("svg-smil", function(g, d){
-        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(svgNS,"animate")));
+        return has("dom-createelementns") && /SVG/.test(toString.call(d.createElementNS(svgNS, "animate")));
     });
 
     addtest("svg-clippaths", function(g, d){
-        return !!d.createElementNS && /SVG/.test(toString.call(d.createElementNS(svgNS,"clipPath")));
+        return has("dom-createelementns") && /SVG/.test(toString.call(d.createElementNS(svgNS, "clipPath")));
     });
-    
-    addtest("vml", function(g, d, e){
+
+    addtest("vml", function(g, d, el){
         /*
           Sources:
           http://en.wikipedia.org/wiki/Vector_Markup_Language
           http://msdn.microsoft.com/en-us/library/bb263897(v=VS.85).aspx
           http://www.svg-vml.net/Zibool-compar.htm
-        */          
-        var vml, supported;
-
-        e.innerHTML = "<v:shape adj=\"1\"/>";
-        vml = e.firstChild;
-
-        supported = "adj" in vml;
-
-        vml = null;
-        e.innerHTML = "";
-
+        */
+        el.innerHTML = "<v:shape adj=\"1\"/>";
+        var supported = ("adj" in el.firstChild);
+        el.innerHTML = "";
         return supported;
-    });
-    
-    addtest("canvas-webgl", function(){
-        try{
-            if(elem.getContext("webgl")){ return true; }
-        }catch(e){}
-
-        try{
-            if(elem.getContext("experimental-webgl")){ return true; }
-        }catch(e){}
-
-        return false;
     });
 
 })(has, has.add, has.cssprop);

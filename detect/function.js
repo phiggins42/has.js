@@ -1,12 +1,15 @@
- (function(has, addtest, cssprop){
+ (function(has, addtest, cssprop, undefined){
+
+    var toString = {}.toString,
+        FUNCTION_CLASS = "[object Function]";
 
     // Function tests
     addtest("function-bind", function(){
-        return "bind" in Function.prototype;
+        return toString.call(Function.bind) == FUNCTION_CLASS;
     });
 
-    addtest("function-caller", function() { 
-        function test(undefined) { return test.caller !== undefined; }
+    addtest("function-caller", function(){ 
+        function test(){ return test.caller !== undefined; }
         return test();
     });
 
