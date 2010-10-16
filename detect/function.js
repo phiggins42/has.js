@@ -8,8 +8,8 @@
         return toString.call(Function.bind) == FUNCTION_CLASS;
     });
 
-    addtest("function-caller", function() { 
-        function test() { return test.caller !== undefined; }
+    addtest("function-caller", function(){ 
+        function test(){ return test.caller !== undefined; }
         return test();
     });
 

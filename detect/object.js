@@ -18,8 +18,8 @@
             obj = { },
             backup = arr.__proto__;
 
-        if (arr.__proto__ == Array.prototype  &&
-              obj.__proto__ == Object.prototype) {
+        if(arr.__proto__ == Array.prototype &&
+                obj.__proto__ == Object.prototype){
             // test if it's writable and restorable
             arr.__proto__ = obj;
             supported = typeof arr.push == "undefined";

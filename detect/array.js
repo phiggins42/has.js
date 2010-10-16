@@ -54,11 +54,17 @@
     });
 
     addtest("array-slice-nodelist", function(g, d, el){
-        var supported = true, de = d.documentElement, id = de.id;
+        var supported = true,
+            de = d.documentElement,
+            id = de.id;
+
         // Opera 9.25 bug
         de.id = "length";
         // older Safari will return an empty array
-        try { supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0]; } catch(e) { }
+        try{
+            supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0];
+        }catch(e){}
+
         de.id = id;
         return supported;
     });

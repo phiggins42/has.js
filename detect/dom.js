@@ -23,7 +23,7 @@
     }, true);
 
     // works in all but IE
-    addtest("dom-createelementns", function(g, d) {
+    addtest("dom-createelementns", function(g, d){
         return has.isHostType(d, "createElementNS");
     })
 

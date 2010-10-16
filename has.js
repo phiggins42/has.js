@@ -86,9 +86,9 @@ has = (function(g){
         return supported;
     }
 
-    function clearElement(el) {
-        if (el) {
-            while (el.lastChild) {
+    function clearElement(el){
+        if(el){
+            while(el.lastChild){
                 el.removeChild(el.lastChild);
             }
         }
@@ -98,7 +98,7 @@ has = (function(g){
     // Host objects can return type values that are different from their actual
     // data type. The objects we are concerned with usually return non-primitive
     // types of object, function, or unknown.
-    function isHostType(object, property) {
+    function isHostType(object, property){
         var type = typeof object[property];
         return type == 'object' ? !!object[property] : !NON_HOST_TYPES[type];
     }

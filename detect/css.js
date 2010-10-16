@@ -9,7 +9,7 @@
     //FROM cft.js
     addtest("css-enabled", function(g, d, el){
         var supported, fake,
-            root = d.body || (function() {
+            root = d.body || (function(){
                 fake = true;
                 return d.documentElement.appendChild(d.createElement("body"));
             }());
@@ -28,8 +28,8 @@
     addtest("css-content-box", function(g, d, el){
         var fake, root, supported = null;
 
-        if (has("css-enabled")) {
-            root = d.body || (function() {
+        if(has("css-enabled")){
+            root = d.body || (function(){
                 fake = true;
                 return d.documentElement.appendChild(d.createElement("body"));
             }());
@@ -51,9 +51,9 @@
         var control, fake, oldCssText, root,
             supported = null;
 
-        if (has("css-enabled")) {
+        if(has("css-enabled")){
             control = el.cloneNode(false);
-            root = d.body || (function() {
+            root = d.body || (function(){
                 fake = true;
                 return d.documentElement.appendChild(d.createElement("body"));
             }());
@@ -83,7 +83,7 @@
         var re = /^rgba/,
             supported = null;
 
-        if (has("css-enabled")) {
+        if(has("css-enabled")){
           try{
               el.style.color = "rgba(1,1,1,0.5)";
               supported = re.test(el.style.color);

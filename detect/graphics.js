@@ -20,7 +20,7 @@
             supported = !!canvas.getContext("webgl");
         }catch(e){}
 
-        if (!supported) {
+        if(!supported){
             try{
                 supported = !!canvas.getContext("experimental-webgl");
             }catch(e){}

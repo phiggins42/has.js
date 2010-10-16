@@ -4,7 +4,7 @@
 
     var script = document.createElement("script");
 
-    addtest("script-defer", function() {
+    addtest("script-defer", function(){
         return ("defer" in script);
     });
 

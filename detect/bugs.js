@@ -19,7 +19,7 @@
             position = null,
             buggy = position;
 
-        if (has("dom-computed-style")) {
+        if(has("dom-computed-style")){
             // if element is not statically positioned, make it as such, then restore
             computed = view.getComputedStyle(de, null);
             if(computed.position != "static"){
@@ -129,10 +129,10 @@
     addtest("bug-properties-are-attributes", function(g, d, el){
         el.__foo = "bar";
         var buggy = el.getAttribute("__foo") == "bar";
-        if (buggy) {
-          el.removeAttribute("__foo");
-        } else {
-          delete el.__foo;
+        if(buggy){
+            el.removeAttribute("__foo");
+        }else{
+            delete el.__foo;
         }
         return buggy;
     });
@@ -183,7 +183,6 @@
             }catch(e){
                 return true;
             }
-            s = null;
             return buggy;
         }
         return null;
@@ -339,7 +338,7 @@
         // it will be resolved to a function
         var f = function x(){},
            buggy = typeof x == FN;
-        if (buggy) {
+        if(buggy){
           x = null;
         }
         return buggy;

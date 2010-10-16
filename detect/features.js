@@ -38,7 +38,7 @@
         return supported;
     });
 
-    addtest("native-navigator", function(g) {
+    addtest("native-navigator", function(g){
         return ("navigator" in g);
     });
 
@@ -51,11 +51,11 @@
      *   http://gist.github.com/366184
      */
 
-    addtest("native-geolocation", function(g) {
+    addtest("native-geolocation", function(g){
         return has("native-navigator") && ("geolocation" in g.navigator);
     });
 
-    addtest("native-crosswindowmessaging", function(g) {
+    addtest("native-crosswindowmessaging", function(g){
         return ("postMessage" in g);
     });
 
@@ -127,21 +127,21 @@
     });
 
 
-    addtest("native-localstorage", function (g) {
+    addtest("native-localstorage", function(g){
       //  Thanks Modernizr!
       var supported = false;
-      try {
+      try{
         supported = ("localStorage" in g) && ("setItem" in localStorage);
-      } catch(e){}
+      }catch(e){}
       return supported;
     });
 
-    addtest("native-sessionstorage", function (g) {
+    addtest("native-sessionstorage", function(g){
       //  Thanks Modernizr!
       var supported = false;
-      try {
+      try{
         supported = ("sessionStorage" in g) && ("setTime" in sessionStorage);
-      } catch(e){}
+      }catch(e){}
       return supported;
     });
 

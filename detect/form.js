@@ -175,7 +175,7 @@
 
         // WebKit has a few false positives, so we go more robust
         if(supported && has("dom-computed-style") &&
-                typeof input.style.WebkitAppearance != "undefined") {
+                typeof input.style.WebkitAppearance != "undefined"){
 
             de.appendChild(input);
 
