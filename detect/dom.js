@@ -131,4 +131,8 @@
         return !has("dom-computed-style") && has.isHostType(d.documentElement, "currentStyle");
     });
 
+    addtest("dom-element-do-scroll", function(g, d){
+        return has.isHostType(d.documentElement, 'doScroll');
+    });
+
 })(has, has.add, has.cssprop);
