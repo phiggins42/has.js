@@ -16,10 +16,10 @@ has = (function(g){
     //      }
 
     var NON_HOST_TYPES = { "boolean": 1, "number": 1, "string": 1, "undefined": 1 },
+        VENDOR_PREFIXES = ["Webkit", "Moz", "O", "ms", "Khtml"],
         d = isHostType(g, "document") && g.document,
         el = d && isHostType(d, "createElement") && d.createElement("DiV"),
-        prefixes = ["Webkit", "Moz", "O", "ms", "Khtml"],
-        testCache = has._tests = {}
+        testCache = {}
     ;
 
     function has(/* String */name){
@@ -68,7 +68,7 @@ has = (function(g){
     function cssprop(name, el){
         var style,
             supported = false,
-            length = prefixes.length,
+            length = VENDOR_PREFIXES.length,
             capitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
         if(el && (style = el.style)){
@@ -76,7 +76,7 @@ has = (function(g){
                 supported = true;
             }else{
                 while(length--){
-                    if(typeof style[prefixes[length] + capitalized] == "string"){
+                    if(typeof style[VENDOR_PREFIXES[length] + capitalized] == "string"){
                         supported = true;
                         break;
                     }
@@ -125,6 +125,7 @@ has = (function(g){
     has.clearElement = clearElement;
     has.cssprop = cssprop;
     has.isHostType = isHostType;
+    has._tests = testCache;
 
     has.add("dom", function(g, d, el){
         return d && el && isHostType(d, "documentElement") &&

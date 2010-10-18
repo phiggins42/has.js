@@ -29,7 +29,7 @@
 
     // should fail in webkit, as they dont support it.
     addtest("dom-attrmodified", function(g, d, el){
-        var supported = null,
+        var supported = false,
             listener = function(){ supported = true; };
 
         if(has("dom-addeventlistener")){
@@ -43,7 +43,7 @@
     });
 
     addtest("dom-subtreemodified", function(g, d, el){
-        var supported = null,
+        var supported = false,
             listener = function(){ supported = true; };
 
         if(has("dom-addeventlistener")){
@@ -58,8 +58,8 @@
 
     //  FROM cft.js
     addtest("dom-children", function(g, d, el){
-        var supported = null;
-        if(el && has.isHostType(el, "children")){
+        var supported = false;
+        if(has.isHostType(el, "children")){
             var div = el.appendChild(d.createElement("div")),
                 children = el.children;
 
@@ -72,6 +72,8 @@
         return supported;
     });
 
+    // true for html, xhtml and unknown elements are case
+    // sensitive to how they are written in the markup
     addtest("dom-tagname-uppercase", function(g, d, el){
         return el.nodeName == "DIV";
     });
@@ -82,16 +84,17 @@
         return el.childNodes.length == 1;
     });
 
+    
     addtest("dom-html5-shived", function(g, d){
-        var unsupported = !has("dom-html5");
-        if(unsupported){
+        var supported = !has("dom-html5");
+        if(supported){
             // shim it:
             ("abbr article aside audio canvas details figcaption figure footer header " +
             "hgroup mark meter nav output progress section summary time video").replace(/\w+/g,function(n){
                 d.createElement(n);
             });
         }
-        return unsupported;
+        return supported;
     });
 
     addtest("dom-html5-fixed", function(g, d, el){
@@ -111,6 +114,7 @@
         return supported;
     });
 
+    // true for IE
     addtest("dom-selectable", function(g, d, el){
         var supported = false;
         try{
@@ -123,16 +127,19 @@
         return supported;
     });
 
+    // true for all modern browsers, including IE 9+
     addtest("dom-computed-style", function(g, d){
         return has.isHostType(d, "defaultView") && has.isHostType(d.defaultView, "getComputedStyle");
     });
 
+    // true for IE
     addtest("dom-current-style", function(g, d){
         return !has("dom-computed-style") && has.isHostType(d.documentElement, "currentStyle");
     });
 
+    // true for IE
     addtest("dom-element-do-scroll", function(g, d){
-        return has.isHostType(d.documentElement, 'doScroll');
+        return has.isHostType(d.documentElement, "doScroll");
     });
 
 })(has, has.add, has.cssprop);
