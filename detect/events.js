@@ -6,6 +6,7 @@
             result = {
                 metakey: false,
                 preventdefault: false,
+                stoppropagation: false,
                 srcelement: false,
                 relatedtarget: false
             };
@@ -16,6 +17,7 @@
             input.onclick = function(e){
                 e || (e = g.event);
                 result.metakey = ("metaKey" in e);
+                result.stoppropagation = ("stopPropagation" in e);
                 result.preventdefault = ("preventDefault" in e);
                 result.srcelement = ("srcElement" in e);
                 result.relatedtarget = ("relatedTarget" in e);
@@ -28,6 +30,7 @@
 
         addtest("event-metakey", result.metakey);
         addtest("event-preventdefault", result.preventdefault);
+        addtest("event-stoppropagation", result.stoppropagation);
         addtest("event-srcelement", result.srcelement);
         addtest("event-relatedtarget", result.relatedtarget);
         return result[test];
@@ -50,6 +53,10 @@
 
     addtest("event-preventdefault", function(g, d){
         return event_tests(g, d, "preventdefault");
+    });
+
+    addtest("event-stoppropagation", function(g, d){
+        return event_tests(g, d, "stoppropagation");
     });
 
     addtest("event-srcelement", function(g, d){
