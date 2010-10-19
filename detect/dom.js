@@ -25,7 +25,7 @@
     // works in all but IE
     addtest("dom-createelementns", function(g, d){
         return has.isHostType(d, "createElementNS");
-    })
+    });
 
     // should fail in webkit, as they dont support it.
     addtest("dom-attrmodified", function(g, d, el){

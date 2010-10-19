@@ -386,7 +386,7 @@
     });
 
     addtest("bug-es5-regexp", function(){
-        return !/^\s+$/.test(whitespace);
+        return !(/^\s+$/).test(whitespace);
     });
 
     addtest("bug-tofixed-rounding", function(){
