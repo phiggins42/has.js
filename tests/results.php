@@ -93,29 +93,5 @@
     
     <h1>Thanks!</h1>
     
-    <!--
-    <table>
-        <thead>
-            <tr>
-                <td>UserAgent</td>
-                <?php
-                    foreach($master_test_list as $test){
-                        print "<td>" . $test . "</td>"; 
-                    }
-                ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                foreach($out as $agent => $dataset){
-                    print "<tr>\n<td>" . $agent . "</td>";
-                    $row = mixdown($dataset);
-                    print $row;
-                    print "</tr>";
-                }
-            ?>
-        </tbody>
-    </table>
-    -->
 </body>
 </html>
