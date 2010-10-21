@@ -34,26 +34,26 @@
         <script src="require.js"></script>
         <script>
         
-            require([
-                "../detect/bugs.js",
-                "../detect/array.js",
-                "../detect/graphics.js",
-                "../detect/css.js",
-                "../detect/dates.js",
-                "../detect/dom.js",
-                "../detect/features.js",
-                "../detect/form.js",
-                "../detect/function.js",
-                "../detect/json.js",
-                "../detect/object.js",
-                "../detect/strings.js",
-                "../detect/events.js",
-                "../detect/script.js",
-                "../detect/audio.js",
-                "../detect/video.js"
-            ], function(){
-                require.ready(function(){
-                    
+            require.ready(function(){
+                require([
+                    "../detect/bugs.js",
+                    "../detect/array.js",
+                    "../detect/graphics.js",
+                    "../detect/css.js",
+                    "../detect/dates.js",
+                    "../detect/dom.js",
+                    "../detect/features.js",
+                    "../detect/form.js",
+                    "../detect/function.js",
+                    "../detect/json.js",
+                    "../detect/object.js",
+                    "../detect/strings.js",
+                    "../detect/events.js",
+                    "../detect/script.js",
+                    "../detect/audio.js",
+                    "../detect/video.js"
+                ], function(){
+                
                     has.specials = {};
 
                     has.byId = function(id){
@@ -74,7 +74,7 @@
                     if(!run){
                         alert("lazy with immediate execution failed");
                     }
-                    
+                
                     var out = document.getElementById("output"), 
                         html = [], data = [],
                         nao = +new Date,
@@ -157,6 +157,7 @@
                     has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
 
                     has.byId("boom").disabled = false; // backend not in place
+
                 });
             });
         </script>
