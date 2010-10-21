@@ -23,8 +23,6 @@
         print "<p>No data set sent along?</p>";
     }
 
-    
-
 ?>
 <p><a href="runTests.html">back to runTests.html</a></p>
 </body>

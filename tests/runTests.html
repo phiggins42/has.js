@@ -31,136 +31,26 @@
         <title>has.js tests</title>
         
         <script src="../has.js"></script>
-        <script src="require.js"></script>
-        <script>
+
+        <!--script src="require.js"></script-->
         
-            require.ready(function(){
-                require([
-                    "../detect/bugs.js",
-                    "../detect/array.js",
-                    "../detect/graphics.js",
-                    "../detect/css.js",
-                    "../detect/dates.js",
-                    "../detect/dom.js",
-                    "../detect/features.js",
-                    "../detect/form.js",
-                    "../detect/function.js",
-                    "../detect/json.js",
-                    "../detect/object.js",
-                    "../detect/strings.js",
-                    "../detect/events.js",
-                    "../detect/script.js",
-                    "../detect/audio.js",
-                    "../detect/video.js"
-                ], function(){
-                
-                    has.specials = {};
+        <script src="../detect/bugs.js"></script>
+        <script src="../detect/array.js"></script>
+        <script src="../detect/graphics.js"></script>
+        <script src="../detect/css.js"></script>
+        <script src="../detect/dates.js"></script>
+        <script src="../detect/dom.js"></script>
+        <script src="../detect/features.js"></script>
+        <script src="../detect/form.js"></script>
+        <script src="../detect/function.js"></script>
+        <script src="../detect/json.js"></script>
+        <script src="../detect/object.js"></script>
+        <script src="../detect/strings.js"></script>
+        <script src="../detect/events.js"></script>
+        <script src="../detect/script.js"></script>
+        <script src="../detect/audio.js"></script>
+        <script src="../detect/video.js"></script>
 
-                    has.byId = function(id){
-                        return document.getElementById(id);
-                    }
-
-                    // redundant test
-                    has.add("js-enabled-direct", true);
-
-                    var lazy = 0;
-                    has.add("js-enabled-lazy", function(){ lazy++; return true; });
-                    if(!lazy && !has("js-enabled-lazy")){
-                        alert("lazy test failed.");
-                    }
-
-                    var run = 0;
-                    has.add("js-enabled-lazy-now", function(){ run++; return true; }, true);
-                    if(!run){
-                        alert("lazy with immediate execution failed");
-                    }
-                
-                    var out = document.getElementById("output"), 
-                        html = [], data = [],
-                        nao = +new Date,
-                        results = has.all(),
-                        done = +new Date,
-                        bugRE = /^bug-/
-                    ;
-
-                    function resultClass(result, isBug, special){
-                        // format bug-* tests opposite from others
-                        if(result === null){
-                            return "na";
-                        }
-                        if(result == "error"){
-                            return "error";
-                        }
-                        if(isBug){
-                            return (result ? "no" : "yes");
-                        }
-                        return (result ? "yes" : "no");
-                    }
-
-                    var keys = [], i;
-
-                    if(has('object-keys')){
-                        keys = Object.keys(results);
-                    }else{
-                        for(i in results){
-                            keys.push(i);
-                        }
-                    }
-                    keys.sort();
-
-                    var categories = { 'none': [] },
-                        categoryRE = /^(\w+)[-]?/;
-                    var outputResult = function(key, i){
-                        var special = "", r = results[key],
-                            match = key.match(categoryRE),
-                            category = match ? match[1] : 'none';
-
-                        if(!(category in categories)){
-                            categories[category] = [];
-                        }
-                        var html = categories[category];
-
-                        if(key in has.specials){
-                            special = r[has.specials[key]] || "";
-                        }
-
-                        if(r == "error"){
-                            special = ": " + r.ERROR_MSG;
-                        }
-
-                        data.push("<input type='hidden' name='", key, "' value='", r + special ,"'>");
-                        html.push("<li>", key ," <em class='", resultClass(r, bugRE.test(key)), "'>",
-                            (r === null ? 'n/a' : (r == "error" ? r : !!r)) , "</em>", special, "</li>");
-                    };
-
-                    if(has('array-foreach')){
-                        keys.forEach(outputResult);
-                    }else{
-                        i = 0;
-                        for(var key; key=keys[i]; i++){
-                            outputResult(key, i);
-                        }
-                    }
-
-                    for(var j in categories){
-                        if(!categories[j].length){ continue; }
-                        html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
-                        html = html.concat(categories[j]);
-                        html.push('</ul></fieldset>');
-                    }
-
-                    out.innerHTML = html.join("");
-
-                    has.byId("resultinputs").innerHTML = data.join("");
-
-                    has.byId("cost").value = has.byId("took").innerHTML = "took: " + (done - nao) + "ms";
-                    has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
-
-                    has.byId("boom").disabled = false; // backend not in place
-
-                });
-            });
-        </script>
     </head>
     <body>
 
@@ -181,6 +71,112 @@
         </form>
 
         <p>More about this test page and project on <a href="http://github.com/phiggins42/has.js">github:has.js</a></p>
+
+        <script>
+            has.specials = {};
+
+            has.byId = function(id){
+                return document.getElementById(id);
+            }
+
+            // redundant test
+            has.add("js-enabled-direct", true);
+
+            var lazy = 0;
+            has.add("js-enabled-lazy", function(){ lazy++; return true; });
+            if(!lazy && !has("js-enabled-lazy")){
+                alert("lazy test failed.");
+            }
+
+            var run = 0;
+            has.add("js-enabled-lazy-now", function(){ run++; return true; }, true);
+            if(!run){
+                alert("lazy with immediate execution failed");
+            }
+
+            var out = document.getElementById("output"), 
+                html = [], data = [],
+                nao = +new Date,
+                results = has.all(),
+                done = +new Date,
+                bugRE = /^bug-/
+            ;
+
+            function resultClass(result, isBug, special){
+                // format bug-* tests opposite from others
+                if(result === null){
+                    return "na";
+                }
+                if(result == "error"){
+                    return "error";
+                }
+                if(isBug){
+                    return (result ? "no" : "yes");
+                }
+                return (result ? "yes" : "no");
+            }
+
+            var keys = [], i;
+
+            if(has('object-keys')){
+                keys = Object.keys(results);
+            }else{
+                for(i in results){
+                    keys.push(i);
+                }
+            }
+            keys.sort();
+
+            var categories = { 'none': [] },
+                categoryRE = /^(\w+)[-]?/;
+            var outputResult = function(key, i){
+                var special = "", r = results[key],
+                    match = key.match(categoryRE),
+                    category = match ? match[1] : 'none';
+
+                if(!(category in categories)){
+                    categories[category] = [];
+                }
+                var html = categories[category];
+
+                if(key in has.specials){
+                    special = r[has.specials[key]] || "";
+                }
+
+                if(r == "error"){
+                    special = ": " + r.ERROR_MSG;
+                }
+
+                data.push("<input type='hidden' name='", key, "' value='", r + special ,"'>");
+                html.push("<li>", key ," <em class='", resultClass(r, bugRE.test(key)), "'>",
+                    (r === null ? 'n/a' : (r == "error" ? r : !!r)) , "</em>", special, "</li>");
+            };
+
+            if(has('array-foreach')){
+                keys.forEach(outputResult);
+            }else{
+                i = 0;
+                for(var key; key=keys[i]; i++){
+                    outputResult(key, i);
+                }
+            }
+
+            for(var j in categories){
+                if(!categories[j].length){ continue; }
+                html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
+                html = html.concat(categories[j]);
+                html.push('</ul></fieldset>');
+            }
+
+            out.innerHTML = html.join("");
+
+            has.byId("resultinputs").innerHTML = data.join("");
+
+            has.byId("cost").value = has.byId("took").innerHTML = "took: " + (done - nao) + "ms";
+            has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
+
+            has.byId("boom").disabled = false; // backend not in place
+        </script>
 
     </body>
 </html>
