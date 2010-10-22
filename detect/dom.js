@@ -140,8 +140,10 @@
           head = d.getElementsByTagName("head")[0],
           bool = false;
           
+          // TODO: investigate if IE wont return full path. Perhaps need to create A tag via innerHTML. ^pi
+          link.href = 'testurl'; 
           base.href = fauxBase;
-          link.href = 'testurl';
+          
           head.appendChild(base);
           body.appendChild(link);
 
