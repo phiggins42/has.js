@@ -124,38 +124,33 @@
         return has.isHostType(d.documentElement, "doScroll");
     });
 
-
-    // test for dynamic-updating base tag support (allows us to avoid href,src attr rewriting)
-    // false for Firefox
-    // adapted with permission from http://github.com/jquery/jquery-mobile/commit/70bba
+    // test for dynamic-updating base tag support (allows us to avoid href & src attr rewriting)
+    // false for Firefox and IE < 8
     addtest("dom-dynamic-base", function (g, d, el){
-      var fauxBase = location.protocol + '//' + location.host + location.pathname + 'test/',
-          base = d.createElement('base'),
-          link = d.createElement('a'),
-          fake = false,
-          body = d.body || (function(){
-              fake = true;
-              return d.documentElement.appendChild(d.createElement("body"));
-          }()),
+      var backup, base,
+          q = d.createElement("q"),
           head = d.getElementsByTagName("head")[0],
-          bool = false;
-          
-          // TODO: investigate if IE wont return full path. Perhaps need to create A tag via innerHTML. ^pi
-          link.href = 'testurl'; 
-          base.href = fauxBase;
-          
-          head.appendChild(base);
-          body.appendChild(link);
+          fake = false,
+          supported = null;
 
-          bool = link.href.indexOf(fauxBase) === 0;
+       if(head){
+            base = d.getElementsByTagName("base")[0] || (function(){
+                fake = true;
+                return head.insertBefore(d.createElement("base"), head.firstChild);
+            })();
 
-          if(fake){
-              d.documentElement.removeChild(body);
-          }
-          head.removeChild(base);
-          body.removeChild(link);
-          
-          return bool;
-    });
+            backup = base.href;
+            base.href = (("location" in g) ? location.protocol : "http:") + "//x";
+            q.cite = "y";
+            supported = q.cite.indexOf("x/y") > -1;
+
+            if(fake){
+                head.removeChild(base);
+            } else {
+                base.href = backup;
+            }
+      }
+      return supported;
+  });
 
 })(has, has.add, has.cssprop);
