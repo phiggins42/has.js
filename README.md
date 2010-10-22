@@ -91,17 +91,17 @@ There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.
 
 Internally, we follow these conventions:
 
-    + All Strings are quoted using double-quotes **"**
-    + Test names are lowercase, hyphen separated strings. Enclosed in double-quotes
-        + Tests are passed `g`, `d`, and `n`. Use these aliases always.
-    + Globals are as follows, available as used but will be reduced to a single ref:
-        + STR == "string"
-        + FN == "function"
-    + Tests return Booleans. Sometimes, you must coerce a boolean:
-        + DO return !!(someExpression) as necessary
-        + DO N0T return !!("x" in y) or anything else that would otherwise return a boolean, eg
-            + x !== y, x > y, x typeof y
-        + DO wrap expressions in parens: eg return ("x" in y)
+  + All Strings are quoted using double-quotes **"**
+  + Test names are lowercase, hyphen separated strings. Enclosed in double-quotes
+    + Tests are passed `g`, `d`, and `n`. Use these aliases always.
+  + Globals are as follows, available as used but will be reduced to a single ref:
+    + STR == "string"
+    + FN == "function"
+  + Tests return Booleans. Sometimes, you must coerce a boolean:
+    + DO return !!(someExpression) as necessary
+    + DO N0T return !!("x" in y) or anything else that would otherwise return a boolean, eg
+      + x !== y, x > y, x typeof y
+    + DO wrap expressions in parens: eg return ("x" in y)
 
 ## License 
 
