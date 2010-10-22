@@ -78,29 +78,11 @@
         return el.nodeName == "DIV";
     });
 
-    // FIXME: these don't need to be here, was just doing first pass at inspection ^ph
-    addtest("dom-html5", function(g, d, el){
+    addtest("dom-html5-elements", function(g, d, el){
         el.innerHTML = "<nav>a</nav>";
         return el.childNodes.length == 1;
     });
 
-    
-    addtest("dom-html5-shived", function(g, d){
-        var supported = !has("dom-html5");
-        if(supported){
-            // shim it:
-            ("abbr article aside audio canvas details figcaption figure footer header " +
-            "hgroup mark meter nav output progress section summary time video").replace(/\w+/g,function(n){
-                d.createElement(n);
-            });
-        }
-        return supported;
-    });
-
-    addtest("dom-html5-fixed", function(g, d, el){
-        el.innerHTML = "<nav>a</nav>";
-        return el.childNodes.length == 1;
-    });
 
     // TODO: see
     // http://msdn.microsoft.com/en-us/library/ms536389(VS.85).aspx vs
