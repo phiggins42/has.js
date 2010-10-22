@@ -124,4 +124,36 @@
         return has.isHostType(d.documentElement, "doScroll");
     });
 
+
+    // test for dynamic-updating base tag support (allows us to avoid href,src attr rewriting)
+    // false for Firefox
+    // adapted with permission from http://github.com/jquery/jquery-mobile/commit/70bba
+    addtest("dom-dynamic-base", function (g, d, el){
+      var fauxBase = location.protocol + '//' + location.host + location.pathname + 'test/',
+          base = d.createElement('base'),
+          link = d.createElement('a'),
+          fake = false,
+          body = d.body || (function(){
+              fake = true;
+              return d.documentElement.appendChild(d.createElement("body"));
+          }()),
+          head = d.getElementsByTagName("head")[0],
+          bool = false;
+          
+          base.href = fauxBase;
+          link.href = 'testurl';
+          head.appendChild(base);
+          body.appendChild(link);
+
+          bool = link.href.indexOf(fauxBase) === 0;
+
+          if(fake){
+              d.documentElement.removeChild(body);
+          }
+          head.removeChild(base);
+          body.removeChild(link);
+          
+          return bool;
+    });
+
 })(has, has.add, has.cssprop);
