@@ -95,11 +95,11 @@
         return supported;
     });
 
+    // TODO: this test is really testing if expando's become attributes (IE)  
     // true for IE
     addtest("dom-selectable", function(g, d, el){
         var supported = false;
         try{
-            // TODO: this test is really testing if expando's become attributes (IE)
             el.unselectable = "on";
             supported = typeof e.attributes.unselectable != "undefined" &&
                 e.attributes.unselectable.value == "on";
