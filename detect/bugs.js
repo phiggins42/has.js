@@ -38,9 +38,9 @@
                     buggy = true;
                 }
             }
-            if(fake){
-                root.parentNode.removeChild(root);
-            }
+        }
+        if(fake){
+            root.parentNode.removeChild(root);
         }
         root.removeChild(el);
         has.clearElement(el);
