@@ -131,7 +131,7 @@
         return has.isHostType(d, "forms") ? (typeof d.forms == FN) : null;
     });
 
-    // IE returns comment nodes as part of `getElementsByTagName` results
+    // true for IE
     addtest("bug-getelementsbytagname-returns-comment-nodes", function(g, d, el){
         var all, buggy = null;
 
@@ -147,25 +147,20 @@
         return buggy;
     });
 
-    // TODO: Add bug-setattribute-ignores-type too
+    // TODO: Add bug-readonly-element-type too
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
-    addtest("bug-setattribute-ignores-name", function(g, d){
+    addtest("bug-readonly-element-name", function(g, d, el){
         var buggy,
-            form = d.createElement("form"),
-            input = d.createElement("input"),
-            de = d.documentElement;
+            input = el.appendChild(d.createElement("input"));
 
-        input.setAttribute("name", "test");
-        form.appendChild(input);
-
-        // Older Safari (e.g. 2.0.2) populates "elements" collection only when form is within a document
-        de.appendChild(form);
-        buggy = form.elements ? (typeof form.elements["test"] == "undefined") : null;
-        de.removeChild(form);
+        input.name = 'x';
+        buggy = !el.getElementsByTagName('*')['x'];
+        has.clearElement(el);
         return buggy;
     });
 
+    // true for IE
     addtest("bug-properties-are-attributes", function(g, d, el){
         el.__foo = "bar";
         var buggy = el.getAttribute("__foo") == "bar";
@@ -178,6 +173,7 @@
         return buggy;
     });
 
+    // true for IE
     addtest("bug-pre-ignores-newline", function(g, d){
         var buggy,
             de = d.documentElement,
