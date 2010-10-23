@@ -276,7 +276,7 @@
         var buggy = null,
             xpath = ".//*[local-name()='p' or local-name()='P'][position() = 2]";
 
-        if(has.isHostType(d, "evaluate") && typeof g.XPathResult == "object"){
+        if(has.isHostType(d, "evaluate") && has.isHostType(g, "XPathResult")){
             el.appendChild(d.createElement("p")).appendChild(d.createTextNode("a"));
             el.appendChild(d.createElement("p")).appendChild(d.createTextNode("b"));
             xpath = d.evaluate(xpath, el, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
