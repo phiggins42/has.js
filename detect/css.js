@@ -11,18 +11,19 @@
             }());
 
         el.style.display = "none";
-        root.appendChild(el);
+        root.insertBefore(el, root.firstChild);
         supported = (el.offsetWidth === 0);
         root.removeChild(el);
 
         if(fake){
-            d.documentElement.removeChild(root);
+            root.parentNode.removeChild(root);
         }
         return supported;
     });
 
     addtest("css-content-box", function(g, d, el){
-        var fake, root, supported = null;
+        var fake, root,
+            supported = null;
 
         if(has("css-enabled")){
             root = d.body || (function(){
@@ -31,20 +32,20 @@
             }());
 
             el.style.cssText = "position: absolute; top: -4000px; width: 40px; height: 40px; border: 1px solid black;";
-            root.appendChild(el);
+            root.insertBefore(el, root.firstChild);
 
             supported = el.clientWidth == 40;
             root.removeChild(el);
             el.style.cssText = "";
         }
         if(fake){
-            d.documentElement.removeChild(root);
+            root.parentNode.removeChild(root);
         }
         return supported;
     });
 
     addtest("css-position-fixed", function(g, d, el){
-        var control, fake, oldCssText, root,
+        var backup, control, fake, root,
             supported = null;
 
         if(has("css-enabled")){
@@ -54,22 +55,21 @@
                 return d.documentElement.appendChild(d.createElement("body"));
             }());
 
-            oldCssText = root.style.cssText;
-
+            backup = root.style.cssText;
             root.style.cssText = "padding:0;margin:0";
             el.style.cssText = "position:fixed;top:42px";
-            root.appendChild(el);
-            root.appendChild(control);
 
+            root.insertBefore(control, root.firstChild);
+            root.insertBefore(el, control);
             supported = el.offsetTop !== control.offsetTop;
 
             root.removeChild(el);
             root.removeChild(control);
-            root.style.cssText = oldCssText;
+            root.style.cssText = backup;
             el.style.cssText = "";
         }
         if(fake){
-            d.documentElement.removeChild(root);
+            root.parentNode.removeChild(root);
         }
         return supported;
     });
