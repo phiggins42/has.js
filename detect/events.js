@@ -4,11 +4,11 @@
         var de = d.documentElement,
             input = d.createElement("input"),
             result = {
-                metakey: false,
-                preventdefault: false,
-                stoppropagation: false,
-                srcelement: false,
-                relatedtarget: false
+                metakey: null,
+                preventdefault: null,
+                stoppropagation: null,
+                srcelement: null,
+                relatedtarget: null
             };
 
         if(has.isHostType(input, "click")){
@@ -22,10 +22,12 @@
                 result.srcelement = ("srcElement" in e);
                 result.relatedtarget = ("relatedTarget" in e);
             };
-            de.appendChild(input);
-            input.click();
-            de.removeChild(input);
-            input = input.onclick = null;
+            try{
+                de.insertBefore(input, de.firstChild);
+                input.click();
+                de.removeChild(input);
+            }catch(e){}
+            input.onclick = null;
         }
 
         addtest("event-metakey", result.metakey);
