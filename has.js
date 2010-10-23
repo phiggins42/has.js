@@ -66,20 +66,18 @@ has = (function(g){
 
     // cssprop adapted from http://gist.github.com/598008 (thanks, ^pi)
     function cssprop(name, el){
-        var style,
-            supported = false,
+        var supported = false,
+            capitalized = name.charAt(0).toUpperCase() + name.slice(1),
             length = VENDOR_PREFIXES.length,
-            capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+            style = el.style;
 
-        if(el && (style = el.style)){
-            if(typeof style[name] == "string"){
-                supported = true;
-            }else{
-                while(length--){
-                    if(typeof style[VENDOR_PREFIXES[length] + capitalized] == "string"){
-                        supported = true;
-                        break;
-                    }
+        if(typeof style[name] == "string"){
+            supported = true;
+        }else{
+            while(length--){
+                if(typeof style[VENDOR_PREFIXES[length] + capitalized] == "string"){
+                    supported = true;
+                    break;
                 }
             }
         }
