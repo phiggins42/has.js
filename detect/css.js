@@ -1,12 +1,8 @@
 (function(has, addtest, cssprop){
 
-    var STR = "string",
-        FN = "function"
-    ;
-
     if(!has("dom")){ return; }
 
-    //FROM cft.js
+    // FROM cft.js
     addtest("css-enabled", function(g, d, el){
         var supported, fake,
             root = d.body || (function(){
@@ -78,7 +74,7 @@
         return supported;
     });
 
-    //FROM cft.js
+    // FROM cft.js
     addtest("css-rgba", function(g, d, el){
         var re = /^rgba/,
             supported = null;
@@ -122,9 +118,10 @@
     });
 
     addtest("css-style-float", function(g, d, el){
-        return typeof el.style.styleFloat == STR;
+        return cssprop("styleFloat", el);
     });
 
+    // TODO: Fix false positive in Opera
     addtest("css-pointerevents", function(g, d, el){
         return cssprop("pointerEvents", el);
     });
