@@ -127,8 +127,9 @@
         return buggy;
     });
 
+    // true for Safari
     addtest("bug-typeof-nodelist-function", function(g, d){
-        return has.isHostType(d, "forms") ? (typeof d.forms == FN) : null;
+        return (typeof d.documentElement.childNodes == FN);
     });
 
     // true for IE
@@ -281,7 +282,8 @@
             xpath = d.evaluate(xpath, el, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
             if(xpath && has.isHostType(xpath, "snapshotItem")){
-                buggy = xpath.snapshotItem(0).innerHTML != "b";
+                xpath = xpath.snapshotItem(0);
+                buggy = !!(xpath && xpath.firstChild) && xpath.firstChild.nodeValue != "b";
             }
             has.clearElement(el);
         }
