@@ -114,7 +114,7 @@ has = (function(g){
                 ret[name].ERROR_MSG = e.toString();
             }
         }
-        return ret; // Object
+        return ret;
     }
 
     has.all = all;
@@ -127,10 +127,13 @@ has = (function(g){
 
     has.add("dom", function(g, d, el){
         return d && el && isHostType(d, "documentElement") &&
-            isHostType(el, "style") && isHostType(el, "appendChild") &&
-            isHostType(el, "insertBefore") && isHostType(el, "getAttribute") &&
+            isHostType(d, "getElementById") && isHostType(d, "getElementsByName") &&
+            isHostType(d, "getElementsByTagName") && isHostType(d, "createComment") &&
+            isHostType(d, "createElement") && isHostType(d, "createTextNode") &&
+            isHostType(el, "appendChild") && isHostType(el, "insertBefore") &&
+            isHostType(el, "removeChild") && isHostType(el, "getAttribute") &&
             isHostType(el, "setAttribute") && isHostType(el, "removeAttribute") &&
-            isHostType(el, "getElementsByTagName");
+            isHostType(el, "style") && typeof el.style.cssText == "string";
     }, true);
 
     return has;
