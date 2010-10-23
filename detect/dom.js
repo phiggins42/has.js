@@ -56,7 +56,7 @@
         return supported;
     });
 
-    //  FROM cft.js
+    // FROM cft.js
     addtest("dom-children", function(g, d, el){
         var supported = false;
         if(has.isHostType(el, "children")){
@@ -83,15 +83,14 @@
         return el.childNodes.length == 1;
     });
 
-
-    // TODO: see
+    // true for IE < 9
     // http://msdn.microsoft.com/en-us/library/ms536389(VS.85).aspx vs
     // http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-2141741547
     addtest("dom-create-attr", function(g, d){
-        var supported = false;
+        var input, supported = false;
         try{
-            d.createElement("<input type='hidden' name='hasjs'>");
-            supported = true;
+            input = d.createElement("<input type='hidden' name='hasjs'>");
+            supported = input.type == "hidden" && input.name == "hasjs";
         }catch(e){}
         return supported;
     });
@@ -100,12 +99,12 @@
     addtest("dom-selectable", function(g, d, el){
         var supported = false;
         try{
-          // TODO: this test is really testing if expando's become attributes (IE)
-          el.unselectable = "on";
-          supported = typeof e.attributes.unselectable != "undefined" &&
+            // TODO: this test is really testing if expando's become attributes (IE)
+            el.unselectable = "on";
+            supported = typeof e.attributes.unselectable != "undefined" &&
                 e.attributes.unselectable.value == "on";
+            el.unselectable = "off";
         }catch(e){}
-        el.unselectable = "off";
         return supported;
     });
 
