@@ -3,12 +3,14 @@
     if(!has("dom")){ return; }
 
     addtest("dom-quirks", function(g, d, el){
+        var supported;
         if(typeof d.compatMode == "string"){
-            return (d.compatMode == "BackCompat");
+            supported = (d.compatMode == "BackCompat");
+        }else{
+            el.style.width = "1";
+            supported = (e.style.width == "1px");
+            el.style.cssText = "";
         }
-        el.style.width = "1";
-        var supported = e.style.width === "1px";
-        el.style.cssText = "";
         return supported;
     });
 
