@@ -5,9 +5,10 @@
     // FROM cft.js
     addtest("css-enabled", function(g, d, el){
         var supported, fake,
+            de = d.documentElement,
             root = d.body || (function(){
                 fake = true;
-                return d.documentElement.appendChild(d.createElement("body"));
+                return de.insertBefore(d.createElement("body"), de.firstChild);
             }());
 
         el.style.display = "none";
@@ -23,18 +24,19 @@
 
     addtest("css-content-box", function(g, d, el){
         var fake, root,
+            de = d.documentElement,
             supported = null;
 
         if(has("css-enabled")){
             root = d.body || (function(){
                 fake = true;
-                return d.documentElement.appendChild(d.createElement("body"));
+                return de.insertBefore(d.createElement("body"), de.firstChild);
             }());
 
             el.style.cssText = "position: absolute; top: -4000px; width: 40px; height: 40px; border: 1px solid black;";
             root.insertBefore(el, root.firstChild);
 
-            supported = el.clientWidth == 40;
+            supported = (el.clientWidth == 40);
             root.removeChild(el);
             el.style.cssText = "";
         }
@@ -46,13 +48,14 @@
 
     addtest("css-position-fixed", function(g, d, el){
         var backup, control, fake, root,
+            de = d.documentElement,
             supported = null;
 
         if(has("css-enabled")){
             control = el.cloneNode(false);
             root = d.body || (function(){
                 fake = true;
-                return d.documentElement.appendChild(d.createElement("body"));
+                return de.insertBefore(d.createElement("body"), de.firstChild);
             }());
 
             backup = root.style.cssText;
@@ -61,7 +64,7 @@
 
             root.insertBefore(control, root.firstChild);
             root.insertBefore(el, control);
-            supported = el.offsetTop !== control.offsetTop;
+            supported = (el.offsetTop !== control.offsetTop);
 
             root.removeChild(el);
             root.removeChild(control);
