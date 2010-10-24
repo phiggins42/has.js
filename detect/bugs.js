@@ -12,29 +12,31 @@
     addtest("bug-offset-values-positioned-inside-static", function(g, d, el){
         var div, fake,
             buggy = null,
+            de = d.documentElement,
             id = "__test_" + Number(new Date()),
-            clearance = "margin:0;padding:0;border:0;visibility:hidden;",
-            payload = "<div style='position:absolute;top:10px;" + clearance + "'>"+
-                "<div style='position:relative;top:10px;" + clearance + "'>"+
-                "<div style='height:10px;font-size:1px;" + clearance + "'><\/div>"+
-                "<div id='" + id + "'>x<\/div>"+
-                "<\/div>"+
-                "<\/div>",
+            css = "margin:0;padding:0;border:0;visibility:hidden;",
             root = d.body || (function(){
                 fake = true;
-                return d.documentElement.appendChild(d.createElement("body"));
+                return de.insertBefore(d.createElement("body"), de.firstChild);
             }());
 
-        el.innerHTML = payload;
+        el.innerHTML =
+            "<div style='position:absolute;top:10px;" + css + "'>"+
+            "<div style='position:relative;top:10px;" + css + "'>"+
+            "<div style='height:10px;font-size:1px;"  + css + "'><\/div>"+
+            "<div id='" + id + "'>x<\/div>"+
+            "<\/div>"+
+            "<\/div>";
+
         root.insertBefore(el, root.firstChild);
         div = d.getElementById(id);
 
-        if (el.firstChild) {
+        if(div.firstChild){
             buggy = false;
-            if(el.offsetTop != 10){
+            if(div.offsetTop != 10){
                 // buggy, set position to relative and check if it fixes it
-                el.style.position = "relative";
-                if(el.offsetTop == 10){
+                div.style.position = "relative";
+                if(div.offsetTop == 10){
                     buggy = true;
                 }
             }
@@ -224,7 +226,7 @@
     });
 
     addtest("bug-getelementbyid-ids-names", function(g, d){
-        var el, input
+        var input
             name = "__test_" + Number(new Date()),
             root = d.getElementsByTagName("head")[0] || d.documentElement,
             buggy = null;
@@ -236,9 +238,8 @@
             input.name = name;
         }
         try{
-            root.insertBefore(el, root.firstChild);
-            el = d.getElementById(name);
-            buggy = !!el && el.nodeName.toUpperCase() == "INPUT";
+            root.insertBefore(input, root.firstChild);
+            buggy = d.getElementById(name) == input;
             root.removeChild(input);
         }catch(e){}
         return buggy;
@@ -248,7 +249,7 @@
         var buggy,
             id = "__test_" + Number(new Date()),
             script = d.createElement("script"),
-            root = d.getElementsByTagName("head")[0] || d.documentElement;
+            root = d.getElementsByTagName('script')[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
@@ -262,7 +263,7 @@
         var buggy,
             script = d.createElement("script"),
             id = "__test_" + Number(new Date()),
-            root = d.getElementsByTagName("head")[0] || d.documentElement;
+            root = d.getElementsByTagName('script')[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
