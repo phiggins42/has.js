@@ -97,15 +97,13 @@
         return supported;
     });
 
-    // TODO: this test is really testing if expando's become attributes (IE)  
-    // true for IE
-    addtest("dom-selectable", function(g, d, el){
+    addtest("dom-expandos-become-attributes", function(g, d, el){
         var supported = false;
         try{
-            el.unselectable = "on";
-            supported = typeof el.attributes.unselectable != "undefined" &&
-                el.attributes.unselectable.value == "on";
-            el.unselectable = "off";
+            el.foo = "bar";
+            supported = typeof el.attributes.foo != "undefined" &&
+                el.attributes.foo.value == "bar";
+            el.foo = "";
         }catch(e){}
         return supported;
     });
