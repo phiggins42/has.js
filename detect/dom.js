@@ -103,8 +103,8 @@
         var supported = false;
         try{
             el.unselectable = "on";
-            supported = typeof e.attributes.unselectable != "undefined" &&
-                e.attributes.unselectable.value == "on";
+            supported = typeof el.attributes.unselectable != "undefined" &&
+                el.attributes.unselectable.value == "on";
             el.unselectable = "off";
         }catch(e){}
         return supported;
