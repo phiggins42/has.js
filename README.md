@@ -66,6 +66,37 @@ By forcing a function wrapper around the test logic we are able to defer executi
 each test to have it's own execution context. This way, we can remove some or all the tests we do not need in whatever upstream library
 should adopt _has_.
 
+## As a Module
+has.js can be loaded as a module with RequireJS, Dojo, or any other AMD module 
+loader, and no global variable will be created. Requiring or depending on has.js give 
+you access to has(). You can also depend on any of the detect modules and has will
+be included. For example, we could create a module that depends on has/array:
+
+    define(["has/array"], function(has){
+      if(has("array-every")){
+        someArray.every(...);
+      }
+      ...
+    }); 
+
+
+## As a Dependency Plugin
+has.js can also be used as a dependency plugin loader in AMD module loaders. This allows
+you to conditionally load modules based on available features. The syntax for feature-dependent
+modules is
+
+    has/detect-module!feature:module,feature2:module2,...
+
+The first feature that matches will induce the corresponding module to be loaded. All
+subsequent feature/modules will be ignored. If none of the features match, null will be
+returned. A "default" feature is available that will always returns true, in order to default to a module
+if none of the other features match. For example, you could define a module that depends 
+on one module if array-every is available and a different module if it is not:
+
+    define(["has/array!array-every:module-using-every,default:module-using-for-loop"], function(aModule){
+      ...
+    }); 
+
 ## Platform Builds
 
 Something resembling a "builder" is coming. A basic dependency matcher and test lister is provided in `build/`

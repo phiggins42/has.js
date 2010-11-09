@@ -1,5 +1,5 @@
-has = (function(g){
-
+(function(define, g){
+define(["has/plugin"], function(plugin){
     // summary: A simple feature detection function/framework.
     //
     // name: String
@@ -118,8 +118,9 @@ has = (function(g){
     }
 
     has.all = all;
-    //>>exlucdeEnd("production");
+    //>>excludeEnd("production");
     has.add = add;
+    has.load = plugin;
     has.clearElement = clearElement;
     has.cssprop = cssprop;
     has.isHostType = isHostType;
@@ -138,6 +139,10 @@ has = (function(g){
 
     return has;
 
-})(this);
-
-
+});
+})(typeof define != "undefined" ? 
+	define : // if define() is available, load has as a module (no global)  
+	function(deps, factory){
+		// if directly loaded, make has a global
+		has = factory();
+}, this);

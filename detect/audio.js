@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
 
     var CAN_PLAY_GUESSES = { "maybe": 1, "probably": 1 },
+    	addtest = has.addtest,
         STR = "string",
         FN = "function"
     ;
@@ -32,4 +34,7 @@
             CAN_PLAY_GUESSES[audio.canPlayType("audio/aac;")]);
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
