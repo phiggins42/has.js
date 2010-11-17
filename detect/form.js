@@ -132,13 +132,11 @@
     });
 
     addtest("input-type-url", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("url");
+        return supportsModernInputProp("url");
     });
 
     addtest("input-type-email", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("email");
+        return supportsModernInputProp("email");
     });
 
     addtest("input-type-datetime", function(){
