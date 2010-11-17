@@ -4,11 +4,11 @@
         FN = "function"
     ;
 
-    function propValidates( prop ){
-        input.setAttribute("type", prop);
+    function typeValidates( type ){
+        input.setAttribute("type", type);
         input.value = "\x01";
-        return has("input-checkvalidity") && input.type == prop &&
-               (/search|tel/.test(prop) || input.value != "\x01" || !input.checkValidity());
+        return has("input-checkvalidity") && input.type == type &&
+               (/search|tel/.test(type) || input.value != "\x01" || !input.checkValidity());
     }
 
     if(!has("dom")){ return; }
@@ -104,55 +104,55 @@
     });
 
     addtest("input-type-color", function(){
-        return propValidates("color");
+        return typeValidates("color");
     });
 
     addtest("input-type-search", function(){
-        return propValidates("search");
+        return typeValidates("search");
     });
 
     addtest("input-type-tel", function(){
-        return propValidates("tel");
+        return typeValidates("tel");
     });
 
     addtest("input-type-url", function(){
-        return propValidates("url");
+        return typeValidates("url");
     });
 
     addtest("input-type-email", function(){
-        return propValidates("email");
+        return typeValidates("email");
     });
 
     addtest("input-type-datetime", function(){
-        return propValidates("datetime");
+        return typeValidates("datetime");
     });
 
     addtest("input-type-date", function(){
-        return propValidates("date");
+        return typeValidates("date");
     });
 
     addtest("input-type-month", function(){
-        return propValidates("month");
+        return typeValidates("month");
     });
 
     addtest("input-type-week", function(){
-        return propValidates("week");
+        return typeValidates("week");
     });
 
     addtest("input-type-time", function(){
-        return propValidates("time");
+        return typeValidates("time");
     });
 
     addtest("input-type-datetime-local", function(){
-        return propValidates("datetime-local");
+        return typeValidates("datetime-local");
     });
 
     addtest("input-type-number", function(){
-        return propValidates("number");
+        return typeValidates("number");
     });
 
     addtest("input-type-range", function(g, d){
-        return propValidates("range");
+        return typeValidates("range");
     });
 
 })(has, has.add, has.cssprop);
