@@ -16,7 +16,7 @@
     // TODO: evaluate if these tests fit within the has.js scope because they don't
     // provide a definate yes or no answer
     addtest("audio-ogg", function(){
-        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/ogg; codecs='vorbis'")];
+        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/ogg; codecs=vorbis")];
     });
 
     addtest("audio-mp3", function(){
@@ -24,7 +24,7 @@
     });
 
     addtest("audio-wav", function(){
-        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/wav; codecs='1'")];
+        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/wav; codecs=1")];
     });
 
     addtest("audio-m4a", function(){
