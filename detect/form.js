@@ -4,27 +4,11 @@
         FN = "function"
     ;
 
-    function supportsModernInputProp( prop ){
+    function propValidates( prop ){
         input.setAttribute("type", prop);
-        var supported = input.type != "text";
-
-        if(supported){
-            input.value = ":)";
-
-            //  From the original `testProp` function
-            if(/^(search|tel)$/.test(input.type)){
-                //  spec doesnt define any special parsing or detectable UI
-                //  behaviors so we pass these through as true
-                //  interestingly, opera fails the earlier test, so it doesn't
-                //  even make it here.
-
-                //  this fakes out the value test
-            }else{
-                //  if the upgraded input compontent rejects the :) text, we got a winner
-                supported = input.value != ":)";
-            }
-        }
-        return supported;
+        input.value = "\x01";
+        return has("input-checkvalidity") && input.type == prop &&
+               (/search|tel/.test(prop) || input.value != "\x01" || !input.checkValidity());
     }
 
     if(!has("dom")){ return; }
@@ -120,74 +104,55 @@
     });
 
     addtest("input-type-color", function(){
-        return supportsModernInputProp("color");
+        return propValidates("color");
     });
 
     addtest("input-type-search", function(){
-        return supportsModernInputProp("search");
+        return propValidates("search");
     });
 
     addtest("input-type-tel", function(){
-        return supportsModernInputProp("tel");
+        return propValidates("tel");
     });
 
     addtest("input-type-url", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("email");
+        return propValidates("url");
     });
 
     addtest("input-type-email", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("email");
+        return propValidates("email");
     });
 
     addtest("input-type-datetime", function(){
-        return supportsModernInputProp("datetime");
+        return propValidates("datetime");
     });
 
     addtest("input-type-date", function(){
-        return supportsModernInputProp("date");
+        return propValidates("date");
     });
 
     addtest("input-type-month", function(){
-        return supportsModernInputProp("month");
+        return propValidates("month");
     });
 
     addtest("input-type-week", function(){
-        return supportsModernInputProp("week");
+        return propValidates("week");
     });
 
     addtest("input-type-time", function(){
-        return supportsModernInputProp("time");
+        return propValidates("time");
     });
 
     addtest("input-type-datetime-local", function(){
-        return supportsModernInputProp("datetime-local");
+        return propValidates("datetime-local");
     });
 
     addtest("input-type-number", function(){
-        return supportsModernInputProp("number");
+        return propValidates("number");
     });
 
     addtest("input-type-range", function(g, d){
-        var de = d.documentElement,
-            supported = supportsModernInputProp("range");
-
-        // WebKit has a few false positives, so we go more robust
-        if(supported && has("dom-computed-style") &&
-                typeof input.style.WebkitAppearance != "undefined"){
-
-            de.appendChild(input);
-
-            // Safari 2-4 allows the smiley as a value, despite making a slider
-            supported = d.defaultView.getComputedStyle(input, null).WebkitAppearance != "textfield" &&
-                // mobile android web browser has false positive, so must
-                // check the height to see if the widget is actually there.
-                (input.offsetHeight !== 0);
-
-            de.removeChild(input);
-        }
-        return supported;
+        return propValidates("range");
     });
 
 })(has, has.add, has.cssprop);
