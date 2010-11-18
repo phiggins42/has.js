@@ -136,6 +136,14 @@ has = (function(g){
             isHostType(el, "style") && typeof el.style.cssText == "string";
     }, true);
 
+    // Stop repeat background-image requests and reduce memory consumption in IE6 SP1
+    // http://misterpixel.blogspot.com/2006/09/forensic-analysis-of-ie6.html
+    // http://blogs.msdn.com/b/cwilso/archive/2006/11/07/ie-re-downloading-background-images.aspx?PageIndex=1
+    // http://support.microsoft.com/kb/823727
+    try{
+        document.execCommand("BackgroundImageCache", false, true);
+    }catch(e){}
+
     return has;
 
 })(this);
