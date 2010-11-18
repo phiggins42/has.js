@@ -15,6 +15,9 @@
 
     // TODO: evaluate if these tests fit within the has.js scope because they don't
     // provide a definate yes or no answer
+    //
+    // NOTE: Opera returns a false-negative in this test if there are single spaces
+    // around the codes value, e.g. codes='vorbis'
     addtest("audio-ogg", function(){
         return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/ogg; codecs=vorbis")];
     });
