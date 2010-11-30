@@ -4,27 +4,11 @@
         FN = "function"
     ;
 
-    function supportsModernInputProp( prop ){
-        input.setAttribute("type", prop);
-        var supported = input.type != "text";
-
-        if(supported){
-            input.value = ":)";
-
-            //  From the original `testProp` function
-            if(/^(search|tel)$/.test(input.type)){
-                //  spec doesnt define any special parsing or detectable UI
-                //  behaviors so we pass these through as true
-                //  interestingly, opera fails the earlier test, so it doesn't
-                //  even make it here.
-
-                //  this fakes out the value test
-            }else{
-                //  if the upgraded input compontent rejects the :) text, we got a winner
-                supported = input.value != ":)";
-            }
-        }
-        return supported;
+    function typeValidates( type ){
+        input.setAttribute("type", type);
+        input.value = "\x01";
+        return has("input-checkvalidity") && input.type == type &&
+               (/search|tel/.test(type) || input.value != "\x01" || !input.checkValidity());
     }
 
     if(!has("dom")){ return; }
@@ -120,74 +104,55 @@
     });
 
     addtest("input-type-color", function(){
-        return supportsModernInputProp("color");
+        return typeValidates("color");
     });
 
     addtest("input-type-search", function(){
-        return supportsModernInputProp("search");
+        return typeValidates("search");
     });
 
     addtest("input-type-tel", function(){
-        return supportsModernInputProp("tel");
+        return typeValidates("tel");
     });
 
     addtest("input-type-url", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("email");
+        return typeValidates("url");
     });
 
     addtest("input-type-email", function(){
-        // real url and email support comes with prebaked validation.
-        return has("input-checkvalidity") && supportsModernInputProp("email");
+        return typeValidates("email");
     });
 
     addtest("input-type-datetime", function(){
-        return supportsModernInputProp("datetime");
+        return typeValidates("datetime");
     });
 
     addtest("input-type-date", function(){
-        return supportsModernInputProp("date");
+        return typeValidates("date");
     });
 
     addtest("input-type-month", function(){
-        return supportsModernInputProp("month");
+        return typeValidates("month");
     });
 
     addtest("input-type-week", function(){
-        return supportsModernInputProp("week");
+        return typeValidates("week");
     });
 
     addtest("input-type-time", function(){
-        return supportsModernInputProp("time");
+        return typeValidates("time");
     });
 
     addtest("input-type-datetime-local", function(){
-        return supportsModernInputProp("datetime-local");
+        return typeValidates("datetime-local");
     });
 
     addtest("input-type-number", function(){
-        return supportsModernInputProp("number");
+        return typeValidates("number");
     });
 
     addtest("input-type-range", function(g, d){
-        var de = d.documentElement,
-            supported = supportsModernInputProp("range");
-
-        // WebKit has a few false positives, so we go more robust
-        if(supported && has("dom-computed-style") &&
-                typeof input.style.WebkitAppearance != "undefined"){
-
-            de.appendChild(input);
-
-            // Safari 2-4 allows the smiley as a value, despite making a slider
-            supported = d.defaultView.getComputedStyle(input, null).WebkitAppearance != "textfield" &&
-                // mobile android web browser has false positive, so must
-                // check the height to see if the widget is actually there.
-                (input.offsetHeight !== 0);
-
-            de.removeChild(input);
-        }
-        return supported;
+        return typeValidates("range");
     });
 
 })(has, has.add, has.cssprop);

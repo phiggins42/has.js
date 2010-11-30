@@ -384,18 +384,7 @@
     });
 
     addtest("bug-tofixed-rounding", function(){
-        return (0.9).toFixed() == 0;
-    });
-
-    // IE bug
-    addtest("bug-bgimagecache", function(g, d){
-        var buggy = false;
-        try{
-            // TODO: Fix false positive for Chrome
-            d.execCommand("BackgroundImageCache", false, true);
-            buggy = true;
-        }catch(e){}
-        return buggy;
+        return (.9).toFixed() == 0;
     });
 
 })(has, has.add, has.cssprop);
