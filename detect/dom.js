@@ -134,18 +134,20 @@
           fake = false,
           supported = null;
 
-       if(head){
+       if(head && "location" in g){
             base = d.getElementsByTagName("base")[0] || (function(){
                 fake = true;
                 return head.insertBefore(d.createElement("base"), head.firstChild);
             })();
 
             backup = base.href;
-            base.href = (("location" in g) ? location.protocol : "http:") + "//x";
+            base.href = location.protocol + "//x";
             q.cite = "y";
             supported = q.cite.indexOf("x/y") > -1;
 
             if(fake){
+            	//reset to pathname before removal, otherwise href persists in Opera
+            	base.href = location.pathname;
                 head.removeChild(base);
             } else {
                 base.href = backup;
