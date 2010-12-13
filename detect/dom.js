@@ -97,7 +97,7 @@
         return supported;
     });
 
-    // TODO: this test is really testing if expando's become attributes (IE)  
+    // TODO: this test is really testing if expando's become attributes (IE)
     // true for IE
     addtest("dom-selectable", function(g, d, el){
         var supported = false;
@@ -131,26 +131,26 @@
       var backup, base,
           q = d.createElement("q"),
           head = d.getElementsByTagName("head")[0],
+          href = location.href,
           fake = false,
-          supported = null;
+          supported = null,
+          token = location.search || location.hash;
 
-       if(head && "location" in g){
+       if(head){
             base = d.getElementsByTagName("base")[0] || (function(){
                 fake = true;
                 return head.insertBefore(d.createElement("base"), head.firstChild);
             })();
 
-            backup = base.href;
+            backup = base.href || href.slice(0, token ? href.indexOf(token) : href.length).replace(/[^\/]*$/, "");
             base.href = location.protocol + "//x";
             q.cite = "y";
             supported = q.cite.indexOf("x/y") > -1;
 
+            // reset href before removal, otherwise href persists in Opera
+            base.href = backup;
             if(fake){
-            	//reset to pathname before removal, otherwise href persists in Opera
-            	base.href = location.pathname;
                 head.removeChild(base);
-            } else {
-                base.href = backup;
             }
       }
       return supported;
