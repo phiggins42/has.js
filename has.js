@@ -126,7 +126,7 @@ has = (function(g){
     has._tests = testCache;
 
     has.add("dom", function(g, d, el){
-        return d && el && isHostType(d, "documentElement") &&
+        return d && el && isHostType(g, "location") && isHostType(d, "documentElement") &&
             isHostType(d, "getElementById") && isHostType(d, "getElementsByName") &&
             isHostType(d, "getElementsByTagName") && isHostType(d, "createComment") &&
             isHostType(d, "createElement") && isHostType(d, "createTextNode") &&
