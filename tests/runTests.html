@@ -29,11 +29,11 @@
         </style>
 
         <title>has.js tests</title>
-        
+
         <script src="../has.js"></script>
 
         <!--script src="require.js"></script-->
-        
+
         <script src="../detect/bugs.js"></script>
         <script src="../detect/array.js"></script>
         <script src="../detect/graphics.js"></script>
@@ -60,18 +60,6 @@
 
         <div id="output"></div>
 
-        <p>Test running took <span id="took"></span></p>
-        <p>Your userAgent is being reported as: <span id="ua"></span></p>
-
-        <form action="report.php" method="POST">
-            <button id="boom" type="submit" disabled="disabled">Report these to teh matrix</button>
-            <div id="resultinputs"></div>
-            <input type="hidden" name="useragent" id="useragent">
-            <input type="hidden" name="cost" id="cost">
-        </form>
-
-        <p>More about this test page and project on <a href="http://github.com/phiggins42/has.js">github:has.js</a></p>
-
         <script>
             has.specials = {};
 
@@ -94,8 +82,8 @@
                 alert("lazy with immediate execution failed");
             }
 
-            var out = document.getElementById("output"), 
-                html = [], data = [],
+            var html = [],
+                data = [],
                 nao = +new Date,
                 results = has.all(),
                 done = +new Date,
@@ -129,6 +117,7 @@
 
             var categories = { 'none': [] },
                 categoryRE = /^(\w+)[-]?/;
+
             var outputResult = function(key, i){
                 var special = "", r = results[key],
                     match = key.match(categoryRE),
@@ -168,15 +157,36 @@
                 html.push('</ul></fieldset>');
             }
 
-            out.innerHTML = html.join("");
+            window.onload = function(){
+                has.byId("output").innerHTML = html.join("");
+                has.byId("resultinputs").innerHTML = data.join("");
 
-            has.byId("resultinputs").innerHTML = data.join("");
+                has.byId("cost").value = has.byId("took").innerHTML = "took: " + (done - nao) + "ms";
+                has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
 
-            has.byId("cost").value = has.byId("took").innerHTML = "took: " + (done - nao) + "ms";
-            has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
-
-            has.byId("boom").disabled = false; // backend not in place
+                has.byId("boom").disabled = false; // backend not in place
+            };
         </script>
 
+        <fieldset>
+            <legend>Results for category base-uri</legend>
+            <ul class="resultList">
+                <li>
+                    <img src="base.gif" alt="base-uri-reset: false">
+                </li>
+            </ul>
+        </fieldset>
+
+        <p>Test running took <span id="took"></span></p>
+        <p>Your userAgent is being reported as: <span id="ua"></span></p>
+
+        <form action="report.php" method="POST">
+            <button id="boom" type="submit" disabled="disabled">Report these to teh matrix</button>
+            <div id="resultinputs"></div>
+            <input type="hidden" name="useragent" id="useragent">
+            <input type="hidden" name="cost" id="cost">
+        </form>
+
+        <p>More about this test page and project on <a href="http://github.com/phiggins42/has.js">github:has.js</a></p>
     </body>
 </html>

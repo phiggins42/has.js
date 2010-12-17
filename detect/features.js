@@ -140,7 +140,7 @@
       //  Thanks Modernizr!
       var supported = false;
       try{
-        supported = ("sessionStorage" in g) && ("setTime" in sessionStorage);
+        supported = ("sessionStorage" in g) && ("setItem" in sessionStorage);
       }catch(e){}
       return supported;
     });

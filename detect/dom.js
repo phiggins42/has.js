@@ -97,14 +97,14 @@
         return supported;
     });
 
-    // TODO: this test is really testing if expando's become attributes (IE)  
+    // TODO: this test is really testing if expando's become attributes (IE)
     // true for IE
     addtest("dom-selectable", function(g, d, el){
         var supported = false;
         try{
             el.unselectable = "on";
-            supported = typeof e.attributes.unselectable != "undefined" &&
-                e.attributes.unselectable.value == "on";
+            supported = typeof el.attributes.unselectable != "undefined" &&
+                el.attributes.unselectable.value == "on";
             el.unselectable = "off";
         }catch(e){}
         return supported;
@@ -131,8 +131,10 @@
       var backup, base,
           q = d.createElement("q"),
           head = d.getElementsByTagName("head")[0],
+          href = location.href,
           fake = false,
-          supported = null;
+          supported = null,
+          token = location.search || location.hash;
 
        if(head){
             base = d.getElementsByTagName("base")[0] || (function(){
@@ -140,15 +142,15 @@
                 return head.insertBefore(d.createElement("base"), head.firstChild);
             })();
 
-            backup = base.href;
-            base.href = (("location" in g) ? location.protocol : "http:") + "//x";
+            backup = base.href || href.slice(0, token ? href.indexOf(token) : href.length).replace(/[^\/]*$/, "");
+            base.href = location.protocol + "//x";
             q.cite = "y";
             supported = q.cite.indexOf("x/y") > -1;
 
+            // reset href before removal, otherwise href persists in Opera
+            base.href = backup;
             if(fake){
                 head.removeChild(base);
-            } else {
-                base.href = backup;
             }
       }
       return supported;
