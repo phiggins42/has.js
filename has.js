@@ -1,5 +1,5 @@
 (function(define, g){
-define(["has/plugin"], function(plugin){
+define(["./_plugin"], function(plugin){
     // summary: A simple feature detection function/framework.
     //
     // name: String
