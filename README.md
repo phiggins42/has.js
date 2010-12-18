@@ -83,19 +83,25 @@ be included. For example, we could create a module that depends on has/array:
 ## As a Dependency Plugin
 has.js can also be used as a dependency plugin loader in AMD module loaders. This allows
 you to conditionally load modules based on available features. The syntax for feature-dependent
-modules is
+modules is based on the JavaScript ternary operator:
 
-    has/detect-module!feature:module,feature2:module2,...
+    define(["has/detect-module!feature?module-if-has-feature:module-if-does-not-have-feature",...
 
-The first feature that matches will induce the corresponding module to be loaded. All
-subsequent feature/modules will be ignored. If none of the features match, null will be
-returned. A "default" feature is available that will always returns true, in order to default to a module
-if none of the other features match. For example, you could define a module that depends 
-on one module if array-every is available and a different module if it is not:
+This follows the standard rule for ternary operators. If the feature (the token before the
+?) is available, the module before the : is loaded, otherwise the module after the colon
+is loaded. Ternary operators can also be nested. We can have a set of different modules
+based on different features:
 
-    define(["has/array!array-every:module-using-every,default:module-using-for-loop"], function(aModule){
-      ...
-    }); 
+    define(["has/detect-module!feature1?module1:feature2?module2:feature3?module3:default-module",...
+
+If feature1 is available, module1 will be returned, if feature2 is available, module2 will be returned, etc.  
+
+Also, if no module (empty string) is provided in one of the ternary slots, null will be returned. For example:
+
+    define(["has/detect-module!feature?module-if-has-feature:",...
+
+This will return the module "module-if-has-feature" if the feature is available, otherwise
+it will return null.
 
 ## Platform Builds
 
