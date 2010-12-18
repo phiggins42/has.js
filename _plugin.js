@@ -7,9 +7,7 @@ define(["require", "./has"], function(require){
 	return function(id, parentRequire, loaded){
 		// split into the different branches, based on has features
 		// first parse the id
-		console.log("id", id);
 		var tokens = id.match(/[\?:]|[^:\?]*/g), i = 0;
-		console.log("tokens", tokens);
 		has = has || require("./has");
 		function get(skip){
 			var operator, term = tokens[i++];
@@ -32,16 +30,13 @@ define(["require", "./has"], function(require){
 				return term;
 			}
 		}
-		try{
 		id = get();
-		}catch(e){
-			console.error(e);
-		}
 		console.log("requiring", id);
 		if(id){
 			parentRequire([id], loaded);
+		}else{
+			loaded(null);
 		}
-		loaded(null);
 	}
 });
 })(typeof define != "undefined" ? define : function(deps, factory){factory(has);});
