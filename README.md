@@ -79,6 +79,17 @@ be included. For example, we could create a module that depends on has/array:
       ...
     }); 
 
+Make sure that you have has.js setup as a package in order for this work properly though.
+You can setup has.js as a package in RequireJS with something like:
+
+	packages: [
+		{
+			name:"has",
+			location:"has.js",
+			lib:"./detect",
+			main:"../has"
+		}
+	]
 
 ## As a Dependency Plugin
 
@@ -110,19 +121,7 @@ are available. For example, if you want to branch to different modules based on 
 existence of the the Array's every() method, you could do:
 
     define(["has/array!array-every?module-for-every:module-when-no-every",...
-    
-Make sure that you have has.js setup as a package in order for this work properly though.
-You can setup has.js as a package in RequireJS with something like:
-
-	packages: [
-		{
-			name:"has",
-			location:"has.js",
-			lib:"./detect",
-			main:"../has"
-		}
-	]
- 
+     
 Or more likely, you can also create your test registration module, then use this module as the
 branching module. For example, we could create a test registration module:
 
