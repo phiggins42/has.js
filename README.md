@@ -86,23 +86,56 @@ has.js can also be used as a dependency loader plugin for AMD module loaders. Th
 you to conditionally load modules based on available features. The syntax for feature-dependent
 modules is based on the JavaScript ternary operator:
 
-    define(["has/detect-module!feature?module-if-has-feature:module-if-does-not-have-feature",...
+    define(["has!feature?module-if-has-feature:module-if-does-not-have-feature",...
 
 This follows the standard rule for ternary operators. If the feature (the token before the
 ?) is available, the module before the : is loaded, otherwise the module after the colon
 is loaded. Ternary operators can also be nested. We can have a set of different modules
 based on different features:
 
-    define(["has/detect-module!feature1?module1:feature2?module2:feature3?module3:default-module",...
+    define(["has!feature1?module1:feature2?module2:feature3?module3:default-module",...
 
 If feature1 is available, module1 will be returned, if feature2 is available, module2 will be returned, etc.  
 
 Also, if no module (empty string) is provided in one of the ternary slots, undefined will be returned. For example:
 
-    define(["has/detect-module!feature?module-if-has-feature:",...
+    define(["has!feature?module-if-has-feature",...
 
 This will return the module "module-if-has-feature" if the feature is available, otherwise
 it will return undefined.
+
+The "has" module itself does not register any tests. Normally you would reference the 
+has detection module that registers the needed tests to ensure that the correct tests
+are available. For example, if you want to branch to different modules based on the
+existence of the the Array's every() method, you could do:
+
+    define(["has/array!array-every?module-for-every:module-when-no-every",...
+    
+Make sure that you have has.js setup as a package in order for this work properly though.
+You can setup has.js as a package in RequireJS with something like:
+
+	packages: [
+		{
+			name:"has",
+			location:"has.js",
+			lib:"./detect",
+			main:"../has"
+		}
+	]
+ 
+Or more likely, you can also create your test registration module, then use this module as the
+branching module. For example, we could create a test registration module:
+
+    define("my-tests", ["has"], function(has){
+        has.add("some-test", function(){
+          // the test code
+        });
+    }); 
+
+And then we could use it:
+
+    define(["my-tests!some-test?module-a:module-b"], function(...
+    
 
 ## Platform Builds
 
