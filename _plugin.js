@@ -15,8 +15,8 @@ define(["require", "./has"], function(require){
 				return;
 			}else{
 				// postfixed with a ? means it is a feature to branch on, the term is the name of the feature
-				if(tokens[i++] == "?"){ 
-					if(!skip && has(term)){
+				if(tokens[i++] == "?"){
+					if(!skip && checkResult(has(term))){
 						// matched the feature, get the first value from the options 
 						return get();
 					}else{
@@ -36,4 +36,10 @@ define(["require", "./has"], function(require){
 			loaded();
 		}
 	};
+	function checkResult(result){
+		if(typeof result == "undefined"){
+			throw new Error("No test " + term + " was defined");
+		}
+		return result;
+	}
 });
