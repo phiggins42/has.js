@@ -19,6 +19,7 @@ define(["has"], function(has){
         return toString.call(Date.now) == FUNCTION_CLASS;
     });
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // the use global has() if a module system is not available 

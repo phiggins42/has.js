@@ -155,8 +155,9 @@ define(["has"], function(has){
         return ("WebSocket" in g);
     });
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
-	factory(has); // the use global has() if a module system is not available 
+	factory(has); // use global has() if a module system is not available 
 });
 

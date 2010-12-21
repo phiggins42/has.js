@@ -70,6 +70,7 @@ define(["has"], function(has){
         return supported;
     });
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // use global has() if a module system is not available 

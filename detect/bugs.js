@@ -389,6 +389,7 @@ define(["has"], function(has){
         return (.9).toFixed() == 0;
     });
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // the use global has() if a module system is not available 

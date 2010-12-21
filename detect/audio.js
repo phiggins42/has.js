@@ -36,6 +36,7 @@ define(["has"], function(has){
         return has("audio") && !!(CAN_PLAY_GUESSES[audio.canPlayType("audio/x-m4a;")] ||
             CAN_PLAY_GUESSES[audio.canPlayType("audio/aac;")]);
     });
+	return has;
 
 });
 })(typeof define != "undefined" ? define : function(deps, factory){

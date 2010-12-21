@@ -146,6 +146,7 @@ define(["has"], function(has){
     // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
     // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // the use global has() if a module system is not available 

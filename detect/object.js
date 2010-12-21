@@ -89,6 +89,7 @@ define(["has"], function(has){
                has("object-issealed") && has("object-keys") && has("object-preventextensions") && has("object-seal");
     });
 
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // use global has() if a module system is not available 

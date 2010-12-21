@@ -18,7 +18,7 @@ define(["has"], function(has){
     addtest("has-test-skeleton", function(global, document, anElement){
         return true; // Boolean
     });
-
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){
 	factory(has); // use global has() if a module system is not available 
