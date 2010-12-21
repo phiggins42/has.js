@@ -1,14 +1,12 @@
 (function(define){
-define(["require", "./has"], function(require){
+define(["./has"], function(has){
 	// this allows us to use has as a dependency plugin for RequireJS and other AMD loaders (like Dojo). The syntax supports the ternary operation for branching:
 	// define("my-module", ["has!array-every?module-using-every:module-using-for-loop"], function(arrayModule){
 	// });
-	var has;
-	return function(id, parentRequire, loaded){
+	has.load = function(id, parentRequire, loaded){
 		// split into the different branches, based on has features
 		// first parse the id
 		var tokens = id.match(/[\?:]|[^:\?]*/g), i = 0;
-		has = has || require("./has");
 		function get(skip){
 			var operator, term = tokens[i++];
 			if(term == ":"){
@@ -31,12 +29,12 @@ define(["require", "./has"], function(require){
 			}
 		}
 		id = get();
-		console.log("requiring", id);
 		if(id){
 			parentRequire([id], loaded);
 		}else{
-			loaded(null);
+			loaded();
 		}
-	}
+	};
+	return has;
 });
 })(typeof define != "undefined" ? define : function(deps, factory){factory(has);});

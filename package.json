@@ -1,7 +1,7 @@
 {
 	"name": "has",
 	"directories": {
-		"lib": "detect"
+		"lib": "./detect"
 	},
-	"main": "./has"
+	"main": "./_plugin.js"
 }
