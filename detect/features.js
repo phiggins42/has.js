@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop, undefined){
+(function(define){
+define(["has"], function(has){
 
     var STR = "string",
+    	addtest = has.add,
         FN = "function"
     ;
 
@@ -153,4 +155,8 @@
         return ("WebSocket" in g);
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
+

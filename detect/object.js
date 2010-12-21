@@ -1,11 +1,13 @@
-(function(has, addtest, cssprop){
-
+(function(define){
+define(["has"], function(has){
+	
     // FIXME: break this out into "modules", like array.js, dom.js, lang.js (?) ^ph
 
     // we could define a couple "constants" for reuse ...
     // just need to ensure they are the same across detect/*.js
     // so we can wrap in a single (fn(){})() at 'build' ^ph
-    var toString = {}.toString,
+    var addtest = has.add,
+    	toString = {}.toString,
         FN = "function",
         FUNCTION_CLASS = "[object Function]",
         OBJECT = Object
@@ -87,4 +89,8 @@
                has("object-issealed") && has("object-keys") && has("object-preventextensions") && has("object-seal");
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // use global has() if a module system is not available 
+});
+

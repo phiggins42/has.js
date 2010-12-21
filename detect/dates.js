@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
 
     var toString = {}.toString,
+    	addtest = has.add,
         NEW_DATE = new Date,
         FUNCTION_CLASS = "[object Function]";
 
@@ -17,4 +19,8 @@
         return toString.call(Date.now) == FUNCTION_CLASS;
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
+

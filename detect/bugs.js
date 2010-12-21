@@ -1,7 +1,9 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
 
     // http://github.com/kangax/cft
     var toString = {}.toString,
+    	addtest = has.add,
         STR = "string",
         FN = "function",
         FUNCTION_CLASS = "[object Function]"
@@ -387,4 +389,7 @@
         return (.9).toFixed() == 0;
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});

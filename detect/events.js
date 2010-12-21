@@ -1,4 +1,6 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
+	var addtest = has.add;
 
     function event_tests(g, d, test){
         var de = d.documentElement,
@@ -69,4 +71,8 @@
         return event_tests(g, d, "relatedtarget");
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
+

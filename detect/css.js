@@ -1,7 +1,9 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
 
     if(!has("dom")){ return; }
-
+	var addtest = has.add,
+		cssprop = has.cssprop;
     // FROM cft.js
     addtest("css-enabled", function(g, d, el){
         var supported, fake,
@@ -144,4 +146,8 @@
     // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
     // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
+

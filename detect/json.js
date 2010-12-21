@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
-
-    var STR = "string",
+(function(define){
+define(["has"], function(has){
+	
+    var addtest = has.add,
+    	STR = "string",
         FN = "function"
     ;
 
@@ -18,4 +20,7 @@
         return ("JSON" in g) && typeof JSON.stringify == FN && JSON.stringify({a:true}) == '{"a":true}';
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // use global has() if a module system is not available 
+});

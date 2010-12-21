@@ -1,4 +1,7 @@
-(function(has, addtest, cssprop){
+(function(define){
+define(["has"], function(has){
+	
+    var addtest = has.add;
 
     if(!has("dom")){ return; }
 
@@ -12,4 +15,8 @@
         return ("async" in script);
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // use global has() if a module system is not available 
+});
+

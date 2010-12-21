@@ -1,6 +1,8 @@
-(function(has, addtest, cssprop){
-
-    var STR = "string",
+(function(define){
+define(["has"], function(has){
+	
+	var STR = "string",
+    	addtest = has.add,
         FN = "function"
     ;
 
@@ -155,4 +157,8 @@
         return typeValidates("range");
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // the use global has() if a module system is not available 
+});
+

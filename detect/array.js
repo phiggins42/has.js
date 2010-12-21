@@ -1,7 +1,7 @@
 (function(define){
 define(["has"], function(has){
     var toString = {}.toString,
-    	addtest = has.addtest,
+    	addtest = has.add,
         EMPTY_ARRAY = [],
         FUNCTION_CLASS = "[object Function]";
 

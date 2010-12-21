@@ -1,6 +1,8 @@
- (function(has, addtest, cssprop, undefined){
-
-    var toString = {}.toString,
+(function(define){
+define(["has"], function(has){
+	
+    var addtest = has.add,
+    	toString = {}.toString,
         FUNCTION_CLASS = "[object Function]";
 
     // Function tests
@@ -13,4 +15,8 @@
         return test();
     });
 
-})(has, has.add, has.cssprop);
+});
+})(typeof define != "undefined" ? define : function(deps, factory){
+	factory(has); // use global has() if a module system is not available 
+});
+

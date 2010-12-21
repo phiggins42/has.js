@@ -2,7 +2,7 @@
 define(["has"], function(has){
 
     var CAN_PLAY_GUESSES = { "maybe": 1, "probably": 1 },
-    	addtest = has.addtest,
+    	addtest = has.add,
         STR = "string",
         FN = "function"
     ;
