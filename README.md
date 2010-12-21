@@ -81,7 +81,8 @@ be included. For example, we could create a module that depends on has/array:
 
 
 ## As a Dependency Plugin
-has.js can also be used as a dependency plugin loader in AMD module loaders. This allows
+
+has.js can also be used as a dependency loader plugin for AMD module loaders. This allows
 you to conditionally load modules based on available features. The syntax for feature-dependent
 modules is based on the JavaScript ternary operator:
 
@@ -96,12 +97,12 @@ based on different features:
 
 If feature1 is available, module1 will be returned, if feature2 is available, module2 will be returned, etc.  
 
-Also, if no module (empty string) is provided in one of the ternary slots, null will be returned. For example:
+Also, if no module (empty string) is provided in one of the ternary slots, undefined will be returned. For example:
 
     define(["has/detect-module!feature?module-if-has-feature:",...
 
 This will return the module "module-if-has-feature" if the feature is available, otherwise
-it will return null.
+it will return undefined.
 
 ## Platform Builds
 
