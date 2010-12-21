@@ -1,5 +1,5 @@
 (function(define, g){
-define([], function(){
+define(["./_plugin"], function(plugin){
     // summary: A simple feature detection function/framework.
     //
     // name: String
@@ -120,6 +120,7 @@ define([], function(){
     has.all = all;
     //>>excludeEnd("production");
     has.add = add;
+    has.load = plugin;
     has.clearElement = clearElement;
     has.cssprop = cssprop;
     has.isHostType = isHostType;

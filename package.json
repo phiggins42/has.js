@@ -3,5 +3,5 @@
 	"directories": {
 		"lib": "./detect"
 	},
-	"main": "./_plugin.js"
+	"main": "./has.js"
 }
