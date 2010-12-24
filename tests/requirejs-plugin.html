@@ -6,9 +6,17 @@
         <script src="../../requirejs/require.js"></script>
         <script>
         	require({
-        		baseUrl: "../"
+        		baseUrl:"../../",
+        		packages: [
+        			{
+        				name:"has",
+        				location:"has.js",
+        				lib:"./detect",
+        				main:"./has"
+        			}
+        		]
         	});
-        	require(["tests/modules/test-branch"]);
+        	require(["has.js/tests/modules/test-branch"]);
         </script>
 
     </head>
