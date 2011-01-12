@@ -68,5 +68,45 @@
     addtest("event-relatedtarget", function(g, d){
         return event_tests(g, d, "relatedtarget");
     });
+    
+    addtest("event-hashchange", function(g){
+        return ("onhashchange" in g);
+    });
+    
+    addtest("event-orientationchange", function(g){
+        return ("onorientationchange" in g);
+    });
+    
+    addtest("event-deviceorientation", function(g){
+        return ("ondeviceorientation" in g);
+    });
+    
+    addtest("event-devicemotion", function(g){
+        return ("ondevicemotion" in g);
+    });
+    
+    addtest("event-online", function(g){
+        return ("ononline" in g);
+    });
+    
+    addtest("event-pageshow", function(g){
+        return ("onpageshow" in g);
+    });
+    
+    addtest("event-storage", function(g){
+        return ("onstorage" in g);
+    });
+    
+    addtest("event-drag", function(g){
+        return ("ondragstart" in g);
+    });
+    
+    addtest("event-progress", function(g){
+        return ("onprogress" in g);
+    });
+    
+    addtest("event-resize", function(g){
+        return ("onresize" in g);
+    });
 
 })(has, has.add, has.cssprop);
