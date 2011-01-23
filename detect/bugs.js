@@ -49,11 +49,20 @@
         })(1,2);
     });
 
+    function testForIn(value){
+        var klass = function(){ this.toString = 1; }, i, count = 0;
+        for(i in new klass){ count++; }
+        has.add("bug-for-in-doubled", count == 2);
+        has.add("bug-dontenum-enumerable", count === 0);
+        return count === value;
+    }
+
     addtest("bug-dontenum-enumerable", function(){
-        for(var prop in { toString: true }){
-            return false;
-        }
-        return true;
+        return testForIn(0);
+    });
+
+    addtest("bug-for-in-doubled", function(){
+        return testForIn(2);
     });
 
     // ES5 added <BOM> (\uFEFF) as a whitespace character
