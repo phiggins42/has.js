@@ -7,6 +7,75 @@
         FUNCTION_CLASS = "[object Function]"
     ;
 
+    addtest("bug-string-split-regexp", function(){
+        var buggy = null, s = "a_b";
+        if(toString.call(s.split) == FUNCTION_CLASS){
+            buggy = s.split(/(_)/).length != 3;
+        }
+        return buggy;
+    });
+
+    addtest("bug-function-expression", function(){
+        // `x` should be resolved to `null` (the one we declared outside this function)
+        // but since named function expression identifier leaks onto the enclosing scope in IE,
+        // it will be resolved to a function
+        var f = function x(){},
+           buggy = typeof x == FN;
+        if(buggy){
+          x = null;
+        }
+        return buggy;
+    });
+
+    addtest("bug-string-replace-ignores-functions", function(){
+        var buggy = null, s = "a";
+        if(toString.call(s.replace) == FUNCTION_CLASS){
+            buggy = s.replace(s, function(){ return ""; }) != "";
+        }
+        return buggy;
+    });
+
+    addtest("bug-arguments-instanceof-array", function(g){
+        return arguments instanceof g.Array;
+    });
+
+    addtest("bug-array-concat-arguments", function(){
+        return (function(){
+            var buggy = null;
+            if(has("bug-arguments-instanceof-array")){
+                buggy = [].concat(arguments)[0] != 1;
+            }
+            return buggy;
+        })(1,2);
+    });
+
+    addtest("bug-dontenum-enumerable", function(){
+        for(var prop in { toString: true }){
+            return false;
+        }
+        return true;
+    });
+
+    // ES5 added <BOM> (\uFEFF) as a whitespace character
+    var whitespace = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
+        "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";
+
+    addtest("bug-es5-trim", function(){
+        var buggy = null;
+        if(has("string-trim")){
+            buggy = !!whitespace.trim();
+        }
+        return buggy;
+    });
+
+    addtest("bug-es5-regexp", function(){
+        return !(/^\s+$/).test(whitespace);
+    });
+
+    addtest("bug-tofixed-rounding", function(){
+        return (.9).toFixed() == 0;
+    });
+
     if(!has("dom")){ return; }
 
     addtest("bug-offset-values-positioned-inside-static", function(g, d, el){
@@ -316,75 +385,6 @@
             has.clearElement(el);
         }
         return buggy;
-    });
-
-    addtest("bug-string-split-regexp", function(){
-        var buggy = null, s = "a_b";
-        if(toString.call(s.split) == FUNCTION_CLASS){
-            buggy = s.split(/(_)/).length != 3;
-        }
-        return buggy;
-    });
-
-    addtest("bug-function-expression", function(){
-        // `x` should be resolved to `null` (the one we declared outside this function)
-        // but since named function expression identifier leaks onto the enclosing scope in IE,
-        // it will be resolved to a function
-        var f = function x(){},
-           buggy = typeof x == FN;
-        if(buggy){
-          x = null;
-        }
-        return buggy;
-    });
-
-    addtest("bug-string-replace-ignores-functions", function(){
-        var buggy = null, s = "a";
-        if(toString.call(s.replace) == FUNCTION_CLASS){
-            buggy = s.replace(s, function(){ return ""; }) != "";
-        }
-        return buggy;
-    });
-
-    addtest("bug-arguments-instanceof-array", function(g){
-        return arguments instanceof g.Array;
-    });
-
-    addtest("bug-array-concat-arguments", function(){
-        return (function(){
-            var buggy = null;
-            if(has("bug-arguments-instanceof-array")){
-                buggy = [].concat(arguments)[0] != 1;
-            }
-            return buggy;
-        })(1,2);
-    });
-
-    addtest("bug-dontenum-enumerable", function(){
-        for(var prop in { toString: true }){
-            return false;
-        }
-        return true;
-    });
-
-    // ES5 added <BOM> (\uFEFF) as a whitespace character
-    var whitespace = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
-        "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";
-
-    addtest("bug-es5-trim", function(){
-        var buggy = null;
-        if(has("string-trim")){
-            buggy = !!whitespace.trim();
-        }
-        return buggy;
-    });
-
-    addtest("bug-es5-regexp", function(){
-        return !(/^\s+$/).test(whitespace);
-    });
-
-    addtest("bug-tofixed-rounding", function(){
-        return (.9).toFixed() == 0;
     });
 
 })(has, has.add, has.cssprop);
