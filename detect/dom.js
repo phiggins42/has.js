@@ -156,4 +156,16 @@
         return supported;
     });
 
+    addtest("dom-classlist", function(g, d, e){
+        var iht = has.isHostType;
+        if(!iht(e, "classList")){
+            return false;
+        }
+
+        var cl = e.classList;
+
+        return iht(cl, "item") && iht(cl, "contains") && iht(cl, "add") &&
+            iht(cl, "remove") && iht(cl, "toggle");
+    });
+
 })(has, has.add, has.cssprop);
