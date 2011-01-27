@@ -219,7 +219,7 @@
         return buggy;
     });
 
-    // TODO: Add bug-readonly-element-type too
+    
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
@@ -228,6 +228,23 @@
 
         input.name = 'x';
         buggy = !el.getElementsByTagName('*')['x'];
+        has.clearElement(el);
+        return buggy;
+    });
+    
+    // type attribute can only be set once and cannot be 
+    //   changed once in DOM
+    // http://msdn.microsoft.com/en-us/library/ms534700.aspx
+    addtest("bug-readonly-element-type", function(g, d, el){
+        var buggy,
+            input = el.appendChild(d.createElement("input"));
+
+        input.type = 'text';
+        try {
+          input.type = 'search';
+        } catch (e) {
+          buggy = true;
+        }
         has.clearElement(el);
         return buggy;
     });
