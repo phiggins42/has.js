@@ -15,17 +15,7 @@
     });
 
     addtest("canvas-webgl", function(){
-        var supported = false;
-        try{
-            supported = !!canvas.getContext("webgl");
-        }catch(e){}
-
-        if(!supported){
-            try{
-                supported = !!canvas.getContext("experimental-webgl");
-            }catch(e){}
-        }
-        return has("canvas") && supported;
+        return !!window.WebGLRenderingContext;
     });
 
     addtest("canvas-text", function(){
