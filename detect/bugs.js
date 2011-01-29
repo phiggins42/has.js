@@ -7,6 +7,27 @@
         FUNCTION_CLASS = "[object Function]"
     ;
 
+    function testForIn(value){
+        var i,
+            count = 0,
+            klass = function(){ this.toString = 1; };
+
+        for(i in new klass){
+            count++;
+        }
+        return count == value;
+    }
+
+    // true for IE < 9
+    addtest("bug-for-in-skips-shadowed", function(){
+        return testForIn(0);
+    });
+
+    // true for Safari 2
+    addtest("bug-for-in-repeats-shadowed", function(){
+        return testForIn(2);
+    });
+
     addtest("bug-string-split-regexp", function(){
         var buggy = null, s = "a_b";
         if(toString.call(s.split) == FUNCTION_CLASS){
@@ -47,13 +68,6 @@
             }
             return buggy;
         })(1,2);
-    });
-
-    addtest("bug-dontenum-enumerable", function(){
-        for(var prop in { toString: true }){
-            return false;
-        }
-        return true;
     });
 
     // ES5 added <BOM> (\uFEFF) as a whitespace character
@@ -218,7 +232,6 @@
         has.clearElement(el);
         return buggy;
     });
-
 
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
