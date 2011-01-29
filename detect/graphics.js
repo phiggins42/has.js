@@ -8,7 +8,7 @@
 
     if(!has("dom")){ return; }
 
-    addtest("canvas", function(){
+    addtest("canvas", function(g){
         return toString.call(g.CanvasRenderingContext2D) == FUNCTION_CLASS;
     });
 

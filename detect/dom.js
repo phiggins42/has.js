@@ -126,7 +126,7 @@
     });
 
     // test for dynamic-updating base tag support (allows us to avoid href & src attr rewriting)
-    // false for Firefox and IE < 8
+    // false for Firefox < 4 and IE < 8
     addtest("dom-dynamic-base", function (g, d, el){
         var backup, base,
             q = d.createElement("q"),
