@@ -7,6 +7,27 @@
         FUNCTION_CLASS = "[object Function]"
     ;
 
+    function testForIn(value){
+        var i,
+            count = 0,
+            klass = function(){ this.toString = 1; };
+
+        for(i in new klass){
+            count++;
+        }
+        return count == value;
+    }
+
+    // true for IE < 9
+    addtest("bug-for-in-skips-shadowed", function(){
+        return testForIn(0);
+    });
+
+    // true for Safari 2
+    addtest("bug-for-in-repeats-shadowed", function(){
+        return testForIn(2);
+    });
+
     addtest("bug-string-split-regexp", function(){
         var buggy = null, s = "a_b";
         if(toString.call(s.split) == FUNCTION_CLASS){
@@ -47,22 +68,6 @@
             }
             return buggy;
         })(1,2);
-    });
-
-    function testForIn(value){
-        var klass = function(){ this.toString = 1; }, i, count = 0;
-        for(i in new klass){ count++; }
-        has.add("bug-for-in-doubled", count == 2);
-        has.add("bug-dontenum-enumerable", count === 0);
-        return count === value;
-    }
-
-    addtest("bug-dontenum-enumerable", function(){
-        return testForIn(0);
-    });
-
-    addtest("bug-for-in-doubled", function(){
-        return testForIn(2);
     });
 
     // ES5 added <BOM> (\uFEFF) as a whitespace character
@@ -228,7 +233,6 @@
         return buggy;
     });
 
-    // TODO: Add bug-readonly-element-type too
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
@@ -237,6 +241,21 @@
 
         input.name = 'x';
         buggy = !el.getElementsByTagName('*')['x'];
+        has.clearElement(el);
+        return buggy;
+    });
+
+    // type attribute can only be set once and cannot be changed once in DOM
+    // http://msdn.microsoft.com/en-us/library/ms534700.aspx
+    addtest("bug-readonly-element-type", function(g, d, el){
+        var buggy = true,
+            input = el.appendChild(d.createElement("input"));
+
+        input.type = 'text';
+        try {
+          input.type = 'password';
+          buggy = input.type != 'password';
+        } catch (e) { }
         has.clearElement(el);
         return buggy;
     });
