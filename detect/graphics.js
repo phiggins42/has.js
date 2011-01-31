@@ -3,35 +3,24 @@ define(["has"], function(has){
 	
     var addtest = has.add,
     	FN = "function",
+		toString = {}.toString,
         STR = "string",
-        toString = {}.toString
+        FN = "function",
+        FUNCTION_CLASS = "[object Function]"
     ;
 
     if(!has("dom")){ return; }
 
-    // FIXME: needs to be self-containedish ^ph
-    var canvas = document.createElement("canvas");
-
-    addtest("canvas", function(){
-        return has.isHostType(canvas, "getContext") && !!canvas.getContext("2d");
+    addtest("canvas", function(g){
+        return toString.call(g.CanvasRenderingContext2D) == FUNCTION_CLASS;
     });
 
-    addtest("canvas-webgl", function(){
-        var supported = false;
-        try{
-            supported = !!canvas.getContext("webgl");
-        }catch(e){}
-
-        if(!supported){
-            try{
-                supported = !!canvas.getContext("experimental-webgl");
-            }catch(e){}
-        }
-        return has("canvas") && supported;
+    addtest("canvas-webgl", function(g){
+        return toString.call(g.WebGLRenderingContext) == FUNCTION_CLASS;
     });
 
-    addtest("canvas-text", function(){
-        return has("canvas") && typeof canvas.getContext("2d").fillText == FN;
+    addtest("canvas-text", function(g, d){
+        return has("canvas") && typeof d.createElement("canvas").getContext("2d").fillText == FN;
     });
 
 

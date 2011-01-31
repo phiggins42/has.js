@@ -129,17 +129,17 @@ define(["has"], function(has){
     });
 
     // test for dynamic-updating base tag support (allows us to avoid href & src attr rewriting)
-    // false for Firefox and IE < 8
+    // false for Firefox < 4 and IE < 8
     addtest("dom-dynamic-base", function (g, d, el){
-      var backup, base,
-          q = d.createElement("q"),
-          head = d.getElementsByTagName("head")[0],
-          href = location.href,
-          fake = false,
-          supported = null,
-          token = location.search || location.hash;
+        var backup, base,
+            q = d.createElement("q"),
+            head = d.getElementsByTagName("head")[0],
+            href = location.href,
+            fake = false,
+            supported = null,
+            token = location.search || location.hash;
 
-       if(head){
+        if(head){
             base = d.getElementsByTagName("base")[0] || (function(){
                 fake = true;
                 return head.insertBefore(d.createElement("base"), head.firstChild);
@@ -155,9 +155,9 @@ define(["has"], function(has){
             if(fake){
                 head.removeChild(base);
             }
-      }
-      return supported;
-  });
+        }
+        return supported;
+    });
 
 	return has;
 });

@@ -9,6 +9,89 @@ define(["has"], function(has){
         FUNCTION_CLASS = "[object Function]"
     ;
 
+    function testForIn(value){
+        var i,
+            count = 0,
+            klass = function(){ this.toString = 1; };
+
+        for(i in new klass){
+            count++;
+        }
+        return count == value;
+    }
+
+    // true for IE < 9
+    addtest("bug-for-in-skips-shadowed", function(){
+        return testForIn(0);
+    });
+
+    // true for Safari 2
+    addtest("bug-for-in-repeats-shadowed", function(){
+        return testForIn(2);
+    });
+
+    addtest("bug-string-split-regexp", function(){
+        var buggy = null, s = "a_b";
+        if(toString.call(s.split) == FUNCTION_CLASS){
+            buggy = s.split(/(_)/).length != 3;
+        }
+        return buggy;
+    });
+
+    addtest("bug-function-expression", function(){
+        // `x` should be resolved to `null` (the one we declared outside this function)
+        // but since named function expression identifier leaks onto the enclosing scope in IE,
+        // it will be resolved to a function
+        var f = function x(){},
+           buggy = typeof x == FN;
+        if(buggy){
+          x = null;
+        }
+        return buggy;
+    });
+
+    addtest("bug-string-replace-ignores-functions", function(){
+        var buggy = null, s = "a";
+        if(toString.call(s.replace) == FUNCTION_CLASS){
+            buggy = s.replace(s, function(){ return ""; }) != "";
+        }
+        return buggy;
+    });
+
+    addtest("bug-arguments-instanceof-array", function(g){
+        return arguments instanceof g.Array;
+    });
+
+    addtest("bug-array-concat-arguments", function(){
+        return (function(){
+            var buggy = null;
+            if(has("bug-arguments-instanceof-array")){
+                buggy = [].concat(arguments)[0] != 1;
+            }
+            return buggy;
+        })(1,2);
+    });
+
+    // ES5 added <BOM> (\uFEFF) as a whitespace character
+    var whitespace = "\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002"+
+        "\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF";
+
+    addtest("bug-es5-trim", function(){
+        var buggy = null;
+        if(has("string-trim")){
+            buggy = !!whitespace.trim();
+        }
+        return buggy;
+    });
+
+    addtest("bug-es5-regexp", function(){
+        return !(/^\s+$/).test(whitespace);
+    });
+
+    addtest("bug-tofixed-rounding", function(){
+        return (.9).toFixed() == 0;
+    });
+
     if(!has("dom")){ return; }
 
     addtest("bug-offset-values-positioned-inside-static", function(g, d, el){
@@ -152,7 +235,6 @@ define(["has"], function(has){
         return buggy;
     });
 
-    // TODO: Add bug-readonly-element-type too
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
@@ -161,6 +243,21 @@ define(["has"], function(has){
 
         input.name = 'x';
         buggy = !el.getElementsByTagName('*')['x'];
+        has.clearElement(el);
+        return buggy;
+    });
+
+    // type attribute can only be set once and cannot be changed once in DOM
+    // http://msdn.microsoft.com/en-us/library/ms534700.aspx
+    addtest("bug-readonly-element-type", function(g, d, el){
+        var buggy = true,
+            input = el.appendChild(d.createElement("input"));
+
+        input.type = 'text';
+        try {
+          input.type = 'password';
+          buggy = input.type != 'password';
+        } catch (e) { }
         has.clearElement(el);
         return buggy;
     });
