@@ -1,5 +1,5 @@
 (function(define){
-define(["has"], function(has){
+define(["has", "./dom"], function(has){
 	
     var addtest = has.add,
     	FN = "function",

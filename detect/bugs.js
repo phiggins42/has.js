@@ -1,5 +1,5 @@
 (function(define){
-define(["has"], function(has){
+define(["has", "./strings", "./dom"], function(has){
 
     // http://github.com/kangax/cft
     var toString = {}.toString,
