@@ -2,18 +2,17 @@
 
     var toString = {}.toString,
         STR = "string",
-        FN = "function",
-        FUNCTION_CLASS = "[object Function]"
+        FN = "function"
     ;
 
     if(!has("dom")){ return; }
 
     addtest("canvas", function(g){
-        return toString.call(g.CanvasRenderingContext2D) == FUNCTION_CLASS;
+        return has.isHostType(g, "CanvasRenderingContext2D");
     });
 
     addtest("canvas-webgl", function(g){
-        return toString.call(g.WebGLRenderingContext) == FUNCTION_CLASS;
+        return has.isHostType(g, "WebGLRenderingContext");
     });
 
     addtest("canvas-text", function(g, d){
