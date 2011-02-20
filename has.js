@@ -134,7 +134,7 @@ has = (function(g){
             isHostType(el, "removeChild") && isHostType(el, "getAttribute") &&
             isHostType(el, "setAttribute") && isHostType(el, "removeAttribute") &&
             isHostType(el, "style") && typeof el.style.cssText == "string";
-    }, true);
+    });
 
     // Stop repeat background-image requests and reduce memory consumption in IE6 SP1
     // http://misterpixel.blogspot.com/2006/09/forensic-analysis-of-ie6.html
