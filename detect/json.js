@@ -6,7 +6,8 @@
 
     // JSON tests
     addtest("json-parse", function(g){
-        var parsed, supported = false;
+        var parsed,
+            supported = false;
         if("JSON" in g && typeof JSON.parse == FN){
           parsed = JSON.parse('{"a":true}');
           supported = !!(parsed && parsed.a);

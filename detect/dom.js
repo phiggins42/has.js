@@ -89,7 +89,8 @@
     // http://msdn.microsoft.com/en-us/library/ms536389(VS.85).aspx vs
     // http://www.w3.org/TR/DOM-Level-3-Core/core.html#ID-2141741547
     addtest("dom-create-attr", function(g, d){
-        var input, supported = false;
+        var input,
+            supported = false;
         try{
             input = d.createElement("<input type='hidden' name='hasjs'>");
             supported = input.type == "hidden" && input.name == "hasjs";

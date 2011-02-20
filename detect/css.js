@@ -4,7 +4,8 @@
 
     // FROM cft.js
     addtest("css-enabled", function(g, d, el){
-        var supported, fake,
+        var fake,
+            supported,
             de = d.documentElement,
             root = d.body || (function(){
                 fake = true;
@@ -23,7 +24,8 @@
     });
 
     addtest("css-content-box", function(g, d, el){
-        var fake, root,
+        var fake,
+            root,
             de = d.documentElement,
             supported = null;
 
@@ -47,7 +49,10 @@
     });
 
     addtest("css-position-fixed", function(g, d, el){
-        var backup, control, fake, root,
+        var backup,
+            control,
+            fake,
+            root,
             de = d.documentElement,
             supported = null;
 
