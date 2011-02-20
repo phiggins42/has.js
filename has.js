@@ -118,6 +118,7 @@ define(["./_plugin"], function(plugin){
     }
 
     has.all = all;
+    has.pluginBuilder = "./build/plugin"; 
     //>>excludeEnd("production");
     has.add = add;
     has.load = plugin;
