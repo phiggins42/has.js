@@ -128,8 +128,10 @@
     // test for dynamic-updating base tag support (allows us to avoid href & src attr rewriting)
     // false for Firefox < 4 and IE < 8
     addtest("dom-dynamic-base", function (g, d, el){
-        var backup, base,
-            q = d.createElement("q"),
+        var attempt,
+            backup,
+            base,
+            attempts = [[d.createElement("a"), "href"], [d.createElement("q"), "cite"]],
             head = d.getElementsByTagName("head")[0],
             href = location.href,
             fake = false,
@@ -144,9 +146,14 @@
 
             backup = base.href || href.slice(0, token ? href.indexOf(token) : href.length).replace(/[^\/]*$/, "");
             base.href = location.protocol + "//x";
-            q.cite = "y";
-            supported = q.cite.indexOf("x/y") > -1;
 
+            // check support on more than one element to be thorough
+            while(attempt = attempts.pop()){
+                if(supported != false){
+                    attempt[0][attempt[1]] = "y";
+                    supported = attempt[0][attempt[1]].indexOf("x/y") > -1;
+                }
+            }
             // reset href before removal, otherwise href persists in Opera
             base.href = backup;
             if(fake){
@@ -165,7 +172,7 @@
         de.id = "length";
         // older Safari will return an empty array
         try{
-            supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0];
+            supported = !![].slice.call(d.childNodes, 0)[0];
         }catch(e){}
 
         de.id = id;
