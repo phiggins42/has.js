@@ -156,4 +156,20 @@
         return supported;
     });
 
+    addtest("dom-nodelist-sliceable", function(g, d, el){
+        var supported = false,
+            de = d.documentElement,
+            id = de.id;
+
+        // Opera 9.25 bug
+        de.id = "length";
+        // older Safari will return an empty array
+        try{
+            supported = !!EMPTY_ARRAY.slice.call(d.childNodes, 0)[0];
+        }catch(e){}
+
+        de.id = id;
+        return supported;
+    });
+
 })(has, has.add, has.cssprop);
