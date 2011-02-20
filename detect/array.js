@@ -55,7 +55,7 @@ define(["has"], function(has){
     });
 
     addtest("array-slice-nodelist", function(g, d, el){
-        var supported = true,
+        var supported = false,
             de = d.documentElement,
             id = de.id;
 

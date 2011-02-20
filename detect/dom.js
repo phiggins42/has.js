@@ -25,7 +25,7 @@ define(["has"], function(has){
     // works in all but IE < 9
     addtest("dom-addeventlistener", function(g, d){
         return has.isHostType(d, "addEventListener");
-    }, true);
+    });
 
     // works in all but IE
     addtest("dom-createelementns", function(g, d){
