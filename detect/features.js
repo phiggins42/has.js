@@ -5,7 +5,7 @@
     ;
 
     // FIXME: isn't really native
-    // miller device gives "[object Console]" in Opera & Webkit. Object in FF, though. ^pi
+    // miller device gives "[object Console]" in Opera & WebKit. Object in FF, though. ^pi
     addtest("native-console", function(g){
         return ("console" in g);
     });
@@ -144,11 +144,35 @@
     });
 
     addtest("native-history-state", function(g){
-        return ("history" in g) && ("pushState" in history);
+      return ("history" in g) && ("pushState" in history);
     });
 
     addtest("native-websockets", function(g){
-        return ("WebSocket" in g);
+      return ("WebSocket" in g);
+    });
+
+    addTest("native-details", function(g, doc){
+      return (function() {
+        var el = doc.createElement('details'),
+            de = doc.documentElement,
+            fake,
+            root = doc.body || (function() {
+              fake = true;
+              return de.insertBefore(doc.createElement("body"), de.firstChildElement || de.firstChild);
+            }()),
+            diff;
+        el.innerHTML = "<summary>a</summary>b";
+        el.style.display = "block";
+        root.appendChild(el);
+        diff = el.offsetHeight;
+        el.open = true;
+        diff = diff != el.offsetHeight;
+        root.removeChild(el);
+        if (fake) {
+          root.parentNode.removeChild(root);
+        }
+        return diff;
+      }());
     });
 
 })(has, has.add, has.cssprop);
