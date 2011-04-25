@@ -151,14 +151,14 @@
       return ("WebSocket" in g);
     });
 
-    addTest("native-details", function(g, doc){
+    addTest("native-details", function(g, d){
       return (function() {
-        var el = doc.createElement('details'),
-            de = doc.documentElement,
+        var el = d.createElement('details'),
+            de = d.documentElement,
             fake,
-            root = doc.body || (function() {
+            root = d.body || (function() {
               fake = true;
-              return de.insertBefore(doc.createElement("body"), de.firstChildElement || de.firstChild);
+              return de.insertBefore(d.createElement("body"), de.firstChildElement || de.firstChild);
             }()),
             diff;
         el.innerHTML = "<summary>a</summary>b";
