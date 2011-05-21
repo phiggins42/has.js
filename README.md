@@ -6,18 +6,14 @@ This document is **not** complete.
 
 ## About
 
-Browser sniffing and feature inference are flawed techniques for detecting browser support in client side JavaScript. The goal of 
-**has.js** is to provide a collection of self-contained tests and unified framework around using pure feature detection for whatever 
-library consumes it. 
+Browser sniffing and feature inference are flawed techniques for detecting browser support in client side JavaScript. The goal of **has.js** is to provide a collection of self-contained tests and unified framework around using pure feature detection for whatever library consumes it. 
 
 You likely _won't_ see **has.js** as a public API in any library. The idea is that _%yourfavoritelibrary%_ will import some or all
 the available tests, based on their own needs for providing you a normalized future proof API against common tasks.
 
-**not stable**, so keep that in mind. This is a young project, and the decided naming conventions may be a moving target. 
-The tests are nothing that haven't been done over and over in various places,
-so the intention is to come to some agreement on a basic naming convention and API based on real world use cases.
+**not stable**, so keep that in mind. This is a young project, and the decided naming conventions may be a moving target. The tests are nothing that haven't been done over and over in various places, so the intention is to come to some agreement on a basic naming convention and API based on real world use cases.
 
-Currently, the testing convention is _has('somefeature')_ returns _Boolean_. eg:
+Currently, the testing convention is `has('somefeature')` returns _Boolean_, e.g.:
 
     if(has("function-bind")){
         // your enviroment has a native Function.prototype.bind
@@ -36,11 +32,11 @@ In the real world, this may translate into something like:
 By doing this, we can easily defer to browser-native versions of common functions, augment prototypes (which **has.js** will _not_ do) to 
 supplement the natives, or whatever we choose.
 
-Running _has()_ is a one-time cost, deferred until needed. After first run, subsequent _has()_ checks are cached and return immediately.
+Running `has()` is a one-time cost, deferred until needed. After first run, subsequent `has()` checks are cached and return immediately.
 
 ## Testing Registration
 
-Each test is self-contained. Register a test with _has.add()_:
+Each test is self-contained. Register a test with `has.add()`:
 
     has.add("some-test-name", function(global, document, anElement){
         // global is a reference to global scope, document is the same
@@ -62,13 +58,11 @@ This is preferred over what would seem a much more effective version:
     // this is not wrapped in a function, and should be:
     has.add("some-other-test", ("foo" in bar)); // or whatever
     
-By forcing a function wrapper around the test logic we are able to defer execution until needed, as well as provide a normalized way for 
-each test to have it's own execution context. This way, we can remove some or all the tests we do not need in whatever upstream library
-should adopt _has_.
+By forcing a function wrapper around the test logic we are able to defer execution until needed, as well as provide a normalized way for each test to have its own execution context. This way, we can remove some or all the tests we do not need in whatever upstream library should adopt _has_.
 
 ## Platform Builds
 
-Something resembling a "builder" is coming. A basic dependency matcher and test lister is provided in `build/`
+Something resembling a "builder" is coming. A basic dependency matcher and test lister is provided in `build/`.
 
 ## Contribute
 
@@ -85,23 +79,23 @@ Something resembling a "builder" is coming. A basic dependency matcher and test 
   + [Rick Waldron](http://github.com/rwldrn/)
   + [Juriy Zaytsev](http://perfectionkills.com) - @kangax, nuff' said.
   
-There is an _irc_ room setup for discussion or questions: **#hasjs@irc.freenode.net**
+There is an _IRC_ room setup for discussion or questions: **#hasjs@irc.freenode.net**
 
 ## Conventions
 
 Internally, we follow these conventions:
 
-  + All Strings are quoted using double-quotes **"**
+  + All Strings are quoted using double-quotes `"`
   + Test names are lowercase, hyphen separated strings. Enclosed in double-quotes
     + Tests are passed `g`, `d`, and `n`. Use these aliases always.
   + Globals are as follows, available as used but will be reduced to a single ref:
-    + STR == "string"
-    + FN == "function"
+    + `STR == "string"`
+    + `FN == "function"`
   + Tests return Booleans. Sometimes, you must coerce a boolean:
-    + DO return !!(someExpression) as necessary
-    + DO N0T return !!("x" in y) or anything else that would otherwise return a boolean, eg
-      + x !== y, x > y, x typeof y
-    + DO wrap expressions in parens: eg return ("x" in y)
+    + DO return `!!(someExpression)` as necessary
+    + DO N0T return `!!("x" in y)` or anything else that would otherwise return a boolean, e.g.
+      + `x !== y`, `x > y`, `typeof y`
+    + DO wrap expressions in parens: e.g. `return ("x" in y)`
 
 ## License 
 
@@ -113,8 +107,8 @@ Tentatively, **has.js** is available under the Academic Free License, New BSD Li
 
   + moar tests. Fork/pull request anytime. 
   + Static Frontend - some home to put a static instance of has.js online to collect UA -> has(test) mappings
-  + Documentation regarding each of the tests, by name. eg: has("native-xhr") // tests if the environment has a native XmlHttpRequest implementation. 
-  + moar tests. Again with the forking. 
-  + "compiler" code / frontend 
+  + Documentation regarding each of the tests, by name. eg: `has("native-xhr") // tests if the environment has a native XmlHttpRequest implementation`.
+  + moar tests. Again with the forking.
+  + "compiler" code / frontend
      + ideally something that will use the list of tests, provide a clean interface to selecting tests needed and to download a single has.js file with tests embedded.
-     + keeping in mind to remove additional closures and provide (only needed) var CONTS = "" style helpers in a single wrapping function. 
+     + keeping in mind to remove additional closures and provide (only needed) `var CONTS = ""` style helpers in a single wrapping function. 
