@@ -240,11 +240,11 @@
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
-        var buggy,
-            input = el.appendChild(d.createElement("input"));
+        var buggy, form = el.appendChild(d.createElement("form")), 
+            input = form.appendChild(d.createElement("input"));
 
         input.name = 'x';
-        buggy = !el.getElementsByTagName('*')['x'];
+        buggy = input !== form.elements['x'];
         has.clearElement(el);
         return buggy;
     });
