@@ -240,11 +240,11 @@
     // name attribute can not be set at run time in IE < 8
     // http://msdn.microsoft.com/en-us/library/ms536389.aspx
     addtest("bug-readonly-element-name", function(g, d, el){
-        var buggy, form = el.appendChild(d.createElement("form")), 
+        var buggy, form = el.appendChild(d.createElement("form")),
             input = form.appendChild(d.createElement("input"));
 
-        input.name = 'x';
-        buggy = input !== form.elements['x'];
+        input.name = "x";
+        buggy = input !== form.elements["x"];
         has.clearElement(el);
         return buggy;
     });
@@ -255,10 +255,10 @@
         var buggy = true,
             input = el.appendChild(d.createElement("input"));
 
-        input.type = 'text';
+        input.type = "text";
         try {
-          input.type = 'password';
-          buggy = input.type != 'password';
+          input.type = "password";
+          buggy = input.type != "password";
         } catch (e) { }
         has.clearElement(el);
         return buggy;
@@ -350,7 +350,7 @@
         var buggy,
             id = "__test_" + Number(new Date()),
             script = d.createElement("script"),
-            root = d.getElementsByTagName('script')[0].parentNode;
+            root = d.getElementsByTagName("script")[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
@@ -364,7 +364,7 @@
         var buggy,
             script = d.createElement("script"),
             id = "__test_" + Number(new Date()),
-            root = d.getElementsByTagName('script')[0].parentNode;
+            root = d.getElementsByTagName("script")[0].parentNode;
 
         script.id = id;
         script.type = "text/javascript";
@@ -420,3 +420,4 @@
     });
 
 })(has, has.add, has.cssprop);
+

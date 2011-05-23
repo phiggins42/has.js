@@ -153,7 +153,7 @@
 
     addTest("native-details", function(g, d){
         return (function(){
-            var el = d.createElement('details'),
+            var el = d.createElement("details"),
                 de = d.documentElement,
                 fake,
                 root = d.body || (function(){
@@ -176,3 +176,4 @@
     });
 
 })(has, has.add, has.cssprop);
+
