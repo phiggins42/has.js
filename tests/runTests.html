@@ -156,6 +156,28 @@
                 html = html.concat(categories[j]);
                 html.push('</ul></fieldset>');
             }
+            
+            function bscopeBeacon(){
+
+              var testkey         = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiG3-0GDA',
+                  script          = document.createElement('script'),
+                  body            = document.getElementsByTagName('body')[0],
+                  testResults     = {}
+              ;
+              
+              window._bTestResults    = testResults;
+              
+              for (var item in results) {
+                _bTestResults[item] = results[item] ? '1' : '0';
+              }
+              
+              script.src = 'http://www.browserscope.org/user/beacon/' + testkey;
+              script.setAttribute('async', 'true');
+              body.parentNode.insertBefore(script, body);
+
+            }
+            
+            
 
             window.onload = function(){
                 has.byId("output").innerHTML = html.join("");
@@ -165,6 +187,8 @@
                 has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
 
                 has.byId("boom").disabled = false; // backend not in place
+                
+                has.byId("bscope").onclick = bscopeBeacon;
             };
         </script>
 
@@ -186,6 +210,8 @@
             <input type="hidden" name="useragent" id="useragent">
             <input type="hidden" name="cost" id="cost">
         </form>
+
+        <button id="bscope" type="submit">Report these to <a href="http://www.browserscope.org/user/tests/table/agt1YS1wcm9maWxlcnINCxIEVGVzdBiG3-0GDA?v=3&layout=simple">browserscope</a></button>
 
         <p>More about this test page and project on <a href="http://github.com/phiggins42/has.js">github:has.js</a></p>
     </body>
