@@ -151,7 +151,7 @@
         return ("WebSocket" in g);
     });
 
-    addTest("native-details", function(g, d){
+    addtest("native-details", function(g, d){
         return (function(){
             var el = d.createElement("details"),
                 de = d.documentElement,
