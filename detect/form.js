@@ -76,7 +76,7 @@
     });
 
     addtest("input-attr-indeterminate ", function(){
-        return ("indeterminate " in input);
+        return ("indeterminate" in input);
     });
 
     addtest("input-attr-willvalidate", function(){
