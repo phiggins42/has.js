@@ -118,7 +118,7 @@ has = (function(g){
     }
 
     has.all = all;
-    //>>exlucdeEnd("production");
+    //>>excludeEnd("production");
     has.add = add;
     has.clearElement = clearElement;
     has.cssprop = cssprop;
