@@ -43,7 +43,7 @@ var require, define;
             cfg = require;
         }
     }
-    
+
     //>>excludeStart("requireExcludePlugin", pragmas.requireExcludePlugin);
     /**
      * Calls a method on a plugin. The obj object should have two property,
@@ -698,7 +698,7 @@ var require, define;
                     context.defined.jquery = $;
                 }
 
-                //Make sure 
+                //Make sure
                 if (context.scriptCount) {
                     $.readyWait += 1;
                     context.jQueryIncremented = true;
@@ -1015,7 +1015,7 @@ var require, define;
      * Splits a name into a possible plugin prefix and
      * the module name. If baseName is provided it will
      * also normalize the name via require.normalizeName()
-     * 
+     *
      * @param {String} name the module name
      * @param {String} [baseName] base name that name is
      * relative to.
@@ -1321,12 +1321,12 @@ var require, define;
 
     /**
      * Executes the modules in the correct order.
-     * 
+     *
      * @private
      */
     req.exec = function (module, traced, waiting, context) {
         //Some modules are just plain script files, abddo not have a formal
-        //module definition, 
+        //module definition,
         if (!module) {
             //Returning undefined for Spidermonky strict checking in Komodo
             return undefined;

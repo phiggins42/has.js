@@ -4,7 +4,7 @@
     <title>has.js submissions</title>
 </head>
 <body>
-  
+
     <h1>FTW</h1>
 
     <?php
