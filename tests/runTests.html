@@ -156,7 +156,7 @@
                 html = html.concat(categories[j]);
                 html.push('</ul></fieldset>');
             }
-            
+
             function bscopeBeacon(){
 
               var testkey         = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiG3-0GDA',
@@ -164,20 +164,20 @@
                   body            = document.getElementsByTagName('body')[0],
                   testResults     = {}
               ;
-              
+
               window._bTestResults    = testResults;
-              
+
               for (var item in results) {
                 _bTestResults[item] = results[item] ? '1' : '0';
               }
-              
+
               script.src = 'http://www.browserscope.org/user/beacon/' + testkey;
               script.setAttribute('async', 'true');
               body.parentNode.insertBefore(script, body);
 
             }
-            
-            
+
+
 
             window.onload = function(){
                 has.byId("output").innerHTML = html.join("");
@@ -187,7 +187,7 @@
                 has.byId("useragent").value = has.byId("ua").innerHTML = navigator.userAgent;
 
                 has.byId("boom").disabled = false; // backend not in place
-                
+
                 has.byId("bscope").onclick = bscopeBeacon;
             };
         </script>

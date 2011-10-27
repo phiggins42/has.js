@@ -5,31 +5,31 @@
         tbody td, thead td {
             font-size:9pt;
         }
-        
+
         thead td {
             border-bottom:1px solid #ededed;
         }
-        
+
         thead td, tbody td {
             padding:2px;
             border-right:1px solid #ededed;
         }
-        
+
         td.yes { background-color:green; }
         td.no { background-color:red; }
         td.maybe { background-color:yellow; }
         td.unknown { background-color:#ededed; }
-        
+
     </style>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>has.js results matrix</title>
 </head>
 <body>
     <?php
-    
+
         // load allll the data
         $lines = file("results.data");
-        
+
         // go over each line, adjusting our flat list of data
         // into something like array(
         //      "someuseragent" => array(
@@ -54,18 +54,18 @@
         $master_test_list = array();
 
         foreach($out as $agent => $dataset){
-            
+
             $numtests = count($dataset);
-            
+
             // pull out all the unique test names we know about
             foreach($dataset as $datapart){
                 foreach($datapart as $name => $value){
                     if(!in_array($name, $master_test_list)){
-                        $master_test_list[] = $name; 
+                        $master_test_list[] = $name;
                     }
                 }
             }
-            
+
         }
 
         function mixdown($results){
@@ -73,10 +73,10 @@
             // things may or may not happen.
             // * some test may not have been written at the time the other data was collected
             //      + in this case we need to specify "unknown" class.
-            // * some tests, sorted by useragent, may have varying results. 
+            // * some tests, sorted by useragent, may have varying results.
             //      + in this case, we need to use 'maybe' class ......
             //      + this is probably bad, as it means perhaps faulty data has
-            //        gotten into our suite. 
+            //        gotten into our suite.
             // jesus christ i should just flatten the tests immediately. huh?
             $ret = array();
             foreach($results as $test){
@@ -88,10 +88,10 @@
                 }
             }
         }
-    
+
     ?>
-    
+
     <h1>Thanks!</h1>
-    
+
 </body>
 </html>
