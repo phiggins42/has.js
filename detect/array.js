@@ -1,6 +1,16 @@
-(function(has, addtest, cssprop){
+(function(factory){
+    if(typeof exports === 'object'){
+        module.exports = factory(require('has'));
+    }else if(typeof define === 'function' && define.amd){
+        define(['has'], factory);
+    }else{
+        factory(has);
+    }
+}(function(has){
 
-    var toString = {}.toString,
+    var addtest = has.add,
+        cssprop = has.cssprop,
+        toString = {}.toString,
         EMPTY_ARRAY = [],
         FUNCTION_CLASS = "[object Function]";
 
@@ -53,4 +63,5 @@
             has("array-some");
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+}));

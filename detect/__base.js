@@ -1,6 +1,16 @@
-(function(has, addtest, cssprop){
+(function(factory){
+    if(typeof exports === 'object'){
+        module.exports = factory(require('has'));
+    }else if(typeof define === 'function' && define.amd){
+        define(['has'], factory);
+    }else{
+        factory(has);
+    }
+}(function(has){
 
-    var STR = "string",
+    var addtest = has.add,
+        cssprop = has.cssprop,
+        STR = "string",
         FN = "function"
     ;
 
@@ -17,4 +27,5 @@
         return true; // Boolean
     });
 
-})(has, has.add, has.cssprop);
+    return has;
+}));

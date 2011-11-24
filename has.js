@@ -1,4 +1,4 @@
-has = (function(g){
+(function(g){
 
     // summary: A simple feature detection function/framework.
     //
@@ -144,8 +144,16 @@ has = (function(g){
         document.execCommand("BackgroundImageCache", false, true);
     }catch(e){}
 
-    return has;
 
-})(this);
+    if(typeof module === 'object' && module.exports){
+        // For Node
+        module.exports = has;
+    }else if(typeof define === 'function' && define.amd){
+        // AMD. Register as an anonymous module.
+        define(function(){ return has; });
+    }else{
+        // Browser globals
+        g.has = has;
+    }
 
-
+}(this));
