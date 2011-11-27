@@ -1,4 +1,4 @@
-has = (function(g){
+;(function(g){
 
     // summary: A simple feature detection function/framework.
     //
@@ -19,6 +19,8 @@ has = (function(g){
         VENDOR_PREFIXES = ["Webkit", "Moz", "O", "ms", "Khtml"],
         d = isHostType(g, "document") && g.document,
         el = d && isHostType(d, "createElement") && d.createElement("DiV"),
+        freeExports = typeof exports == "object" && exports,
+        freeModule = typeof module == "object" && module,
         testCache = {}
     ;
 
@@ -98,7 +100,7 @@ has = (function(g){
     // types of object, function, or unknown.
     function isHostType(object, property){
         var type = typeof object[property];
-        return type == 'object' ? !!object[property] : !NON_HOST_TYPES[type];
+        return type == "object" ? !!object[property] : !NON_HOST_TYPES[type];
     }
 
     //>>excludeStart("production", true);
@@ -144,8 +146,28 @@ has = (function(g){
         document.execCommand("BackgroundImageCache", false, true);
     }catch(e){}
 
-    return has;
+    // Expose has()
+    if(freeExports){
+        // in Node.js or RingoJS v0.8.0+
+        if(freeModule && freeModule.exports == freeExports){
+          (freeModule.exports = has).has = has;
+        }
+        // in Narwhal or RingoJS v0.7.0-
+        else{
+          freeExports.has = has;
+        }
+    }
+    // via curl.js or RequireJS
+    else if(typeof define == "function" && typeof define.amd == "object" && define.amd){
+        define("has", function(){
+            return has;
+        });
+    }
+    // in a browser or Rhino
+    else{
+        // use square bracket notation so Closure Compiler won't munge `has`
+        // http://code.google.com/closure/compiler/docs/api-tutorial3.html#export
+        g["has"] = has;
+    }
 
 })(this);
-
-
