@@ -147,7 +147,14 @@
     }catch(e){}
 
     // Expose has()
-    if(freeExports){
+    // some AMD build optimizers, like r.js, check for specific condition patterns like the following:
+    if(typeof define == "function" && typeof define.amd == "object" && define.amd){
+        define("has", function(){
+            return has;
+        });
+    }
+    // check for `exports` after `define` in case a build optimizer adds an `exports` object
+    else if(freeExports){
         // in Node.js or RingoJS v0.8.0+
         if(freeModule && freeModule.exports == freeExports){
           (freeModule.exports = has).has = has;
@@ -157,17 +164,10 @@
           freeExports.has = has;
         }
     }
-    // via curl.js or RequireJS
-    else if(typeof define == "function" && typeof define.amd == "object" && define.amd){
-        define("has", function(){
-            return has;
-        });
-    }
     // in a browser or Rhino
     else{
         // use square bracket notation so Closure Compiler won't munge `has`
         // http://code.google.com/closure/compiler/docs/api-tutorial3.html#export
         g["has"] = has;
     }
-
 })(this);
