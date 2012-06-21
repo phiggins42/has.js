@@ -39,7 +39,7 @@
     });
 
     addtest("array-reduceright", function(){
-        return toString.call(EMPTY_ARRAY.reduce) == FUNCTION_CLASS;
+        return toString.call(EMPTY_ARRAY.reduceRight) == FUNCTION_CLASS;
     });
 
     addtest("array-some", function(){
