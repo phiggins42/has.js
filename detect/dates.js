@@ -17,4 +17,9 @@
         return toString.call(Date.now) == FUNCTION_CLASS;
     });
 
+    addtest("performance-now", function(){
+        return toString.call(performance.now) == FUNCTION_CLASS ||
+               toString.call(performance.webkitNow) == FUNCTION_CLASS;
+    });
+
 })(has, has.add, has.cssprop);
