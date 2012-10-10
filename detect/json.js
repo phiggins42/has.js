@@ -3,33 +3,33 @@
 
     // Determines whether the (possibly native) `JSON.stringify` and `parse`
     // implementations are spec-compliant. Based on work by Ken Snyder.
-    addtest("json-parse", function() {
+    addtest("json-parse", function(){
         var supported = false, value;
-        if (typeof JSON == "object" && JSON) {
-            if (typeof JSON.parse == FN) {
-                try {
+        if(typeof JSON == "object" && JSON){
+            if(typeof JSON.parse == FN){
+                try{
                     // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
                     // Conforming implementations should also coerce the initial argument to
                     // a string prior to parsing.
-                    if (JSON.parse("0") === 0 && !JSON.parse(false)) {
+                    if(JSON.parse("0") === 0 && !JSON.parse(false)){
                         // Simple parsing test.
                         value = JSON.parse("{\"A\":[1,true,false,null,\"\\u0000\\b\\n\\f\\r\\t\"]}");
-                        if ((supported = value.A.length == 5 && value.A[0] == 1)) {
-                            try {
+                        if((supported = value.A.length == 5 && value.A[0] == 1)){
+                            try{
                                 // Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
                                 supported = !JSON.parse('"\t"');
-                            } catch (exception) {}
-                            if (supported) {
-                                try {
+                            }catch(e){}
+                            if(supported){
+                                try{
                                     // FF 4.0 and 4.0.1 allow leading `+` signs, and leading and
                                     // trailing decimal points. FF 4.0, 4.0.1, and IE 9 also allow
                                     // certain octal literals.
                                     supported = JSON.parse("01") != 1;
-                                } catch (exception) {}
+                                }catch(e){}
                             }
                         }
                     }
-                } catch (exception) {
+                }catch(e){
                     supported = false;
                 }
             }
@@ -37,15 +37,15 @@
         return supported;
     });
 
-    addtest("json-stringify", function() {
+    addtest("json-stringify", function(){
         var supported = false, value;
-        if (typeof JSON == "object" && JSON) {
-            if (typeof JSON.stringify == FN) {
+        if(typeof JSON == "object" && JSON){
+            if(typeof JSON.stringify == FN){
                 // A test function object with a custom `toJSON` method.
-                (value = function() {
+                (value = function(){
                     return 1;
                 }).toJSON = value;
-                try {
+                try{
                     supported =
                         // Firefox 3.1b1 and b2 serialize string, number, and boolean
                         // primitives as object literals.
@@ -100,7 +100,7 @@
                         // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
                         // values less than 1000. Credits: @Yaffle.
                         JSON.stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
-                } catch (exception) {
+                }catch(e){
                     supported = false;
                 }
             }
@@ -108,7 +108,7 @@
         return supported;
     });
 
-    addtest("json", function() {
+    addtest("json", function(){
         return has("json-stringify") && has("json-parse");
     });
 })(has, has.add, has.cssprop);
