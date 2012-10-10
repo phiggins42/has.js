@@ -22,8 +22,8 @@
                             if(supported){
                                 try{
                                     // FF 4.0 and 4.0.1 allow leading `+` signs, and leading and
-                                    // trailing decimal points. FF 4.0, 4.0.1, and IE 9 also allow
-                                    // certain octal literals.
+                                    // trailing decimal points. FF 4.0, 4.0.1, and IE 9-10 also
+                                    // allow certain octal literals.
                                     supported = JSON.parse("01") != 1;
                                 }catch(e){}
                             }
@@ -59,10 +59,10 @@
                         // objects with `toJSON` properties as well, *unless* they are nested
                         // within an object or array).
                         JSON.stringify(isNaN) === undef &&
-                        // IE 8 serializes `undefined` as `"undefined"`. Safari 5.1.2 and FF
+                        // IE 8 serializes `undefined` as `"undefined"`. Safari 5.1.7 and FF
                         // 3.1b3 pass this test.
                         JSON.stringify(undef) === undef &&
-                        // Safari 5.1.2 and FF 3.1b3 throw `Error`s and `TypeError`s,
+                        // Safari <= 5.1.7 and FF 3.1b3 throw `Error`s and `TypeError`s,
                         // respectively, if the value is omitted entirely.
                         JSON.stringify() === undef &&
                         // FF 3.1b1, 2 throw an error if the given value is not a number,
@@ -97,7 +97,7 @@
                         // Firefox <= 11.0 incorrectly serializes years prior to 0 as negative
                         // four-digit years instead of six-digit years. Credits: @Yaffle.
                         JSON.stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
-                        // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
+                        // Safari <= 5.1.7 and Opera >= 10.53 incorrectly serialize millisecond
                         // values less than 1000. Credits: @Yaffle.
                         JSON.stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
                 }catch(e){
