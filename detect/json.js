@@ -1,7 +1,8 @@
 (function(has, addtest, cssprop, undef){
     var FN = "function";
 
-    // JSON tests.
+    // Determines whether the (possibly native) `JSON.stringify` and `parse`
+    // implementations are spec-compliant. Based on work by Ken Snyder.
     addtest("json-parse", function() {
         var supported = false, value;
         if (typeof JSON == "object" && JSON) {
