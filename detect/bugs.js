@@ -327,7 +327,7 @@
     });
 
     addtest("bug-getelementbyid-ids-names", function(g, d){
-        var input
+        var input,
             name = "__test_" + Number(new Date()),
             root = d.getElementsByTagName("head")[0] || d.documentElement,
             buggy = null;
