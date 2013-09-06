@@ -155,4 +155,8 @@
         return typeValidates("range");
     });
 
+    addtest("input-speech", function(g, d){
+        return ("speech" in input || "onwebkitspeechchange" in input);
+    });
+
 })(has, has.add, has.cssprop);
