@@ -175,5 +175,11 @@
         }());
     });
 
+    // Currently SpeechRecognition only available with webkit prefix
+    addtest("speech-recognition", function(g){
+        return ("webkitSpeechRecognition" in g);
+    });
+
+
 })(has, has.add, has.cssprop);
 
