@@ -154,8 +154,9 @@
             if(typeof module.config == "function"){
                 moduleConfig = module.config();
             }
-            for (propKey in moduleConfig)
+            for(propKey in moduleConfig){
                 has.add(propKey, moduleConfig[propKey]);
+            }
             return has;
         });
     }
