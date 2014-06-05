@@ -150,7 +150,9 @@
     // some AMD build optimizers, like r.js, check for specific condition patterns like the following:
     if(typeof define == "function" && typeof define.amd == "object" && define.amd){
         define("has", ['module'], function(module){
-            var moduleConfig = module.config() || {};
+            var moduleConfig = {};
+            if (typeof module.config === "function")
+                moduleConfig = module.config() || {};
             for (var propKey in moduleConfig)
                 has.add(propKey, moduleConfig[propKey]);
             return has;
