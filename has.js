@@ -151,7 +151,7 @@
     if(typeof define == "function" && typeof define.amd == "object" && define.amd){
         define("has", ["module"], function(module){
             var moduleConfig = {};
-            if(typeof module.config === "function"){
+            if(typeof module.config == "function"){
                 moduleConfig = module.config() || {};
             }
             for (var propKey in moduleConfig)
