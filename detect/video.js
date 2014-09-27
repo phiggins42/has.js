@@ -3,6 +3,9 @@
     if(!has("dom")){ return; }
 
     var video = document.createElement("video"),
+        // IE9 is reported to throw errors if "Desktop Experience" is not installed
+        // have a look at this:
+        // https://github.com/Modernizr/Modernizr/issues/224
         canPlayType = function( type ) {
           try {
             return video.canPlayType( type );
