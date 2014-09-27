@@ -2,7 +2,13 @@
 
     if(!has("dom")){ return; }
 
-    var video = document.createElement("video");
+    var video = document.createElement("video"),
+        canPlayType = function( type ) {
+          try {
+            return video.canPlayType( type );
+          } catch( e ) { }
+          return false;
+        };
 
     addtest("video", function(){
         return has.isHostType(video, "canPlayType");
@@ -14,15 +20,15 @@
         // workaround required for ie9, who doesn't report video support without audio codec specified.
         //   bug 599718 @ msft connect
         var h264 = 'video/mp4; codecs="avc1.42E01E';
-        return has("video") && (video.canPlayType(h264 + '"') || video.canPlayType(h264 + ', mp4a.40.2"'));
+        return has("video") && ( canPlayType(h264 + '"') || canPlayType(h264 + ', mp4a.40.2"'));
     });
 
     addtest("video-ogg-theora", function(){
-        return has("video") && video.canPlayType('video/ogg; codecs="theora, vorbis"');
+        return has("video") && canPlayType('video/ogg; codecs="theora, vorbis"');
     });
 
     addtest("video-webm", function(){
-        return has("video") && video.canPlayType('video/webm; codecs="vp8, vorbis"');
+        return has("video") && canPlayType('video/webm; codecs="vp8, vorbis"');
     });
 
 })(has, has.add, has.cssprop);
