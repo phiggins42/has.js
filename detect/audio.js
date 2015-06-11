@@ -34,5 +34,13 @@
         return has("audio") && !!(CAN_PLAY_GUESSES[audio.canPlayType("audio/x-m4a;")] ||
             CAN_PLAY_GUESSES[audio.canPlayType("audio/aac;")]);
     });
+    
+    addtest("audio-opus", function(){
+        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/ogg; codecs=opus")];
+    })
+    
+    addtest("audio-weba", function(){
+        return has("audio") && !!CAN_PLAY_GUESSES[audio.canPlayType("audio/webm;")];
+    })
 
 })(has, has.add, has.cssprop);
