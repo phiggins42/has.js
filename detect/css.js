@@ -146,7 +146,11 @@
         return cssprop("transform", el);
     });
 
-    // FIXME: modernizr has flexbox, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
+    addtest("flex", function(g, d, el){
+        return cssprop("flex", el);
+    });
+
+    // FIXME: modernizr has, backgroundsize, borderimage, cssanimations, csscolumns, cssgradients,
     // cssreflections, csstransforms, csstransforms3d, csstransitions, fontface
 
 })(has, has.add, has.cssprop);
