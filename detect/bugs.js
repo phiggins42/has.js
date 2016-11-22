@@ -419,5 +419,12 @@
         return buggy;
     });
 
+	// true on IE6 and IE7
+	addtest("bug-cloned-getattributenode-nodevalue", function(g, d, el){
+		var clone = el.cloneNode(false);
+		clone.setAttribute('class', 'test');
+		return clone.getAttributeNode('class').nodeValue != 'test';
+	});
+
 })(has, has.add, has.cssprop);
 
