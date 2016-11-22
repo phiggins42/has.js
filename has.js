@@ -149,7 +149,7 @@
     // Expose has()
     // some AMD build optimizers, like r.js, check for specific condition patterns like the following:
     if(typeof define == "function" && typeof define.amd == "object" && define.amd){
-        define("has", function(){
+        define(function(){
             return has;
         });
     }
