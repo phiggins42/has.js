@@ -32,8 +32,6 @@
 
         <script src="../has.js"></script>
 
-        <!--script src="require.js"></script-->
-
         <script src="../detect/bugs.js"></script>
         <script src="../detect/array.js"></script>
         <script src="../detect/graphics.js"></script>
@@ -51,6 +49,7 @@
         <script src="../detect/audio.js"></script>
         <script src="../detect/video.js"></script>
 
+        <script src="require.js"></script>
     </head>
     <body>
 
@@ -61,125 +60,129 @@
         <div id="output"></div>
 
         <script>
-            has.specials = {};
 
-            has.byId = function(id){
-                return document.getElementById(id);
-            }
+            define("app", ["has"], function (_has) {
 
-            // redundant test
-            has.add("js-enabled-direct", true);
+                var moduleConfig = _has.all();
+                for(var m in moduleConfig)
+                    has.add(m, moduleConfig[m]);
 
-            var lazy = 0;
-            has.add("js-enabled-lazy", function(){ lazy++; return true; });
-            if(!lazy && !has("js-enabled-lazy")){
-                alert("lazy test failed.");
-            }
+                has.specials = {};
 
-            var run = 0;
-            has.add("js-enabled-lazy-now", function(){ run++; return true; }, true);
-            if(!run){
-                alert("lazy with immediate execution failed");
-            }
-
-            var html = [],
-                data = [],
-                nao = +new Date,
-                results = has.all(),
-                done = +new Date,
-                bugRE = /^bug-/
-            ;
-
-            function resultClass(result, isBug, special){
-                // format bug-* tests opposite from others
-                if(result === null){
-                    return "na";
-                }
-                if(result == "error"){
-                    return "error";
-                }
-                if(isBug){
-                    return (result ? "no" : "yes");
-                }
-                return (result ? "yes" : "no");
-            }
-
-            var keys = [], i;
-
-            if(has('object-keys')){
-                keys = Object.keys(results);
-            }else{
-                for(i in results){
-                    keys.push(i);
-                }
-            }
-            keys.sort();
-
-            var categories = { 'none': [] },
-                categoryRE = /^(\w+)[-]?/;
-
-            var outputResult = function(key, i){
-                var special = "", r = results[key],
-                    match = key.match(categoryRE),
-                    category = match ? match[1] : 'none';
-
-                if(!(category in categories)){
-                    categories[category] = [];
-                }
-                var html = categories[category];
-
-                if(key in has.specials){
-                    special = r[has.specials[key]] || "";
+                has.byId = function(id){
+                    return document.getElementById(id);
                 }
 
-                if(r == "error"){
-                    special = ": " + r.ERROR_MSG;
+                // redundant test
+                has.add("js-enabled-direct", true);
+
+                var lazy = 0;
+                has.add("js-enabled-lazy", function(){ lazy++; return true; });
+                if(!lazy && !has("js-enabled-lazy")){
+                    alert("lazy test failed.");
                 }
 
-                data.push("<input type='hidden' name='", key, "' value='", r + special ,"'>");
-                html.push("<li>", key ," <em class='", resultClass(r, bugRE.test(key)), "'>",
-                    (r === null ? 'n/a' : (r == "error" ? r : !!r)) , "</em>", special, "</li>");
-            };
-
-            if(has('array-foreach')){
-                keys.forEach(outputResult);
-            }else{
-                i = 0;
-                for(var key; key=keys[i]; i++){
-                    outputResult(key, i);
+                var run = 0;
+                has.add("js-enabled-lazy-now", function(){ run++; return true; }, true);
+                if(!run){
+                    alert("lazy with immediate execution failed");
                 }
-            }
 
-            for(var j in categories){
-                if(!categories[j].length){ continue; }
-                html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
-                html = html.concat(categories[j]);
-                html.push('</ul></fieldset>');
-            }
+                var html = [],
+                    data = [],
+                    nao = +new Date,
+                    results = has.all(),
+                    done = +new Date,
+                    bugRE = /^bug-/
+                ;
 
-            function bscopeBeacon(){
+                function resultClass(result, isBug, special){
+                    // format bug-* tests opposite from others
+                    if(result === null){
+                        return "na";
+                    }
+                    if(result == "error"){
+                        return "error";
+                    }
+                    if(isBug){
+                        return (result ? "no" : "yes");
+                    }
+                    return (result ? "yes" : "no");
+                }
 
-              var testkey         = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiG3-0GDA',
-                  script          = document.createElement('script'),
-                  body            = document.getElementsByTagName('body')[0],
-                  testResults     = {}
-              ;
+                var keys = [], i;
 
-              window._bTestResults    = testResults;
+                if(has('object-keys')){
+                    keys = Object.keys(results);
+                }else{
+                    for(i in results){
+                        keys.push(i);
+                    }
+                }
+                keys.sort();
 
-              for (var item in results) {
-                _bTestResults[item] = results[item] ? '1' : '0';
-              }
+                var categories = { 'none': [] },
+                    categoryRE = /^(\w+)[-]?/;
 
-              script.src = 'http://www.browserscope.org/user/beacon/' + testkey;
-              script.setAttribute('async', 'true');
-              body.parentNode.insertBefore(script, body);
+                var outputResult = function(key, i){
+                    var special = "", r = results[key],
+                        match = key.match(categoryRE),
+                        category = match ? match[1] : 'none';
 
-            }
+                    if(!(category in categories)){
+                        categories[category] = [];
+                    }
+                    var html = categories[category];
 
+                    if(key in has.specials){
+                        special = r[has.specials[key]] || "";
+                    }
 
+                    if(r == "error"){
+                        special = ": " + r.ERROR_MSG;
+                    }
 
-            window.onload = function(){
+                    data.push("<input type='hidden' name='", key, "' value='", r + special ,"'>");
+                    html.push("<li>", key ," <em class='", resultClass(r, bugRE.test(key)), "'>",
+                        (r === null ? 'n/a' : (r == "error" ? r : !!r)) , "</em>", special, "</li>");
+                };
+
+                if(has('array-foreach')){
+                    keys.forEach(outputResult);
+                }else{
+                    i = 0;
+                    for(var key; key=keys[i]; i++){
+                        outputResult(key, i);
+                    }
+                }
+
+                for(var j in categories){
+                    if(!categories[j].length){ continue; }
+                    html.push('<fieldset><legend>Results for category ', j, '</legend><ul class="resultList">');
+                    html = html.concat(categories[j]);
+                    html.push('</ul></fieldset>');
+                }
+
+                function bscopeBeacon(){
+
+                  var testkey         = 'agt1YS1wcm9maWxlcnINCxIEVGVzdBiG3-0GDA',
+                      script          = document.createElement('script'),
+                      body            = document.getElementsByTagName('body')[0],
+                      testResults     = {}
+                  ;
+
+                  window._bTestResults    = testResults;
+
+                  for (var item in results) {
+                    _bTestResults[item] = results[item] ? '1' : '0';
+                  }
+
+                  script.src = 'http://www.browserscope.org/user/beacon/' + testkey;
+                  script.setAttribute('async', 'true');
+                  body.parentNode.insertBefore(script, body);
+
+                }
+
                 has.byId("output").innerHTML = html.join("");
                 has.byId("resultinputs").innerHTML = data.join("");
 
@@ -189,7 +192,22 @@
                 has.byId("boom").disabled = false; // backend not in place
 
                 has.byId("bscope").onclick = bscopeBeacon;
-            };
+
+            });
+
+            require({
+                paths: {
+                    has: "../has"
+                },
+                config: {
+                    has: {
+                        "requireJS-ModuleConfig_TestBool": true,
+                        "requireJS-ModuleConfig_TestString": "TEST",
+                        "requireJS-ModuleConfig_TestArray": [1,2,3,4],
+                        "requireJS-ModuleConfig_TestFunction": function() { return true; }
+                    }
+                }
+            }, ["app"]);
         </script>
 
         <fieldset>
