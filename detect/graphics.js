@@ -35,11 +35,11 @@
     });
 
     addtest("svg-smil", function(g, d){
-        return has("dom-createelementns") && /SVG/.test(toString.call(d.createElementNS(svgNS, "animate")));
+        return has("dom-createelements") && /SVG/.test(toString.call(d.createElementNS(svgNS, "animate")));
     });
 
     addtest("svg-clippaths", function(g, d){
-        return has("dom-createelementns") && /SVG/.test(toString.call(d.createElementNS(svgNS, "clipPath")));
+        return has("dom-createelements") && /SVG/.test(toString.call(d.createElementNS(svgNS, "clipPath")));
     });
 
     addtest("vml", function(g, d, el){
