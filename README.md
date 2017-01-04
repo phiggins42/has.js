@@ -14,21 +14,21 @@ the available tests, based on their own needs for providing you a normalized fut
 **not stable**, so keep that in mind. This is a young project, and the decided naming conventions may be a moving target. The tests are nothing that haven't been done over and over in various places, so the intention is to come to some agreement on a basic naming convention and API based on real world use cases.
 
 Currently, the testing convention is `has('somefeature')` returns _Boolean_, e.g.:
-
-    if(has("function-bind")){
-        // your enviroment has a native Function.prototype.bind
-    }else{
-        // you should get a new browser.
-    }
-
+```js
+if(has("function-bind")){
+    // your enviroment has a native Function.prototype.bind
+}else{
+    // you should get a new browser.
+}
+```
 In the real world, this may translate into something like:
-
-    mylibrary.trim = has("string-trim") ? function(str){
-        return (str || "").trim();
-    } : function(str){
-        /* do the regexp based string trimming you feel like using */
-    }
-
+```js
+mylibrary.trim = has("string-trim") ? function(str){
+    return (str || "").trim();
+} : function(str){
+    /* do the regexp based string trimming you feel like using */
+}
+```
 By doing this, we can easily defer to browser-native versions of common functions, augment prototypes (which **has.js** will _not_ do) to
 supplement the natives, or whatever we choose.
 
@@ -37,27 +37,27 @@ Running `has()` is a one-time cost, deferred until needed. After first run, subs
 ## Testing Registration
 
 Each test is self-contained. Register a test with `has.add()`:
-
-    has.add("some-test-name", function(global, document, anElement){
-        // global is a reference to global scope, document is the same
-        // anElement only exists in browser enviroments, and can be used
-        // as a common element from which to do DOM working.
-        // ALWAYS CLEAN UP AFTER YOURSELF in a test. No leaks, thanks.
-        // return a Boolean from here.
-        return true;
-    });
-
+```js
+has.add("some-test-name", function(global, document, anElement){
+    // global is a reference to global scope, document is the same
+    // anElement only exists in browser enviroments, and can be used
+    // as a common element from which to do DOM working.
+    // ALWAYS CLEAN UP AFTER YOURSELF in a test. No leaks, thanks.
+    // return a Boolean from here.
+    return true;
+});
+```
 You can register and run a test immediately by passing a truthy value after the test function:
-
-    has.add("some-other-test", function(){
-        return false; // Boolean
-    }, true)
-
+```js
+has.add("some-other-test", function(){
+    return false; // Boolean
+}, true)
+```
 This is preferred over what would seem a much more effective version:
-
-    // this is not wrapped in a function, and should be:
-    has.add("some-other-test", ("foo" in bar)); // or whatever
-
+```js
+// this is not wrapped in a function, and should be:
+has.add("some-other-test", ("foo" in bar)); // or whatever
+```
 By forcing a function wrapper around the test logic we are able to defer execution until needed, as well as provide a normalized way for each test to have its own execution context. This way, we can remove some or all the tests we do not need in whatever upstream library should adopt _has_.
 
 ## Platform Builds
