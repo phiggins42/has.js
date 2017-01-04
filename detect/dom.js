@@ -180,4 +180,16 @@
         return supported;
     });
 
+    // IE prior to 9 does not support setting the 'name' property of iframes dynamically. 
+    // Instead the internal element will get a property of 'submitName' or 'propdescName'
+    addtest("dom-dynamic-name", function(g, d, el){
+        var supported, iframe = d.createElement("iframe");
+        iframe.style.display = "none";
+        iframe.name = "abcdefg";
+        d.body.appendChild(iframe);
+        supported = (iframe.contentWindow === g.frames[iframe.name]);
+        d.body.removeChild(iframe);
+        return supported;
+    });
+
 })(has, has.add, has.cssprop);
